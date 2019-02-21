@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from .editor_window import EditorFrame
 from RTE.controller import Controller
+from .console import ConsoleView
 
 
 class RenpyTextEditorGUI(tk.Frame):
@@ -14,12 +15,19 @@ class RenpyTextEditorGUI(tk.Frame):
         return
 
     def __setup_ui(self):
-        self.main_window = tk.PanedWindow(self, orient=tk.HORIZONTAL)
+        self.main_frame = tk.PanedWindow(self, orient=tk.VERTICAL)
+        self.text_window = tk.PanedWindow(self, orient=tk.HORIZONTAL)
         self.left_notebook = ttk.Notebook(self)
         self.right_notebook = ttk.Notebook(self)
-        self.main_window.add(self.left_notebook)
-        self.main_window.add(self.right_notebook)
-        self.main_window.grid(row=0, column=1)
+        self.bottom_notebook = ttk.Notebook(self)
+        self.text_window.add(self.left_notebook)
+        self.text_window.add(self.right_notebook)
+        self.main_frame.add(self.text_window)
+        self.main_frame.add(self.bottom_notebook)
+        self.main_frame.grid(row=0, column=1)
+
+        self.console_ui = ConsoleView(self)
+        self.bottom_notebook.add(self.console_ui, text="Console")
 
     def add_tab(self, side="left"):
         if side == "left":

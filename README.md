@@ -28,3 +28,4 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 - [ ] Collapsing blocks of code
     - [ ] collapsing with "#region region-name" and "#endregion" comments
     - [ ] collapsing labels, screens, python, init, statements and functions
+- [ ] Visual scripting for Renpy Visual Novels (VSVN)

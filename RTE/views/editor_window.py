@@ -69,6 +69,7 @@ class EditorFrame(tk.Frame):
         self.linenumbers.attach(self.text)
 
         self.vsb.pack(side="right", fill="y")
+        self.hsb.pack(side="bottom", fill="x")
         self.linenumbers.pack(side="left", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
 
