@@ -86,9 +86,3 @@ class EditorFrame(tk.Frame):
 
     def loop(self):
         self.after(5, self.loop)
-
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    EditorFrame(root).pack(side="top", fill="both", expand=True)
-    root.mainloop()
