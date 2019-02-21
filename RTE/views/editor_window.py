@@ -75,10 +75,6 @@ class EditorFrame(tk.Frame):
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
 
-        self.text.insert("end", "one\ntwo\nthree\n")
-        self.text.insert("end", "four\n", ("bigfont",))
-        self.text.insert("end", "five\n")
-
         self.loop()
 
     def _on_change(self, event):
