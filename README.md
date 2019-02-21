@@ -8,7 +8,7 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 - [ ] Theme Support
 - [ ] Snippets Support
 - [ ] Duplicate line/ Selected Code Block
-- [ ] Autocompletion
+- [ ] Tab Autocompletion
 - [ ] Variable viewer
 - [ ] Renpy Console (run renpy code headless, jump to labels to test, call screens etc)
 - [ ] Automatic Renpy markdown matching, with automatic detection of custom text tags ({b}, {u} etc tags)
@@ -24,3 +24,7 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 - [ ] Save file viewer
 - [ ] Layeredimage builder and preview
 - [ ] Screen builder and preview
+- [ ] Tabs for multiple files open at the same time.
+- [ ] Collapsing blocks of code
+    - [ ] collapsing with "#region region-name" and "#endregion" comments
+    - [ ] collapsing labels, screens, python, init, statements and functions
