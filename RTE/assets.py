@@ -1,0 +1,44 @@
+import tkinter as tk
+
+
+class AssetStore:
+    folder = """#define folder_width 16
+                #define folder_height 16
+                static unsigned char folder_bits[] = {
+                    0x00, 0x00, 0x3f, 0x00, 0xf1, 0x7f, 0x01, 0x40, 0xfd, 0xff, 0x07, 0x80,
+                    0x03, 0x80, 0x03, 0x80, 0x03, 0x80, 0x03, 0x80, 0x01, 0xc0, 0x01, 0x40,
+                    0x01, 0x40, 0x01, 0x40, 0xfe, 0x7f, 0x00, 0x00 };"""
+    folder_mask = """#define textfile_mask_width 16
+                     #define textfile_mask_height 16
+                     static unsigned char textfile_mask_bits[] = {
+                         0x00, 0x00, 0xfc, 0x3f, 0x06, 0x48, 0x06, 0x50, 0xf6, 0x67, 0x06, 0x60,
+                         0x06, 0x40, 0xe6, 0x4f, 0x06, 0x40, 0x06, 0x40, 0xe6, 0x4f, 0x06, 0x40,
+                         0x06, 0x40, 0xe6, 0x4f, 0x06, 0x40, 0xfc, 0x3f };"""
+
+    image = """#define imagefile_width 16
+               #define imagefile_height 16
+               static unsigned char imagefile_bits[] = {
+                    0x00, 0x00, 0x00, 0x00, 0xfc, 0x3f, 0x02, 0x40, 0x22, 0x4c, 0x72, 0x52,
+                    0xfa, 0x52, 0x02, 0x4c, 0x02, 0x40, 0xfa, 0x40, 0x8a, 0x40, 0xfa, 0x40,
+                    0x02, 0x40, 0xfc, 0x3f, 0x00, 0x00, 0x00, 0x00 };"""
+    image_mask = """#define imagefile_mask_width 16
+                    #define imagefile_mask_height 16
+                    static unsigned char imagefile_mask_bits[] = {
+                        0x00, 0x00, 0x00, 0x00, 0xfc, 0x3f, 0x02, 0x40, 0x22, 0x4c, 0x72, 0x52,
+                        0xfa, 0x52, 0x02, 0x4c, 0x02, 0x40, 0xfa, 0x40, 0x8a, 0x40, 0xfa, 0x40,
+                        0x02, 0x40, 0xfc, 0x3f, 0x00, 0x00, 0x00, 0x00 };"""
+
+    @classmethod
+    def get_icon_by_extension(cls, extension, bg="white"):
+        if isinstance(extension, str):
+            extension = extension.lower()
+        if extension is None or extension == "folder":
+            return tk.BitmapImage(data=cls.folder, maskdata=cls.folder_mask, background=bg)
+        elif extension in ("png", "jpg", "image"):
+            return tk.BitmapImage(data=cls.image, maskdata=cls.image_mask, background=bg)
+        elif extension in ("webm", "mp4", "avi", "movie"):
+            return tk.BitmapImage(data=cls.movie, maskdata=cls.movie_mask, background=bg)
+        elif extension in ("mp3", "wav", "music"):
+            return tk.BitmapImage(data=cls.music, maskdata=cls.music_mask, background=bg)
+        else:
+            return tk.BitmapImage(data=cls.text, maskdata=cls.text_mask, background=bg)

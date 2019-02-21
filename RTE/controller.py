@@ -1,4 +1,4 @@
-from RTE.model import ThemeModel
+from RTE.model import ThemeModel, Project
 
 
 class MenusController():
