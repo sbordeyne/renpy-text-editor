@@ -9,7 +9,7 @@ if __name__ == '__main__':
     path = os.path.join(cwd, "project")
     root = tk.Tk()
     gui = ProjectManagerView(root, path)
-    gui.init_treeview()
+    gui.build_tree()
     gui.pack()
     root.mainloop()
 

@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from .editor_window import EditorFrame
+from .project_manager import ProjectManagerView
 from RTE.controller import Controller
 from .console import ConsoleView
 
@@ -9,7 +10,7 @@ class RenpyTextEditorGUI(tk.Frame):
     def __init__(self, master=None):
         super(RenpyTextEditorGUI, self).__init__()
         self.master = master
-        self.controller = Controller()
+        self.controller = Controller(self)
         self.__setup_menu()
         self.__setup_ui()
         return
@@ -24,7 +25,10 @@ class RenpyTextEditorGUI(tk.Frame):
         self.text_window.add(self.right_notebook)
         self.main_frame.add(self.text_window)
         self.main_frame.add(self.bottom_notebook)
-        self.main_frame.grid(row=0, column=1)
+        self.main_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+        self.project_manager = ProjectManagerView()
+        self.project_manager.pack(side=tk.LEFT, fill=tk.Y, expand=True)
 
         self.console_ui = ConsoleView(self)
         self.bottom_notebook.add(self.console_ui, text="Console")

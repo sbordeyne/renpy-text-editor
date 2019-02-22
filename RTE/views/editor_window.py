@@ -58,12 +58,12 @@ class EditorFrame(tk.Frame):
     def __init__(self, master=None):
         super(EditorFrame, self).__init__()
         self.master = master
-
         self.text = CustomText(self)
-        self.vsb = tk.Scrollbar(orient="vertical", command=self.text.yview)
-        self.hsb = tk.Scrollbar(orient="horizontal", command=self.text.xview)
+        self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
+        self.hsb = tk.Scrollbar(self, orient="horizontal", command=self.text.xview)
         self.text.configure(yscrollcommand=self.vsb.set,
-                            xscrollcommand=self.hsb.set)
+                            xscrollcommand=self.hsb.set,
+                            wrap=tk.NONE)
         self.text.tag_configure("bigfont", font=("Helvetica", "24", "bold"))
         self.linenumbers = TextLineNumbers(self, width=30)
         self.linenumbers.attach(self.text)

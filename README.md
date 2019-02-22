@@ -13,7 +13,7 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 - [ ] Renpy Console (run renpy code headless, jump to labels to test, call screens etc)
 - [ ] Automatic Renpy markdown matching, with automatic detection of custom text tags ({b}, {u} etc tags)
 - [ ] Autocompletion of variables in text
-- [ ] Multiple Views with Dockable windows
+- [ ] Multiple Views with resizable frames
 - [x] Fully Portable
 - [ ] Project Viewer, with Picture, and audio player.
 - [ ] Plugin support
@@ -24,8 +24,9 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 - [ ] Save file viewer
 - [ ] Layeredimage builder and preview
 - [ ] Screen builder and preview
-- [ ] Tabs for multiple files open at the same time.
+- [x] Tabs for multiple files open at the same time.
 - [ ] Collapsing blocks of code
     - [ ] collapsing with "#region region-name" and "#endregion" comments
     - [ ] collapsing labels, screens, python, init, statements and functions
 - [ ] Visual scripting for Renpy Visual Novels (VSVN)
+- [ ] Reassign Keybindings how you see fit, including support for F13-F24 keys.
