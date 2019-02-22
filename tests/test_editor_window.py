@@ -1,5 +1,6 @@
+import setup_tests
 import tkinter as tk
-from RTE.views import EditorFrame
+from RTE.views.editor_window import EditorFrame
 
 if __name__ == "__main__":
     root = tk.Tk()
