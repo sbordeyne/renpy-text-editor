@@ -12,4 +12,3 @@ if __name__ == '__main__':
     gui.build_tree()
     gui.pack()
     root.mainloop()
-

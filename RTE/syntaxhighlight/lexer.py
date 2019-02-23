@@ -366,3 +366,6 @@ class RenpyTracebackLexer(RegexLexer):
              bygroups(Generic.Error, Text), '#pop')
         ],
     }
+
+
+renpylexer = RenpyLexer()

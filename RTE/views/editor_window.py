@@ -1,5 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from pygments import lex
+from RTE.syntaxhighlight.lexer import renpylexer
 
 
 class TextLineNumbers(tk.Canvas):
@@ -64,7 +66,6 @@ class EditorFrame(tk.Frame):
         self.text.configure(yscrollcommand=self.vsb.set,
                             xscrollcommand=self.hsb.set,
                             wrap=tk.NONE)
-        self.text.tag_configure("bigfont", font=("Helvetica", "24", "bold"))
         self.linenumbers = TextLineNumbers(self, width=30)
         self.linenumbers.attach(self.text)
 
@@ -80,6 +81,34 @@ class EditorFrame(tk.Frame):
 
     def _on_change(self, event):
         self.linenumbers.redraw()
+
+    def init_theme(self, theme):
+        global renpylexer
+        for token in theme:
+            self.text.tag_configure(token.name, **token.attributes)
+        content = self.text.get("1.0", tk.END).split("\n")
+        self.previous_content = ""
+        for i in range(1, len(content) + 1):
+            self.colorize(i)
+
+    def colorize(self, row=None):
+        content = self.text.get("1.0", tk.END)
+        lines = content.split("\n")
+        if row is None:
+            row = int(self.text.index("insert linestart"))
+
+        if (self.previous_content != content):
+            self.text.mark_set("range_start", self.row + ".0")
+            data = self.text.get(self.row + ".0",
+                                 row + "." + str(len(lines[int(row) - 1])))
+
+            for token, content in lex(data, renpylexer):
+                self.text.mark_set("range_end",
+                                   "range_start + %dc" % len(content))
+                self.text.tag_add(str(token), "range_start", "range_end")
+                self.text.mark_set("range_start", "range_end")
+
+        self.previous_content = self.text.get("1.0", f"{row}.0")
 
     def loop(self):
         self.after(5, self.loop)

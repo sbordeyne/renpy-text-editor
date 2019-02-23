@@ -16,7 +16,7 @@ class ProjectManagerView(tk.Frame):
         self.treeview = ttk.Treeview(self,
                                      columns=("name", "path"),
                                      displaycolumns=(0),
-                                     height=config.wm_height//50,
+                                     height=config.wm_height//20,
                                      selectmode="browse",
                                      show=())
         self.treeview.pack()

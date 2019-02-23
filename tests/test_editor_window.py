@@ -7,6 +7,7 @@ if __name__ == "__main__":
     gui = EditorFrame(root)
     gui.pack(side="top", fill="both", expand=True)
     gui.text.insert("end", "one\ntwo\nthree\n")
-    gui.text.insert("end", "four\n", ("bigfont",))
+    gui.text.insert("end", "four\n")
     gui.text.insert("end", "five\n")
+    print(gui.text.index("current linestart"))
     root.mainloop()

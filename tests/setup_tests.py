@@ -1,5 +1,6 @@
 import sys
 import os
-from RTE.config import config
 
 sys.path.append(os.path.join(os.getcwd(), ".."))
+os.chdir(os.path.join(os.getcwd(), ".."))
+from RTE.config import config
