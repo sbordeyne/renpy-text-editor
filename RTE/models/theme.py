@@ -16,7 +16,7 @@ class Theme:
         with open(self.path) as conf:
             data = json.load(conf)
         self._tokens = [Token(k, v) for k, v in data["tokens"].items()]
-        self.ui_data = data["ui"]
+        self.ui = data["ui"]
         self.i = 0
 
     def __iter__(self):

@@ -1,6 +1,9 @@
+import os
 from RTE.models.theme import Theme
 from RTE.models.project import Project
 import tkinter.filedialog as filedialog
+import RTE.constants as const
+
 
 class MenusController():
     def __init__(self, master):
@@ -15,6 +18,10 @@ class MenusController():
         return
 
     def file_open(self):
+        path = filedialog.askdirectory()
+        self.master.project = Project(path)
+        self.master.view.project_manager.project_path = path
+        self.master.view.project_manager.build_tree()
         return
 
     def file_save(self):
@@ -35,3 +42,10 @@ class Controller():
         self.project = None
         self.view = view
         return
+
+    @property
+    def get_all_themes(self):
+        return [f.split(".")[0]
+                for root, dirs, files in os.walk(const.theme_folder_path)
+                for f in files
+                if f.endswith("json") and not f.startswith("default")]

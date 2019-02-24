@@ -4,8 +4,8 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 # Planned Features
 
 - [x] Editor View with Line numbering
-- [ ] RenPy Syntax Highlighting
-- [ ] Theme Support
+- [-] RenPy Syntax Highlighting
+- [x] Theme Support
 - [ ] Snippets Support
 - [ ] Duplicate line/ Selected Code Block
 - [ ] Tab Autocompletion

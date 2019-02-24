@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from pygments import lex
-from RTE.syntaxhighlight.lexer import renpylexer
+from RTE.syntaxhighlight.lexer import RenpyLexer
 from RTE.config import config
 
 
@@ -79,20 +79,30 @@ class EditorFrame(tk.Frame):
 
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
+        self.text.bind("<Tab>", self._tab_key_pressed)
 
         self.theme = config.current_theme
+        self.init_theme()
 
         self.loop()
 
     def _on_change(self, event):
         self.linenumbers.redraw()
+        self.colorize()
+
+    def _tab_key_pressed(self, event):
+        if config.insert_spaces_instead_of_tabs:
+            self.text.insert(tk.END, " " * config.tabs_length)
+        else:
+            self.text.insert(tk.END, "\t")
 
     def init_theme(self):
         global renpylexer
         for token in self.theme:
-            self.text.tag_configure(token.name, **token.attributes)
+            self.text.tag_configure(f"Token.{token.name}", **token.attributes)
         content = self.text.get("1.0", tk.END).split("\n")
         self.previous_content = ""
+        self.text.config(**self.theme.ui["text"])
         for i in range(1, len(content) + 1):
             self.colorize(i)
 
@@ -100,14 +110,14 @@ class EditorFrame(tk.Frame):
         content = self.text.get("1.0", tk.END)
         lines = content.split("\n")
         if row is None:
-            row = int(self.text.index("insert linestart"))
+            row = int(self.text.index("insert linestart").split(".")[0])
 
         if (self.previous_content != content):
-            self.text.mark_set("range_start", self.row + ".0")
-            data = self.text.get(self.row + ".0",
-                                 row + "." + str(len(lines[int(row) - 1])))
+            self.text.mark_set("range_start", f"{row}.0")
+            data = self.text.get(f"{row}.0",
+                                 f"{row}." + str(len(lines[int(row) - 1])))
 
-            for token, content in lex(data, renpylexer):
+            for token, content in lex(data, RenpyLexer()):
                 self.text.mark_set("range_end",
                                    "range_start + %dc" % len(content))
                 self.text.tag_add(str(token), "range_start", "range_end")

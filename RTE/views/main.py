@@ -4,16 +4,21 @@ from .editor_window import EditorFrame
 from .project_manager import ProjectManagerView
 from RTE.controller import Controller
 from .console import ConsoleView
-
+from RTE.config import config
 
 class RenpyTextEditorGUI(tk.Frame):
     def __init__(self, master=None):
         super(RenpyTextEditorGUI, self).__init__()
         self.master = master
         self.controller = Controller(self)
+        self.__setup_variables()
         self.__setup_menu()
         self.__setup_ui()
         return
+
+    def __setup_variables(self):
+        self.current_theme = tk.StringVar()
+        self.current_theme.set(config.theme_name)
 
     def __setup_ui(self):
         self.main_frame = tk.PanedWindow(self, orient=tk.VERTICAL)
@@ -47,13 +52,22 @@ class RenpyTextEditorGUI(tk.Frame):
         self.menubar = tk.Menu(self)
         self.master.config(menu=self.menubar)
         menufile = tk.Menu(self.menubar)
+        self.menuthemes = tk.Menu(self.menubar)
         self.menubar.add_cascade(label="File", menu=menufile)
+        self.menubar.add_cascade(label="Themes", menu=self.menuthemes)
 
-        menufile.add_command(label="New", command=self.controller.menus.file_new)
         menufile.add_command(label="Open", command=self.controller.menus.file_open)
         menufile.add_command(label="Save", command=self.controller.menus.file_save)
         menufile.add_command(label="Save As", command=self.controller.menus.file_save_as)
         menufile.add_command(label="Quit", command=self.quit)
+
+        for theme in self.controller.get_all_themes:
+            self.menuthemes.add_radiobutton(label=theme,
+                                            variable=self.current_theme)
+
+    def loop(self):
+        config.set_theme(self.current_theme.get())
+        self.after(5, self.loop)
 
     def quit(self):
         self.master.destroy()

@@ -1,5 +1,7 @@
 {
     "wm_width":1024,
     "wm_height":768,
-    "theme_name": "monokai"
+    "theme_name": "monokai",
+    "insert_spaces_instead_of_tabs": true,
+    "tabs_length": 4
 }
