@@ -1,4 +1,5 @@
-from RTE.model import ThemeModel, Project
+from RTE.models.theme import Theme
+from RTE.models.project import Project
 import tkinter.filedialog as filedialog
 
 class MenusController():
@@ -25,7 +26,7 @@ class MenusController():
 
 class ThemeController():
     def __init__(self):
-        self.model = ThemeModel()
+        self.model = Theme()
 
 
 class Controller():

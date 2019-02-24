@@ -1,6 +1,7 @@
 import RTE.constants as const
 import json
 from collections import defaultdict
+from RTE.models.themes import Theme
 
 
 class Config:
@@ -10,6 +11,7 @@ class Config:
         self._attrs = defaultdict()
         for k, v in data.items():
             self._attrs[k] = v
+        self.current_theme = self.get_theme()
 
     def __getattr__(self, attr):
         return self._attrs[attr]
@@ -23,5 +25,16 @@ class Config:
     def geometry(self):
         return f"{self.wm_width}x{self.wm_height}"
 
+    def get_theme(self):
+        return Theme(self.theme_name)
+
+    def set_theme(self, theme_name):
+        self.theme_name = theme_name
+        self.current_theme = self.get_theme()
+
+    def save(self):
+        to_save = dict(self._attrs)
+        with open(const.config_file_path, "w") as conf:
+            json.dump(to_save, conf, indent=4)
 
 config = Config()

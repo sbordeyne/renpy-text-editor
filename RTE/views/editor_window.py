@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from pygments import lex
 from RTE.syntaxhighlight.lexer import renpylexer
+from RTE.config import config
 
 
 class TextLineNumbers(tk.Canvas):
@@ -61,8 +62,10 @@ class EditorFrame(tk.Frame):
         super(EditorFrame, self).__init__()
         self.master = master
         self.text = CustomText(self)
-        self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
-        self.hsb = tk.Scrollbar(self, orient="horizontal", command=self.text.xview)
+        self.vsb = tk.Scrollbar(self, orient="vertical",
+                                command=self.text.yview)
+        self.hsb = tk.Scrollbar(self, orient="horizontal",
+                                command=self.text.xview)
         self.text.configure(yscrollcommand=self.vsb.set,
                             xscrollcommand=self.hsb.set,
                             wrap=tk.NONE)
@@ -77,14 +80,16 @@ class EditorFrame(tk.Frame):
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
 
+        self.theme = config.current_theme
+
         self.loop()
 
     def _on_change(self, event):
         self.linenumbers.redraw()
 
-    def init_theme(self, theme):
+    def init_theme(self):
         global renpylexer
-        for token in theme:
+        for token in self.theme:
             self.text.tag_configure(token.name, **token.attributes)
         content = self.text.get("1.0", tk.END).split("\n")
         self.previous_content = ""

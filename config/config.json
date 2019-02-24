@@ -1,4 +1,5 @@
 {
     "wm_width":1024,
-    "wm_height":768
+    "wm_height":768,
+    "theme_name": "monokai"
 }

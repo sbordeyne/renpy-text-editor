@@ -1,0 +1,113 @@
+{
+    "ui":
+    {
+        "text":{
+            "background":"#202023"
+        }
+    },
+    "tokens":
+    {
+        "Text":{
+            "foreground":"#FEFEFE"
+        },
+        "String.Symbol":{
+
+        },
+        "String.Affix":{
+
+        },
+        "String.Doc":{
+
+        },
+        "Comment.Hashbang":{
+
+        },
+        "Comment.Single":{
+
+        },
+        "Punctuation":{
+
+        },
+        "Operator.Word":{
+
+        },
+        "Operator":{
+
+        },
+        "Keyword":{
+
+        },
+        "Keyword.Reserved":{
+
+        },
+        "Keyword.Declaration":{
+
+        },
+        "Name.Label":{
+
+        },
+        "Keyword.Namespace":{
+
+        },
+        "Name.Builtin":{
+
+        },
+        "Name.Builtin.Pseudo":{
+
+        },
+        "Name.Exception":{
+
+        },
+        "Name.Function.Magic":{
+
+        },
+        "Name.Variable.Magic":{
+
+        },
+        "Number.Float":{
+
+        },
+        "Number.Oct":{
+
+        },
+        "Number.Bin":{
+
+        },
+        "Number.Hex":{
+
+        },
+        "Number.Integer.Long":{
+
+        },
+        "Number.Integer":{
+
+        },
+        "String.Backtick":{
+
+        },
+        "Name.Decorator":{
+
+        },
+        "Name":{
+
+        },
+        "Name.Function":{
+
+        },
+        "Name.Class":{
+
+        },
+        "Name.Namespace":{
+
+        },
+        "String.Escape":{
+
+        },
+        "String.Single":{
+
+        },
+        "String.Double":{
+
+        }
+    }
+}
