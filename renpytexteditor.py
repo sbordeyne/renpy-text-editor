@@ -6,6 +6,7 @@ from RTE.config import config
 def main():
     root = tk.Tk()
     root.geometry(config.geometry)
+    root.title("Renpy Text Editor")
     #root.iconbitmap(AssetStore.folder())
     view = RenpyTextEditorGUI(root)
     view.pack()

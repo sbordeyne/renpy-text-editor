@@ -1,7 +1,7 @@
 import RTE.constants as const
 import json
 from collections import defaultdict
-from RTE.models.themes import Theme
+from RTE.models.theme import Theme
 
 
 class Config:
