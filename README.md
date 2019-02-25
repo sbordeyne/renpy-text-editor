@@ -4,7 +4,7 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 # Planned Features
 
 - [x] Editor View with Line numbering
-- [-] RenPy Syntax Highlighting
+- [x] RenPy Syntax Highlighting
 - [x] Theme Support
 - [ ] Snippets Support
 - [ ] Duplicate line/ Selected Code Block
@@ -30,3 +30,13 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
     - [ ] collapsing labels, screens, python, init, statements and functions
 - [ ] Visual scripting for Renpy Visual Novels (VSVN)
 - [ ] Reassign Keybindings how you see fit, including support for F13-F24 keys.
+
+## LayeredImage Builder Feature
+
+- [ ] Support for any number of layers with easy photoshop-like layer window
+- [ ] Support for basic transforms:
+    - [ ] rotate
+    - [ ] zoom
+    - [ ] xoffset, yoffset
+    - [ ] crop
+- [ ] View a layered image from the builder
