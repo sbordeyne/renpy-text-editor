@@ -37,6 +37,6 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 - [ ] Support for basic transforms:
     - [ ] rotate
     - [ ] zoom
-    - [ ] xoffset, yoffset
+    - [x] xoffset, yoffset
     - [ ] crop
 - [ ] View a layered image from the builder
