@@ -14,6 +14,9 @@ class ImageLayer:
         self.photo_img = None
         self.reference = None
         self.mouse_pos = (0, 0)
+        self.margin = 5  # px, on either side of the selection box
+
+        self.transforms = set()
 
         self.scale_factor = 1
         self.crop_rect = (0, 0, self.width, self.height)
@@ -23,6 +26,8 @@ class ImageLayer:
                 self.y <= y <= self.y + self.height)
 
     def move(self, x, y):
+        self.transforms.add("xoffset")
+        self.transforms.add("yoffset")
         self.x = x - self.mouse_pos[0]
         self.y = y - self.mouse_pos[1]
 
@@ -30,7 +35,24 @@ class ImageLayer:
     def rect(self):
         return (self.x, self.y, self.x + self.width, self.y + self.height)
 
+    def on_image_edge(self, x, y, orientation):
+        x0, y0, x1, y1 = self.rect
+        m = self.margin
+        right = (x0 - m <= x <= x0 + m)
+        left = (x1 - m <= x <= x1 + m)
+        up = (y0 - m <= y <= y0 + m)
+        down = (y1 - m <= y <= y1 + m)
+        h = (right or left)
+        v = (up or down)
+        if orientation == "horizontal":
+            return h
+        elif orientation == "vertical":
+            return v
+        else:
+            return (h and v)
+
     def rotate(self, angle, canvas):
+        self.transforms.add("rotate")
         canvas.delete(self.reference)
         self.img = self.img.rotate(angle)
         self.photo_img = ImageTk.PhotoImage(self.img)
@@ -40,10 +62,21 @@ class ImageLayer:
         return canvas
 
     def scale(self, factor, canvas):
+        self.transforms.add("zoom")
         canvas.delete(self.reference)
         self.img = self.img.resize((self.width * factor,
                                     self.height * factor),
                                    Image.NEAREST)
+        self.photo_img = ImageTk.PhotoImage(self.img)
+        self.reference = canvas.create_image((self.x, self.y),
+                                             image=self.photo_img,
+                                             anchor="nw")
+        return canvas
+
+    def crop(self, rect, canvas):
+        self.transforms.add("crop")
+        canvas.delete(self.reference)
+        self.img = self.img.crop(rect)
         self.photo_img = ImageTk.PhotoImage(self.img)
         self.reference = canvas.create_image((self.x, self.y),
                                              image=self.photo_img,
@@ -61,6 +94,7 @@ class LayeredImageBuilderGUI(tk.Frame):
         self.master.bind('<Button-3>', self.display_contextual)
         self.master.bind('<Button-1>', self.select_image)
         self.master.bind('<B1-Motion>', self.move_selection)
+        self.master.bind('<Motion>', self.on_mouse_movement)
         self.images = []
         self.selected = None
         self.selection_rect = None
@@ -107,6 +141,18 @@ class LayeredImageBuilderGUI(tk.Frame):
             self.canvas.coords(self.selected.reference, (self.selected.x, self.selected.y))
         if self.selection_rect is not None:
             self.canvas.coords(self.selection_rect, self.selected.rect)
+
+    def on_mouse_movement(self, event):
+        if self.selected is not None:
+            if self.selected.on_image_edge(event.x_root, event.y_root, "horizontal"):
+                self.canvas.config(cursor="sb_h_double_arrow")
+            elif self.selected.on_image_edge(event.x_root, event.y_root, "vertical"):
+                self.canvas.config(cursor="sb_v_double_arrow")
+            else:
+                self.canvas.config(cursor="left_ptr")
+        else:
+            self.canvas.config(cursor="left_ptr")
+
 
     def test(self):
         if self.selected is not None:
