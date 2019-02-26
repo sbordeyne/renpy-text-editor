@@ -88,8 +88,9 @@ class LayeredImageBuilderGUI(tk.Frame):
             if img.hitbox(event.x_root, event.y_root):
                 self.selected = img
                 self.selected.mouse_pos = (event.x, event.y)
-                self.selection_rect = self.canvas.create_rectangle(self.selected.x, self.selected.y,
-                                         self.selected.width, self.selected.height)
+                if self.selection_rect is None:
+                    self.selection_rect = self.canvas.create_rectangle(self.selected.x, self.selected.y,
+                                                                       self.selected.width, self.selected.height)
                 return
         self.selected = None
         self.remove_selection_rect()
