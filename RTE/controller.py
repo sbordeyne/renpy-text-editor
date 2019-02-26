@@ -4,10 +4,15 @@ from RTE.models.project import Project
 import tkinter.filedialog as filedialog
 import RTE.constants as const
 
+from RTE.views.layeredimage_builder import LayeredImageBuilderGUI
+import tkinter as tk
+
 
 class MenusController():
     def __init__(self, master):
         self.master = master
+
+        self.layeredimage_builder_wm = None
         return
 
     def file_new(self):
@@ -28,6 +33,27 @@ class MenusController():
         return
 
     def file_save_as(self):
+        return
+
+    def tools_open_layeredimage_builder(self):
+        if self.layeredimage_builder_wm is None:
+            self.layeredimage_builder_wm = tk.Toplevel()
+            gui = LayeredImageBuilderGUI(self.layeredimage_builder_wm)
+            gui.pack()
+            self.layeredimage_builder_wm.protocol("WM_DELETE_WINDOW", self.on_layeredimage_builder_quit)
+            self.layeredimage_builder_wm.mainloop()
+
+    def on_layeredimage_builder_quit(self):
+        self.layeredimage_builder_wm.destroy()
+        self.layeredimage_builder_wm = None
+
+    def tools_open_variable_viewer(self):
+        return
+
+    def tools_open_screen_builder(self):
+        return
+
+    def tools_open_options(self):
         return
 
 

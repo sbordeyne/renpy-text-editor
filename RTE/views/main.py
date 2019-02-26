@@ -53,8 +53,10 @@ class RenpyTextEditorGUI(tk.Frame):
         self.master.config(menu=self.menubar)
         menufile = tk.Menu(self.menubar)
         self.menuthemes = tk.Menu(self.menubar)
+        menutools = tk.Menu(self.menubar)
         self.menubar.add_cascade(label="File", menu=menufile)
         self.menubar.add_cascade(label="Themes", menu=self.menuthemes)
+        self.menubar.add_cascade(label="Tools", menu=menutools)
 
         menufile.add_command(label="Open", command=self.controller.menus.file_open)
         menufile.add_command(label="Save", command=self.controller.menus.file_save)
@@ -64,6 +66,11 @@ class RenpyTextEditorGUI(tk.Frame):
         for theme in self.controller.get_all_themes:
             self.menuthemes.add_radiobutton(label=theme,
                                             variable=self.current_theme)
+
+        menutools.add_command(label="Layeredimage Builder", command=self.controller.menus.tools_open_layeredimage_builder)
+        menutools.add_command(label="Variable Viewer", command=self.controller.menus.tools_open_variable_viewer)
+        menutools.add_command(label="Screen Builder", command=self.controller.menus.tools_open_screen_builder)
+        menutools.add_command(label="Options", command=self.controller.menus.tools_open_options)
 
     def loop(self):
         config.set_theme(self.current_theme.get())

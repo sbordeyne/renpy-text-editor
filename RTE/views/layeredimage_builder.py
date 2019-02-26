@@ -11,8 +11,12 @@ class ImageLayer:
         self.y = 0
         self.path = ""
         self.img = None
+        self.photo_img = None
         self.reference = None
         self.mouse_pos = (0, 0)
+
+        self.scale_factor = 1
+        self.crop_rect = (0, 0, self.width, self.height)
 
     def hitbox(self, x, y):
         return (self.x <= x <= self.x + self.width and
@@ -25,6 +29,26 @@ class ImageLayer:
     @property
     def rect(self):
         return (self.x, self.y, self.x + self.width, self.y + self.height)
+
+    def rotate(self, angle, canvas):
+        canvas.delete(self.reference)
+        self.img = self.img.rotate(angle)
+        self.photo_img = ImageTk.PhotoImage(self.img)
+        self.reference = canvas.create_image((self.x, self.y),
+                                             image=self.photo_img,
+                                             anchor="nw")
+        return canvas
+
+    def scale(self, factor, canvas):
+        canvas.delete(self.reference)
+        self.img = self.img.resize((self.width * factor,
+                                    self.height * factor),
+                                   Image.NEAREST)
+        self.photo_img = ImageTk.PhotoImage(self.img)
+        self.reference = canvas.create_image((self.x, self.y),
+                                             image=self.photo_img,
+                                             anchor="nw")
+        return canvas
 
 
 class LayeredImageBuilderGUI(tk.Frame):
@@ -46,6 +70,7 @@ class LayeredImageBuilderGUI(tk.Frame):
         self.contextual_menu = tk.Menu(self, tearoff=0)
         self.contextual_menu.add_command(label='Add Image',
                                          command=self.add_image)
+        self.contextual_menu.add_command(label="Test", command=self.test)
 
     def display_contextual(self, event):
         try:
@@ -57,10 +82,12 @@ class LayeredImageBuilderGUI(tk.Frame):
             self.contextual_menu.grab_release()
 
     def select_image(self, event):
+        if self.selected is not None and self.selected.hitbox(event.x_root, event.y_root):
+            self.selected.mouse_pos = (event.x, event.y)
         for img in reversed(self.images):
             if img.hitbox(event.x_root, event.y_root):
                 self.selected = img
-                self.selected.mouse_pos = (event.x_root, event.y_root)
+                self.selected.mouse_pos = (event.x, event.y)
                 self.selection_rect = self.canvas.create_rectangle(self.selected.x, self.selected.y,
                                          self.selected.width, self.selected.height)
                 return
@@ -80,16 +107,22 @@ class LayeredImageBuilderGUI(tk.Frame):
         if self.selection_rect is not None:
             self.canvas.coords(self.selection_rect, self.selected.rect)
 
+    def test(self):
+        if self.selected is not None:
+            self.canvas = self.selected.rotate(90, self.canvas)
+
     def add_image(self):
         img_path = filedialog.askopenfilename()
         if not img_path:
             return
-        im = ImageTk.PhotoImage(file=img_path)
+        i = Image.open(img_path)
+        im = ImageTk.PhotoImage(i)
         layer = ImageLayer()
         layer.width = im.width()
         layer.height = im.height()
         layer.path = img_path
-        layer.img = im
+        layer.img = i
+        layer.photo_img = im
         layer.reference = self.canvas.create_image((0, 0), image=im, anchor="nw")
         self.images.append(layer)
         return
