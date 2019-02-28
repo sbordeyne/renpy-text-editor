@@ -1,0 +1,80 @@
+﻿# Copyright 2004-2018 Tom Rothamel <pytom@bishoujo.us>
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+init -1170 python hide:
+
+    config.old_names['Quit'] = 'Quit Game'
+
+    # The contents of the main menu.
+    config.main_menu = [
+        ( u"Start Game", "start", 'True'),
+        ( u"Continue Game", _intra_jumps("_load_screen", "main_game_transition"), 'True' ),
+        ( u"Preferences", _intra_jumps("_prefs_screen", "main_game_transition"), 'True' ),
+        ( u"Quit",  ui.jumps("_quit"), 'True' ),
+        ]
+
+    # If not None, this is used to fix the positions of the
+    # things in the main menu.
+    config.main_menu_positions = None
+
+    # Styles used in this file.
+
+# This is the default main menu, which we get if the user hasn't
+# defined his own, or if that function calls this explicitly.
+label _library_main_menu:
+
+    python hide:
+
+        ui.add(renpy.Keymap(toggle_fullscreen = renpy.toggle_fullscreen))
+
+        ui.window(style='mm_root')
+        ui.null()
+
+        if not config.main_menu_positions:
+            ui.window(style='mm_menu_frame')
+            ui.vbox(style='mm_menu_frame_vbox')
+
+        for i, (text, clicked, enabled) in enumerate(config.main_menu):
+
+            if isinstance(clicked, basestring):
+                clicked = ui.jumpsoutofcontext(clicked)
+
+            if config.main_menu_positions:
+                kwargs = config.main_menu_positions.get(text, { })
+            else:
+                kwargs = { }
+
+            if not eval(enabled):
+                clicked = None
+                disabled = True
+            else:
+                disabled = False
+
+            _button_factory(text, "mm", clicked=clicked, disabled=disabled, properties=kwargs)
+
+        if not config.main_menu_positions:
+            ui.close()
+
+        store._result = ui.interact(suppress_overlay=True,
+                                    suppress_underlay=True,
+                                    mouse="mainmenu")
+
+    jump _main_menu
