@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.font as tkfont
 import tkinter.ttk as ttk
 from pygments import lex
 from RTE.syntaxhighlight.lexer import RenpyLexer
@@ -99,6 +100,7 @@ class EditorFrame(tk.Frame):
             self.text.insert(tk.END, " " * config.tabs_length)
         else:
             self.text.insert(tk.END, "\t")
+        return 'break'
 
     def init_theme(self):
         for token in self.theme:
@@ -106,6 +108,8 @@ class EditorFrame(tk.Frame):
         content = self.text.get("1.0", tk.END).split("\n")
         self.previous_content = ""
         self.text.config(**self.theme.ui["text"])
+        font = tkfont.Font(font=self.text["font"])
+        self.text.config(tabs=(font.measure(' ' * config.tabs_length), ))
         for i in range(1, len(content) + 1):
             self.colorize(i)
 
