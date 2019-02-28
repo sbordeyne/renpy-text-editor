@@ -2,13 +2,14 @@
     "ui":
     {
         "text":{
-            "background":"#202023"
+            "background": "#272822",
+            "insertbackground": "#f8f8f2"
         }
     },
     "tokens":
     {
         "Text":{
-            "foreground":"#FEFEFE"
+            "foreground": "#f8f8f2"
         },
         "String.Symbol":{
 
@@ -20,22 +21,23 @@
 
         },
         "Comment.Hashbang":{
-
+            "foreground": "#75715e"
         },
         "Comment.Single":{
-
+            "foreground": "#75715e"
         },
         "Punctuation":{
-
+            "foreground":"#f8f8f2"
         },
         "Operator.Word":{
-
+            "foreground": "#f92672"
         },
         "Operator":{
-
+            "foreground": "#f92672",
+            "font": "bold"
         },
         "Keyword":{
-            "foreground":"#697071"
+            "foreground":"#f92672"
         },
         "Keyword.Reserved":{
 
@@ -89,13 +91,13 @@
 
         },
         "Name":{
-
+            "foreground": "#f8f8f2"
         },
         "Name.Function":{
 
         },
         "Name.Class":{
-
+            "foreground": "#ae81ff"
         },
         "Name.Namespace":{
 

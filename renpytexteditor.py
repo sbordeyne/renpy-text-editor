@@ -2,6 +2,7 @@ from RTE.views.main import RenpyTextEditorGUI
 import tkinter as tk
 # from RTE.assets import AssetStore
 from RTE.config import config
+import os
 
 
 def main():

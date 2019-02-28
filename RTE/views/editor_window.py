@@ -68,7 +68,8 @@ class EditorFrame(tk.Frame):
                                 command=self.text.xview)
         self.text.configure(yscrollcommand=self.vsb.set,
                             xscrollcommand=self.hsb.set,
-                            wrap=tk.NONE)
+                            wrap=tk.NONE,
+                            height=config.wm_height // 20)
         self.linenumbers = TextLineNumbers(self, width=30)
         self.linenumbers.attach(self.text)
 
@@ -80,6 +81,9 @@ class EditorFrame(tk.Frame):
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
         self.text.bind("<Tab>", self._tab_key_pressed)
+
+        self.text.mark_set("range_start", "1.0")
+        self.text.mark_set("range_end", "1.0")
 
         self.theme = config.current_theme
         self.init_theme()
@@ -97,7 +101,6 @@ class EditorFrame(tk.Frame):
             self.text.insert(tk.END, "\t")
 
     def init_theme(self):
-        global renpylexer
         for token in self.theme:
             self.text.tag_configure(f"Token.{token.name}", **token.attributes)
         content = self.text.get("1.0", tk.END).split("\n")
@@ -121,6 +124,8 @@ class EditorFrame(tk.Frame):
                 self.text.mark_set("range_end",
                                    "range_start + %dc" % len(content))
                 self.text.tag_add(str(token), "range_start", "range_end")
+                for tok in self.theme:
+                    self.text.tag_configure(f"Token.{tok.name}", **tok.attributes)
                 self.text.mark_set("range_start", "range_end")
 
         self.previous_content = self.text.get("1.0", f"{row}.0")
