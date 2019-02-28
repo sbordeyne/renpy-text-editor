@@ -82,11 +82,15 @@ class EditorFrame(tk.Frame):
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
         self.text.bind("<Tab>", self._tab_key_pressed)
+        self.text.bind("<Key-space>", lambda event: self.on_key_whitespace(self.text, ' '))
+        self.text.bind("<Key-Tab>", lambda event: self.on_key_whitespace(self.text, '\t'))
+        self.text.bind("<Return>", lambda event: self.on_key_whitespace(self.text, '\n'))
 
         self.text.mark_set("range_start", "1.0")
         self.text.mark_set("range_end", "1.0")
 
         self.theme = config.current_theme
+        self.showinvis = config.show_whitespace_characters
         self.init_theme()
 
         self.loop()
@@ -101,6 +105,47 @@ class EditorFrame(tk.Frame):
         else:
             self.text.insert(tk.END, "\t")
         return 'break'
+
+    def on_key_whitespace(self, char, event=None):
+        convstr = ''
+        if self.showinvis:
+            if char == ' ':
+                convstr = '·'
+            elif char == '\t':
+                convstr = '»\t'
+            elif char == '\n':
+                convstr = '¶\n'
+            self.text.insert(tk.INSERT, convstr)
+
+    def convert_whitespace_characters(self):
+        if self.showinvis:
+            convlst = [[' ', '·'], ['\t', '»\t'], ['\n', '¶\n']]
+        else:
+            convlst = [['·', ' '], ['»\t', '\t'], ['¶\n', '\n']]
+        for i in range(len(convlst)):
+            res = True
+            char = convlst[i][0]
+            subchar = convlst[i][1]
+            while res:
+                res = self.replace(char, subchar)
+
+    def replace(self, char, subchar):
+        where = '1.0'
+        past_subchar = '1.0'
+        while where:
+            where = self.text.search(char, past_subchar, tk.END + '-1c')
+            past_subchar = '{}+{}c'.format(where, len(subchar))
+            past_char = '{}+{}c'.format(where, len(char))
+            if where:
+                self.text.delete(where, past_char)
+                self.text.insert(where, subchar)
+            else:
+                return False
+
+    def toggle_show_whitespace(self):
+        self.showinvis = not self.showinvis
+        config.show_whitespace_characters = self.showinvis
+        self.convert_whitespace_characters()
 
     def init_theme(self):
         for token in self.theme:
