@@ -1,5 +1,8 @@
 {
-    "font-family": "courier",
+    "default-font": {
+        "family": "courier",
+        "size": 10
+    },
     "ui":
     {
         "text":{

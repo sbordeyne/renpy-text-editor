@@ -4,10 +4,10 @@ import json
 import tkinter.font as tkfont
 
 class Token:
-    def __init__(self, name, attributes, fontfamily):
+    def __init__(self, name, attributes, font):
         self.name = name
         self.attributes = attributes
-        self.fontfamily = fontfamily
+        self.font = font
 
     def set_font(self):
         convert = {"normal": tkfont.NORMAL,
@@ -21,7 +21,9 @@ class Token:
                 if v.lower() in convert:
                     fontstyle[k] = convert[v.lower()]
             if "family" not in fontstyle.keys():
-                fontstyle["family"] = self.fontfamily
+                fontstyle["family"] = self.font["family"]
+            if "size" not in fontstyle.keys():
+                fontstyle["size"] = self.font["size"]
             self.attributes["font"] = tkfont.Font(**fontstyle)
 
 
@@ -31,8 +33,8 @@ class Theme:
         self.path = os.path.join(const.theme_folder_path, self.name + ".json")
         with open(self.path) as conf:
             data = json.load(conf)
-        fontfamily = data["font-family"]
-        self._tokens = [Token(k, v, fontfamily) for k, v in data["tokens"].items()]
+        font = data["default-font"]
+        self._tokens = [Token(k, v, font) for k, v in data["tokens"].items()]
         self.ui = data["ui"]
         self.i = 0
 

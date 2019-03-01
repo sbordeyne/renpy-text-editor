@@ -6,6 +6,7 @@ from RTE.controller import Controller
 from .console import ConsoleView
 from RTE.config import config
 
+
 class RenpyTextEditorGUI(tk.Frame):
     def __init__(self, master=None):
         super(RenpyTextEditorGUI, self).__init__()
@@ -78,4 +79,3 @@ class RenpyTextEditorGUI(tk.Frame):
 
     def quit(self):
         self.master.destroy()
-
