@@ -86,6 +86,8 @@ class EditorFrame(tk.Frame):
         self.text.bind("<Key-Tab>", lambda event: self.on_key_whitespace(self.text, '\t'))
         self.text.bind("<Return>", lambda event: self.on_key_whitespace(self.text, '\n'))
 
+        # self.text.bind("<Control-w>", self.init_theme)
+
         self.text.mark_set("range_start", "1.0")
         self.text.mark_set("range_end", "1.0")
 
@@ -147,8 +149,9 @@ class EditorFrame(tk.Frame):
         config.show_whitespace_characters = self.showinvis
         self.convert_whitespace_characters()
 
-    def init_theme(self):
+    def init_theme(self, *args):
         for token in self.theme:
+            token.set_font()
             self.text.tag_configure(f"Token.{token.name}", **token.attributes)
         content = self.text.get("1.0", tk.END).split("\n")
         self.previous_content = ""
@@ -172,9 +175,9 @@ class EditorFrame(tk.Frame):
             for token, content in lex(data, RenpyLexer()):
                 self.text.mark_set("range_end",
                                    "range_start + %dc" % len(content))
-                self.text.tag_add(str(token), "range_start", "range_end")
                 for tok in self.theme:
                     self.text.tag_configure(f"Token.{tok.name}", **tok.attributes)
+                self.text.tag_add(str(token), "range_start", "range_end")
                 self.text.mark_set("range_start", "range_end")
 
         self.previous_content = self.text.get("1.0", f"{row}.0")

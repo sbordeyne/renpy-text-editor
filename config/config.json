@@ -4,5 +4,5 @@
     "theme_name": "monokai",
     "insert_spaces_instead_of_tabs": false,
     "tabs_length": 4,
-    "show_whitespace_characters": true
+    "show_whitespace_characters": false
 }

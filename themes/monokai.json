@@ -1,4 +1,5 @@
 {
+    "font-family": "courier",
     "ui":
     {
         "text":{
@@ -12,13 +13,13 @@
             "foreground": "#f8f8f2"
         },
         "String.Symbol":{
-
+            "foreground": "#A6E22E"
         },
         "String.Affix":{
-
+            "foreground": "#A6E22E"
         },
         "String.Doc":{
-
+            "foreground": "#A6E22E"
         },
         "Comment.Hashbang":{
             "foreground": "#75715e"
@@ -34,37 +35,48 @@
         },
         "Operator":{
             "foreground": "#f92672",
-            "font": "bold"
+            "font":{
+                "weight": "bold",
+                "slant": "roman"
+            }
         },
         "Keyword":{
             "foreground":"#f92672"
         },
         "Keyword.Reserved":{
-
+            "foreground":"#f92672"
         },
         "Keyword.Declaration":{
-
+            "foreground":"#f92672",
+            "font":{
+                "weight": "bold",
+                "slant": "roman"
+            }
         },
         "Name.Label":{
-
+            "foreground": "#FFE792"
         },
         "Keyword.Namespace":{
-
+            "foreground":"#f92672"
         },
         "Name.Builtin":{
-
+            "foreground":"#0088ff"
         },
         "Name.Builtin.Pseudo":{
-
+            "foreground": "#FD971F",
+            "font":{
+                "weight": "normal",
+                "slant": "italic"
+            }
         },
         "Name.Exception":{
-
+            "foreground":"#f92672"
         },
         "Name.Function.Magic":{
-
+            "foreground":"#66d9ef"
         },
         "Name.Variable.Magic":{
-
+            "foreground":"#66d9ef"
         },
         "Number.Float":{
 
@@ -85,31 +97,34 @@
 
         },
         "String.Backtick":{
-
+            "foreground": "#3AD900"
         },
         "Name.Decorator":{
-
+            "foreground":"#0088ff",
+            "font":{
+                "weight": "normal",
+                "slant": "italic"
+            }
         },
         "Name":{
-            "foreground": "#f8f8f2"
         },
         "Name.Function":{
-
+            "foreground": "#66d9ef"
         },
         "Name.Class":{
             "foreground": "#ae81ff"
         },
         "Name.Namespace":{
-
+            "foreground": "#FFE792"
         },
         "String.Escape":{
-
+            "foreground": "#A6E22E"
         },
         "String.Single":{
-
+            "foreground": "#A6E22E"
         },
         "String.Double":{
-
+            "foreground": "#A6E22E"
         }
     }
 }
