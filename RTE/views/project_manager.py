@@ -1,7 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 import os
-import glob
 from RTE.constants import assets
 from RTE.config import config
 from RTE.utils import autoscroll, get_type_by_extension
@@ -18,7 +17,8 @@ class ProjectManagerView(tk.Frame):
 
     def _set_project_path(self, ppath):
         self._project_path = ppath
-        self.project_name = ppath.split("\\")[-1]
+        dir_ = os.path.abspath(self.project_path).replace('\\', '/')
+        self.project_name = dir_.split("/")[-1]
 
     project_path = property(_get_project_path, _set_project_path)
 
@@ -99,14 +99,23 @@ class ProjectManagerView(tk.Frame):
                 self.tree.item(id_, image=assets.get_icon_by_extension(fname.split(".")[-1]))
                 #self.tree.set(id_, "size", "%d bytes" % size)
 
+    def sort_tree(self, node, col="type", reverse=False):
+        items = [(self.tree.set(k, col), k) for k in self.tree.get_children(node)]
+        items.sort(reverse=reverse)
+        for index, (val, k) in enumerate(items):
+            self.tree.move(k, node, index)
+
     def populate_roots(self):
         dir_ = os.path.abspath(self.project_path).replace('\\', '/')
-        node = self.tree.insert('', 'end', text=self.project_name, values=[dir_, "directory"])
+        node = self.tree.insert('', 'end', text=self.project_name.capitalize(), values=[dir_, "directory"])
         self.populate_tree(node)
+        self.sort_tree(node)
+
 
     def update_tree(self, event):
         tree = event.widget
         self.populate_tree(tree.focus())
+        self.sort_tree(tree.focus())
 
     def change_dir(self, event):
         tree = event.widget

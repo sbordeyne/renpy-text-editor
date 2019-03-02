@@ -1,5 +1,30 @@
 # renpy-text-editor
-Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
+Renpy Text Editor - A dedicated text editor and IDE for the Ren'Py Engine.
+
+# Installation instructions
+
+In order to use this software, you must have the following installed on your computer :
+
+- A python 3.6.5+ installation
+- pip
+- Tcl/Tk 8.5+ (should be included in any python release)
+
+Run the following command in a terminal
+
+`pip install -r requirements.txt --upgrade`
+
+Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
+
+`python3 -m renpytexteditor.py`
+
+
+# Contributing
+
+Contributions should be done via pull requests (PR). If you have a feature to add to the software, whether it's a planned feature or not, please fork this repository and open up a PR with your changes. This will be reviewed, and integrated if applicable.
+
+All code in this repository adheres to the PEP8 styling guide as much as possible, except for the line length guideline, although it is mostly kept under 80 characters long, sometimes, it is unavoidable. Code shall be linted with the pycodestyle linter and the following ignore flags : `E501, W142, W191, E303, E302, W293`.
+
+All code in this repository should be MVC oriented (Model-View-Controller). The entry point is in the RTE.views.main subpackage.
 
 # Planned Features
 
@@ -75,3 +100,19 @@ Renpy Text Editor - A dedicated text editor for the RenPÿ Engine.
 - [ ] To UPPERCASE : Ctrl+Shift+U
 - [ ] To Capitalized case : Ctrl+Alt+U
 - [ ] Invert casing : Ctrl+Shift+Alt+U
+- [ ] Undo
+- [ ] Redo
+
+# To do list :
+
+- [x] Syntax highlighting
+- [x] Main window view, with 2 resizable frames for text editing.
+- [x] Project manager view
+- [x] Theme support
+- [x] opening a file from the project manager
+- [x] Sort the project manager by item type (folder/file)
+- [ ] Improve the lexer for the RenPy language
+- [ ] Save files
+- [ ] Handle keyboard input / changing the Keybindings
+- [ ] Adding in the Options window.
+- [ ] Integrate picture viewer into project manager / Implement music (sound) player.

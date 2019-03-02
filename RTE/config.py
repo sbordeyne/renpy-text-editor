@@ -37,4 +37,27 @@ class Config:
         with open(const.config_file_path, "w") as conf:
             json.dump(to_save, conf, indent=4)
 
+
+class Keybindings:
+    def __init__(self):
+        with open(const.keybindings_file_path) as conf:
+            data = json.load(conf)
+        self._attrs = defaultdict()
+        for k, v in data.items():
+            self._attrs[k] = v
+
+    def __getattr__(self, attr):
+        return self._attrs[attr]
+
+    def __setattr__(self, attr, value):
+        if attr == '_attrs':
+            return super(Keybindings, self).__setattr__(attr, value)
+        self._attrs[attr] = self.format(value)
+
+    def format(self, value):
+        v = value.strip('<>')
+        return f"<{v}>"
+
+
 config = Config()
+keybindings = Keybindings()

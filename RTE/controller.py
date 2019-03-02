@@ -5,6 +5,7 @@ import tkinter.filedialog as filedialog
 import RTE.constants as const
 
 from RTE.views.layeredimage_builder import LayeredImageBuilderGUI
+from RTE.views.options import OptionsView
 import tkinter as tk
 
 
@@ -13,6 +14,7 @@ class MenusController():
         self.master = master
 
         self.layeredimage_builder_wm = None
+        self.options_wm = None
         return
 
     def file_new(self):
@@ -39,7 +41,7 @@ class MenusController():
         if self.layeredimage_builder_wm is None:
             self.layeredimage_builder_wm = tk.Toplevel()
             gui = LayeredImageBuilderGUI(self.layeredimage_builder_wm)
-            gui.pack()
+            gui.grid()
             self.layeredimage_builder_wm.protocol("WM_DELETE_WINDOW", self.on_layeredimage_builder_quit)
             self.layeredimage_builder_wm.mainloop()
 
@@ -54,6 +56,13 @@ class MenusController():
         return
 
     def tools_open_options(self):
+        if self.options_wm is None:
+            self.options_wm = tk.Toplevel()
+            gui = OptionsView(master=self.options_wm, controller=self)
+            gui.grid()
+            self.options_wm.protocol("WM_DELETE_WINDOW", gui.quit)
+            self.options_wm.mainloop()
+
         return
 
 

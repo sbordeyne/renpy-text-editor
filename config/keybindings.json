@@ -1,0 +1,21 @@
+{
+    "undo": "<Control-z>",
+    "redo": "<Control-y>",
+    "quit": "<Alt-F4>",
+    "duplicate": "<Control-d>",
+    "run": "<Key-F5>",
+    "close_current_file": "<Control-w>",
+    "comment_selected": "<Control-q>",
+    "search": "<Control-f>",
+    "replace": "<Control-h>",
+    "search_all": "<Control-Shift-f>",
+    "copy": "<Control-c>",
+    "paste": "<Control-v>",
+    "cut": "<Control-x>",
+    "save": "<Control-s>",
+    "save_as": "<Control-Shift-f>",
+    "to_lower": "<Control-u>",
+    "to_upper": "<Control-Shift-u>",
+    "to_capitalize": "<Control-Alt-u>",
+    "to_invert_casing": "<Control-Alt-Shift-u>"
+}

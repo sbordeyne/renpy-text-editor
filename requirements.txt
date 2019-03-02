@@ -1,3 +1,5 @@
 pygments>=2.2.0
 gitpython>=2.1.11
 pillow>=5.2.0
+pygame>=1.9.0
+pyperclip>=1.7.0
