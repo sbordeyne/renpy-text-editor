@@ -25,13 +25,14 @@ class MainWindowView(tk.PanedWindow):
         self.console_ui = ConsoleView(self)
         self.bottom_nb.add(self.console_ui, text="Console")
 
-    def add_tab(self, side="left"):
+    def add_tab(self, side="left", fpath=None, fname="New Tab"):
+        tab = EditorFrame(self, side)
+        if fpath is not None:
+            tab.set_text(fpath)
         if side == "left":
-            tab = EditorFrame(self)
-            self.left_nb.add(tab)
+            self.left_nb.add(tab, text=fname)
         elif side == "right":
-            tab = EditorFrame(self)
-            self.right_nb.add(tab)
+            self.right_nb.add(tab, text=fname)
         else:
             raise Exception(f"Incorrect side specified. Values are (right|left) : {side}")
 
