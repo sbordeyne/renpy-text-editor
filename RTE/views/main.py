@@ -12,7 +12,7 @@ class CloseableNotebook(ttk.Notebook):
 
     __initialized = False
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, side="left", **kwargs):
         if not self.__initialized:
             self.__initialize_custom_style()
             self.__inititialized = True
@@ -45,6 +45,10 @@ class CloseableNotebook(ttk.Notebook):
 
         if "close" in element and self._active == index:
             self.forget(index)
+            if self.side == "left":
+                self.master.left_tabs.pop(index)
+            else:
+                self.master.right_tabs.pop(index)
             self.event_generate("<<NotebookTabClosed>>")
 
         self.state(["!pressed"])
@@ -102,8 +106,8 @@ class MainWindowView(tk.PanedWindow):
         self.config(orient=tk.VERTICAL)
         self.texts = tk.PanedWindow(self)
 
-        self.left_nb = CloseableNotebook(self)
-        self.right_nb = CloseableNotebook(self)
+        self.left_nb = CloseableNotebook(self, side="left")
+        self.right_nb = CloseableNotebook(self, side="right")
         self.bottom_nb = ttk.Notebook(self)
 
         self.texts.add(self.left_nb)
@@ -114,14 +118,19 @@ class MainWindowView(tk.PanedWindow):
         self.console_ui = ConsoleView(self)
         self.bottom_nb.add(self.console_ui, text="Console")
 
+        self.left_tabs = []
+        self.right_tabs = []
+
     def add_tab(self, side="left", fpath=None, fname="New Tab"):
         tab = EditorFrame(self, side)
         if fpath is not None:
             tab.set_text(fpath)
         if side == "left":
             self.left_nb.add(tab, text=fname)
+            self.left_tabs.append(tab)
         elif side == "right":
             self.right_nb.add(tab, text=fname)
+            self.right_tabs.append(tab)
         else:
             raise Exception(f"Incorrect side specified. Values are (right|left) : {side}")
 
@@ -158,7 +167,11 @@ class RenpyTextEditorGUI(tk.Frame):
         menufile = tk.Menu(self.menubar)
         self.menuthemes = tk.Menu(self.menubar)
         menutools = tk.Menu(self.menubar)
+        menuedit = tk.Menu(self.menubar)
+        menuedit_formatting = tk.Menu(menuedit)
+
         self.menubar.add_cascade(label="File", menu=menufile)
+        self.menubar.add_cascade(label="Edit", menu=menuedit)
         self.menubar.add_cascade(label="Themes", menu=self.menuthemes)
         self.menubar.add_cascade(label="Tools", menu=menutools)
 
@@ -166,6 +179,16 @@ class RenpyTextEditorGUI(tk.Frame):
         menufile.add_command(label="Save", command=self.controller.menus.file_save)
         menufile.add_command(label="Save As", command=self.controller.menus.file_save_as)
         menufile.add_command(label="Quit", command=self.quit)
+
+        menuedit.add_command(label="Undo", command=self.controller.menus.edit_undo)
+        menuedit.add_command(label="Redo", command=self.controller.menus.edit_redo)
+        menuedit.add_command(label="Duplicate line/selection", command=self.controller.menus.edit_duplicate)
+        menuedit.add_cascade(label="Formatting", menu=menuedit_formatting)
+
+        menuedit_formatting.add_command(label="To UPPERCASE", command=self.controller.menus.edit_formatting_upper)
+        menuedit_formatting.add_command(label="To lowercase", command=self.controller.menus.edit_formatting_lower)
+        menuedit_formatting.add_command(label="To Capitalized", command=self.controller.menus.edit_formatting_capitalized)
+        menuedit_formatting.add_command(label="To iNVERT cASING", command=self.controller.menus.edit_formatting_invert)
 
         for theme in self.controller.get_all_themes:
             self.menuthemes.add_radiobutton(label=theme,
@@ -175,6 +198,15 @@ class RenpyTextEditorGUI(tk.Frame):
         menutools.add_command(label="Variable Viewer", command=self.controller.menus.tools_open_variable_viewer)
         menutools.add_command(label="Screen Builder", command=self.controller.menus.tools_open_screen_builder)
         menutools.add_command(label="Options", command=self.controller.menus.tools_open_options)
+
+    def get_current_text(self, side):
+        if side == "left":
+            tabid = self.main.left_nb.select()
+            return self.main.left_tabs[self.main.left_nb.index(tabid)]
+        else:
+            tabid = self.main.right_nb.select()
+            return self.main.right_tabs[self.main.right_nb.index(tabid)]
+
 
     def loop(self):
         config.set_theme(self.current_theme.get())

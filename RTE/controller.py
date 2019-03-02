@@ -65,6 +65,29 @@ class MenusController():
 
         return
 
+    def edit_undo(self):
+        text = self.master.view.get_current_text(self.master.last_entered_side)
+        text.text.edit_undo()
+
+    def edit_redo(self):
+        text = self.master.view.get_current_text(self.master.last_entered_side)
+        text.text.edit_redo()
+
+    def edit_duplicate(self):
+        text = self.master.view.get_current_text(self.master.last_entered_side)
+        pass  # TODO
+
+    def edit_formatting_upper(self):
+        pass
+
+    def edit_formatting_lower(self):
+        pass
+
+    def edit_formatting_capitalized(self):
+        pass
+
+    def edit_formatting_invert(self):
+        pass
 
 class ThemeController():
     def __init__(self):
