@@ -16,7 +16,6 @@ class Token:
                    "roman": tkfont.ROMAN}
         if "font" in self.attributes.keys() and not isinstance(self.attributes["font"], tkfont.Font):
             fontstyle = self.attributes["font"]
-            print(type(fontstyle))
             for k, v in fontstyle.items():
                 if v.lower() in convert:
                     fontstyle[k] = convert[v.lower()]
