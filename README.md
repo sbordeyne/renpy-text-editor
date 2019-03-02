@@ -116,3 +116,4 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Handle keyboard input / changing the Keybindings
 - [ ] Adding in the Options window.
 - [ ] Integrate picture viewer into project manager / Implement music (sound) player.
+- [x] Make tabs closeable
