@@ -4,7 +4,7 @@ import os
 import glob
 from RTE.constants import assets
 from RTE.config import config
-from RTE.utils import autoscroll
+from RTE.utils import autoscroll, get_type_by_extension
 
 
 class ProjectManagerView(tk.Frame):
@@ -112,9 +112,14 @@ class ProjectManagerView(tk.Frame):
         tree = event.widget
         node = tree.focus()
         print(tree.item(node))
-        if tree.parent(node):
-            path = os.path.abspath(tree.set(node, "fullpath"))
-            if os.path.isdir(path):
-                os.chdir(path)
-                tree.delete(tree.get_children(''))
-                self.populate_roots()
+        if tree.item(node)["values"][1] == "directory":
+            if tree.parent(node):
+                path = os.path.abspath(tree.set(node, "fullpath"))
+                if os.path.isdir(path):
+                    os.chdir(path)
+                    tree.delete(tree.get_children(''))
+                    self.populate_roots()
+        elif tree.item(node)["values"][1] == "file":
+            path = tree.item(node)["values"][0]
+            ftype = get_type_by_extension(path.split("/")[-1].split(".")[-1])
+            self.master.controller.open_file(path, ftype)

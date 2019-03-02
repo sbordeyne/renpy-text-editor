@@ -59,9 +59,10 @@ class CustomText(tk.Text):
 
 
 class EditorFrame(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, master=None, windowside="left"):
         super(EditorFrame, self).__init__(master)
         self.master = master
+        self.window_side = windowside
         self.text = CustomText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical",
                                 command=self.text.yview)
@@ -70,7 +71,8 @@ class EditorFrame(tk.Frame):
         self.text.configure(yscrollcommand=self.vsb.set,
                             xscrollcommand=self.hsb.set,
                             wrap=tk.NONE,
-                            height=config.wm_height // 20)
+                            height=config.wm_height // 20,
+                            undo=True)
         self.linenumbers = TextLineNumbers(self, width=30)
         self.linenumbers.attach(self.text)
 
@@ -85,6 +87,7 @@ class EditorFrame(tk.Frame):
         self.text.bind("<Key-space>", lambda event: self.on_key_whitespace(self.text, ' '))
         self.text.bind("<Key-Tab>", lambda event: self.on_key_whitespace(self.text, '\t'))
         self.text.bind("<Return>", lambda event: self.on_key_whitespace(self.text, '\n'))
+        self.text.bind("<FocusIn>", lambda event: self.master.master.controller.set_last_entered_side(self.window_side))
 
         # self.text.bind("<Control-w>", self.init_theme)
 
@@ -181,6 +184,11 @@ class EditorFrame(tk.Frame):
                 self.text.mark_set("range_start", "range_end")
 
         self.previous_content = self.text.get("1.0", f"{row}.0")
+
+    def set_text(self, fpath):
+        with open(fpath, "r") as f:
+            self.text.insert(tk.END, f.read())
+        self.init_theme()
 
     def loop(self):
         self.after(5, self.loop)

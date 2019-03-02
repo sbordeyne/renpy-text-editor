@@ -67,6 +67,7 @@ class Controller():
         self.menus = MenusController(self)
         self.project = None
         self.view = view
+        self.last_entered_side = "left"
         return
 
     @property
@@ -75,3 +76,10 @@ class Controller():
                 for root, dirs, files in os.walk(const.theme_folder_path)
                 for f in files
                 if f.endswith("json") and not f.startswith("default")]
+
+    def open_file(self, path, ftype):
+        if ftype == "text":
+            self.view.main.add_tab(self.last_entered_side, path, path.split('/')[-1])
+
+    def set_last_entered_side(self, side):
+        self.last_entered_side = side
