@@ -7,9 +7,38 @@ from .console import ConsoleView
 from RTE.config import config
 
 
+class MainWindowView(tk.PanedWindow):
+    def __init__(self, *args, **kwargs):
+        super(MainWindowView, self).__init__(*args, **kwargs)
+        self.config(orient=tk.VERTICAL)
+        self.texts = tk.PanedWindow(self)
+
+        self.left_nb = ttk.Notebook(self)
+        self.right_nb = ttk.Notebook(self)
+        self.bottom_nb = ttk.Notebook(self)
+
+        self.texts.add(self.left_nb)
+        self.texts.add(self.right_nb)
+        self.add(self.texts)
+        self.add(self.bottom_nb)
+
+        self.console_ui = ConsoleView(self)
+        self.bottom_nb.add(self.console_ui, text="Console")
+
+    def add_tab(self, side="left"):
+        if side == "left":
+            tab = EditorFrame(self)
+            self.left_nb.add(tab)
+        elif side == "right":
+            tab = EditorFrame(self)
+            self.right_nb.add(tab)
+        else:
+            raise Exception(f"Incorrect side specified. Values are (right|left) : {side}")
+
+
 class RenpyTextEditorGUI(tk.Frame):
     def __init__(self, master=None):
-        super(RenpyTextEditorGUI, self).__init__()
+        super().__init__(master)
         self.master = master
         self.controller = Controller(self)
         self.__setup_variables()
@@ -22,32 +51,16 @@ class RenpyTextEditorGUI(tk.Frame):
         self.current_theme.set(config.theme_name)
 
     def __setup_ui(self):
-        self.main_frame = tk.PanedWindow(self, orient=tk.VERTICAL)
-        self.text_window = tk.PanedWindow(self, orient=tk.HORIZONTAL)
-        self.left_notebook = ttk.Notebook(self)
-        self.right_notebook = ttk.Notebook(self)
-        self.bottom_notebook = ttk.Notebook(self)
-        self.text_window.add(self.left_notebook)
-        self.text_window.add(self.right_notebook)
-        self.main_frame.add(self.text_window)
-        self.main_frame.add(self.bottom_notebook)
-        self.main_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.frame = tk.Frame(self)
 
-        self.project_manager = ProjectManagerView()
-        self.project_manager.pack(side=tk.LEFT, fill=tk.Y, expand=True)
+        self.main = MainWindowView(self)
 
-        self.console_ui = ConsoleView(self)
-        self.bottom_notebook.add(self.console_ui, text="Console")
+        self.project_manager = ProjectManagerView(self)
+        self.project_manager.grid(row=0, column=0, sticky="ns")
 
-    def add_tab(self, side="left"):
-        if side == "left":
-            tab = EditorFrame(self)
-            self.left_notebook.add(tab)
-        elif side == "right":
-            tab = EditorFrame(self)
-            self.right_notebook.add(tab)
-        else:
-            raise Exception(f"Incorrect side specified. Values are (right|left) : {side}")
+        self.main.grid(row=0, column=1, sticky="ns")
+
+        #elf.frame.grid(row=0, column=0)
 
     def __setup_menu(self):
         self.menubar = tk.Menu(self)

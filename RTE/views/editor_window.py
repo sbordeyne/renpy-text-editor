@@ -60,7 +60,7 @@ class CustomText(tk.Text):
 
 class EditorFrame(tk.Frame):
     def __init__(self, master=None):
-        super(EditorFrame, self).__init__()
+        super(EditorFrame, self).__init__(master)
         self.master = master
         self.text = CustomText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical",

@@ -6,9 +6,10 @@ import tkinter as tk
 
 if __name__ == '__main__':
     cwd = os.getcwd()
-    path = os.path.join(cwd, "project")
+    path = os.path.join(cwd, "tests", "project")
     root = tk.Tk()
-    gui = ProjectManagerView(root, path)
-    gui.build_tree()
-    gui.pack()
+    gui = ProjectManagerView(root)
+    gui.project_path = path
+    gui.populate_roots()
+    gui.grid(sticky="nswe")
     root.mainloop()
