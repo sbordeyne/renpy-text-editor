@@ -2,14 +2,14 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import os
 import glob
-from RTE.assets import AssetStore
+from RTE.constants import assets
 from RTE.config import config
 from RTE.utils import autoscroll
 
 
 class ProjectManagerView(tk.Frame):
     def __init__(self, master=None, project_path=None):
-        super(ProjectManagerView, self).__init__()
+        super(ProjectManagerView, self).__init__(master)
         self._project_path = project_path
         self.init_treeview()
 
@@ -36,16 +36,15 @@ class ProjectManagerView(tk.Frame):
                                  )
 
         self.tree.heading("#0", text="Directory Structure", anchor='w')
+        self.tree.heading("size", text="File Size", anchor='w')
+        self.tree.column("size", stretch=0, width=100)
 
         self.vsb['command'] = self.tree.yview
         self.hsb['command'] = self.tree.xview
 
-        #self.tree.grid(row=0, column=0)
-        #self.vsb.grid(row=0, column=1, sticky="ns")
-        #self.hsb.grid(row=1, column=0, sticky="we")
-        self.tree.pack(side=tk.LEFT, fill=tk.Y, expand=True)
-        self.vsb.pack(side=tk.RIGHT, fill=tk.Y, expand=True)
-        self.hsb.pack(side=tk.BOTTOM, fill=tk.X, expand=True)
+        self.tree.grid(row=0, column=0)
+        self.vsb.grid(row=0, column=1, sticky="ns")
+        self.hsb.grid(row=1, column=0, sticky="ns")
         self.tree.bind('<<TreeviewOpen>>', self.update_tree)
         self.tree.bind('<Double-Button-1>', self.change_dir)
 
@@ -56,14 +55,14 @@ class ProjectManagerView(tk.Frame):
             if dirs:
                 for directory in dirs:
                     item_options = {"text": directory,
-                                    "image": AssetStore.get_icon_by_extension("folder"),
+                                    "image": assets.get_icon_by_extension("folder"),
                                     "values": (directory, os.path.join(root, directory)),
                                     "open": True}
                     self.tree.insert("", "end", **item_options)
                     self.build_tree(os.path.join(root, directory))
             for filename in files:
                 item_options = {"text": filename,
-                                "image": AssetStore.get_icon_by_extension(filename.split(".")[-1]),
+                                "image": assets.get_icon_by_extension(filename.split(".")[-1]),
                                 "values": (filename, os.path.join(root, filename)),
                                 "open": True}
                 self.tree.insert("", "end", **item_options)
@@ -94,10 +93,10 @@ class ProjectManagerView(tk.Frame):
                 if fname not in ('.', '..'):
                     self.tree.insert(id_, 0, text="dummy")
                     self.tree.item(id_, text=fname,
-                                   image=AssetStore.get_icon_by_extension("folder"))
+                                   image=assets.get_icon_by_extension("folder"))
             elif ptype == 'file':
                 size = os.stat(p).st_size
-                self.tree.item(id_, image=AssetStore.get_icon_by_extension(fname.split(".")[-1]))
+                self.tree.item(id_, image=assets.get_icon_by_extension(fname.split(".")[-1]))
                 #self.tree.set(id_, "size", "%d bytes" % size)
 
     def populate_roots(self):

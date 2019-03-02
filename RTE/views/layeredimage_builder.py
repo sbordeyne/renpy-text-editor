@@ -118,7 +118,7 @@ class ImageLayer:
 
 class LayeredImageBuilderGUI(tk.Frame):
     def __init__(self, master=None):
-        super(LayeredImageBuilderGUI, self).__init__()
+        super(LayeredImageBuilderGUI, self).__init__(master)
         self.master = master
         self.init_contextual()
         self.canvas = tk.Canvas(self, width=1024, height=768)
