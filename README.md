@@ -114,8 +114,9 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Improve the lexer for the RenPy language
 - [ ] Save files
 - [ ] Handle keyboard input / changing the Keybindings
-- [ ] Adding in the Options window.
+- [x] Adding in the Options window.
 - [ ] Integrate picture viewer into project manager / Implement music (sound) player.
 - [x] Make tabs closeable
 - [ ] Resizing window support + saving in the config file for later restoration.
 - [x] Undo/Redo
+- [x] Duplicate line & formatting text (upper, lower, capitalize etc)
