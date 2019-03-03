@@ -98,7 +98,7 @@ class AssetStore:
             return cls.image()
         elif extension in ("webm", "mp4", "avi", "movie"):
             return cls.movie()
-        elif extension in ("mp3", "wav", "music"):
+        elif extension in ("mp3", "wav", "opus", "music"):
             return cls.music()
         else:
             return cls.text()

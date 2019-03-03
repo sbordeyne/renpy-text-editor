@@ -28,7 +28,10 @@ import os
 import copy
 import types
 import threading
-import cPickle
+try:
+    import cPickle
+except ImportError:
+    import pickle as cPickle
 
 ################################################################################
 # Version information

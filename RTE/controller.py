@@ -6,8 +6,10 @@ import RTE.constants as const
 
 from RTE.views.layeredimage_builder import LayeredImageBuilderGUI
 from RTE.views.options import OptionsView
+from RTE.utils import text_get_selected
 import tkinter as tk
-
+import string
+import random
 
 class MenusController():
     def __init__(self, master):
@@ -66,28 +68,119 @@ class MenusController():
         return
 
     def edit_undo(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side)
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
         text.text.edit_undo()
 
     def edit_redo(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side)
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
         text.text.edit_redo()
 
     def edit_duplicate(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side)
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        selection = text_get_selected(text)
+        if selection:
+            text.insert(tk.SEL_LAST, f"\n{selection}")
+        else:
+            selection = text.get(tk.CURRENT + " linestart",
+                                 tk.CURRENT + " lineend")
+            text.insert(tk.CURRENT + " lineend", f"\n{selection}")
         pass  # TODO
 
     def edit_formatting_upper(self):
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        selection = text_get_selected(text)
+        if selection:
+            text.insert(tk.SEL_LAST, selection.upper())
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+        else:
+            selection = text.get(tk.CURRENT + " linestart",
+                                 tk.CURRENT + " lineend")
+            text.insert(tk.CURRENT + " lineend", selection.upper())
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
 
     def edit_formatting_lower(self):
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        selection = text_get_selected(text)
+        if selection:
+            text.insert(tk.SEL_LAST, selection.lower())
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+        else:
+            selection = text.get(tk.CURRENT + " linestart",
+                                 tk.CURRENT + " lineend")
+            text.insert(tk.CURRENT + " lineend", selection.lower())
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
 
     def edit_formatting_capitalized(self):
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        selection = text_get_selected(text)
+        if selection:
+            text.insert(tk.SEL_LAST, selection.capitalize())
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+        else:
+            selection = text.get(tk.CURRENT + " linestart",
+                                 tk.CURRENT + " lineend")
+            text.insert(tk.CURRENT + " lineend", selection.capitalize())
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
 
     def edit_formatting_invert(self):
+        def invert(s):
+            rv = ""
+            for char in s:
+                if char in string.ascii_lowercase:
+                    rv += char.upper()
+                elif char in string.ascii_uppercase:
+                    rv += char.lower()
+                else:
+                    rv += char
+            return rv
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        selection = text_get_selected(text)
+        if selection:
+            text.insert(tk.SEL_LAST, invert(selection))
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+        else:
+            selection = text.get(tk.CURRENT + " linestart",
+                                 tk.CURRENT + " lineend")
+            text.insert(tk.CURRENT + " lineend", invert(selection))
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
+
+    def edit_formatting_random(self):
+        def rand(s):
+            rv = ""
+            for char in s:
+                rv += [char.upper(), char.lower()][random.randint(0,1)]
+            return rv
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        selection = text_get_selected(text)
+        if selection:
+            text.insert(tk.SEL_LAST, rand(selection))
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+        else:
+            selection = text.get(tk.CURRENT + " linestart",
+                                 tk.CURRENT + " lineend")
+            text.insert(tk.CURRENT + " lineend", rand(selection))
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+
+    def edit_formatting_spongebob(self):
+        def sponge(s):
+            rv = ""
+            for i, char in enumerate(s):
+                rv += [char.upper(), char.lower()][i % 2]
+            return rv
+        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        selection = text_get_selected(text)
+        if selection:
+            text.insert(tk.SEL_LAST, sponge(selection))
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+        else:
+            selection = text.get(tk.CURRENT + " linestart",
+                                 tk.CURRENT + " lineend")
+            text.insert(tk.CURRENT + " lineend", sponge(selection))
+            text.delete(tk.SEL_FIRST, tk.SEL_LAST)
 
 class ThemeController():
     def __init__(self):

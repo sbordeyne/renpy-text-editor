@@ -189,6 +189,8 @@ class RenpyTextEditorGUI(tk.Frame):
         menuedit_formatting.add_command(label="To lowercase", command=self.controller.menus.edit_formatting_lower)
         menuedit_formatting.add_command(label="To Capitalized", command=self.controller.menus.edit_formatting_capitalized)
         menuedit_formatting.add_command(label="To iNVERT cASING", command=self.controller.menus.edit_formatting_invert)
+        menuedit_formatting.add_command(label="To RAnDom CASinG", command=self.controller.menus.edit_formatting_random)
+        menuedit_formatting.add_command(label="To SpOnGeBoB cAsInG", command=self.controller.menus.edit_formatting_spongebob)
 
         for theme in self.controller.get_all_themes:
             self.menuthemes.add_radiobutton(label=theme,
