@@ -33,14 +33,14 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [x] Editor View with Line numbering
 - [x] RenPy Syntax Highlighting
 - [x] Theme Support
-- [ ] Snippets Support
-- [ ] Duplicate line/ Selected Code Block
+- [x] Snippets Support
+- [x] Duplicate line/ Selected Code Block
 - [ ] Tab Autocompletion
 - [ ] Variable viewer
 - [ ] Renpy Console (run renpy code headless, jump to labels to test, call screens etc)
 - [ ] Automatic Renpy markdown matching, with automatic detection of custom text tags ({b}, {u} etc tags)
 - [ ] Autocompletion of variables in text
-- [ ] Multiple Views with resizable frames
+- [x] Multiple Views with resizable frames
 - [x] Fully Portable
 - [ ] Project Viewer, with Picture, and audio player.
 - [ ] Plugin support
@@ -137,3 +137,5 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Tooltips
     - [x] Create Tooltip class
     - [ ] add tooltips to buttons
+- [x] Snippets support
+- [ ] GUI for adding in snippets

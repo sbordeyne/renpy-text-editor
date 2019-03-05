@@ -6,10 +6,13 @@ import RTE.constants as const
 
 from RTE.views.layeredimage_builder import LayeredImageBuilderGUI
 from RTE.views.options import OptionsView
+from RTE.views.image_viewer import ImageViewer
+from RTE.views.sound_viewer import SoundViewer
 from RTE.utils import text_get_selected
 import tkinter as tk
 import string
 import random
+import sys
 
 class MenusController():
     def __init__(self, master):
@@ -205,6 +208,20 @@ class Controller():
     def open_file(self, path, ftype):
         if ftype == "text":
             self.view.main.add_tab(self.last_entered_side, path, path.split('/')[-1])
+        elif ftype == "image":
+            root = tk.Toplevel()
+            root.title("View image : " + path.split('/')[-1])
+            img_viewer = ImageViewer(root, path)
+            img_viewer.grid()
+            root.mainloop()
+        elif ftype == "music" and sys.platform == "win32":
+            root = tk.Toplevel()
+            root.title("Sound playing : " + path.split('/')[-1])
+            root.geometry("300x50")
+            root.resizable(False, False)
+            sfx_view = SoundViewer(root, path)
+            sfx_view.grid()
+            root.mainloop()
 
     def set_last_entered_side(self, side):
         self.last_entered_side = side

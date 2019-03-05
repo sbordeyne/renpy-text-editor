@@ -24,10 +24,12 @@ class FormattingView(tk.Frame):
         self.show_whitespace = tk.IntVar()
         self.tabs_length = tk.StringVar()
         self.insert_spaces_over_tabs = tk.IntVar()
+        self.start_maximized = tk.IntVar()
 
         self.insert_spaces_over_tabs.set(config.insert_spaces_instead_of_tabs)
         self.tabs_length.set(str(config.tabs_length))
         self.show_whitespace.set(config.show_whitespace_characters)
+        self.start_maximized.set(config.start_maximized)
 
     def __init_tabs_spaces_frame(self):
         self.tabs_spaces_frame = tk.LabelFrame(self, text="Tabs and spaces settings")
@@ -37,20 +39,25 @@ class FormattingView(tk.Frame):
         whitespace_cb = tk.Checkbutton(self.tabs_spaces_frame,
                                        variable=self.show_whitespace,
                                        text="Show Whitespace Characters?")
+        start_maximized_cb = tk.Checkbutton(self.tabs_spaces_frame,
+                                            variable=self.start_maximized,
+                                            text="Start maximized?")
         tabs_length_sb = tk.Spinbox(self.tabs_spaces_frame, from_=2, to=12,
                                     increment=1, textvariable=self.tabs_length,
                                     text="Tabs Length")
 
+        self.tabs_spaces_frame.grid(row=0, column=0)
         spaces_cb.grid(row=0)
         whitespace_cb.grid(row=1)
         tabs_length_sb.grid(row=2)
-        self.tabs_spaces_frame.grid(row=0, column=0)
+        start_maximized_cb.grid(row=3)
 
     def save_config(self):
         global config
         config.insert_spaces_instead_of_tabs = bool(self.insert_spaces_over_tabs.get())
         config.show_whitespace_characters = bool(self.show_whitespace.get())
         config.tabs_length = int(self.tabs_length.get())
+        config.start_maximized = bool(self.start_maximized.get())
         config.save()
 
 

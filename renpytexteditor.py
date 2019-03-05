@@ -8,8 +8,10 @@ import os
 def main():
     root = tk.Tk()
     config.validate_width_height(root)
-    root.geometry(config.geometry)
-    # root.state('zoomed')
+    if config.start_maximized:
+        root.state('zoomed')
+    else:
+        root.geometry(config.geometry)
     root.title("Renpy Text Editor")
     try:
         root.iconbitmap(default="assets/favicon.ico")

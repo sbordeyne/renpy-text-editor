@@ -4,3 +4,4 @@ pillow>=5.2.0
 pygame>=1.9.0
 pyperclip>=1.7.0
 pyinstaller>=3.4
+playsound>=1.2.2

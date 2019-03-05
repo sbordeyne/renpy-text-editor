@@ -4,5 +4,17 @@
         "replace_selection": false,
         "before_cursor": "{b}",
         "after_cursor": "{/b}"
+    },
+    "image-flipped-h":{
+        "name": "Image Flipped Horizontal",
+        "replace_selection": false,
+        "before_cursor": "im.Flip(",
+        "after_cursor": ", horizontal=True)"
+    },
+    "image-flipped-v":{
+        "name": "Image Flipped Vertical",
+        "replace_selection": false,
+        "before_cursor": "im.Flip(",
+        "after_cursor": ", horizontal=False)"
     }
 }

@@ -5,5 +5,6 @@
     "insert_spaces_instead_of_tabs": true,
     "tabs_length": 4,
     "show_whitespace_characters": false,
-    "debug": true
+    "debug": true,
+    "start_maximized": false
 }

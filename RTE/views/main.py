@@ -24,7 +24,7 @@ class CloseableNotebook(ttk.Notebook):
         kwargs["style"] = "CloseableNotebook"
         ttk.Notebook.__init__(self, *args, **kwargs)
         self._active = None
-
+        self.side = side
         self.bind("<ButtonPress-1>", self.on_close_press, True)
         self.bind("<ButtonRelease-1>", self.on_close_release)
 
