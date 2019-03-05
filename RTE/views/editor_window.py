@@ -94,7 +94,7 @@ class EditorFrame(tk.Frame):
         self.text.mark_set("range_start", "1.0")
         self.text.mark_set("range_end", "1.0")
 
-        self.theme = config.current_theme
+        self.theme = config.get_theme()
         self.showinvis = config.show_whitespace_characters
         self.init_theme()
 
@@ -152,6 +152,17 @@ class EditorFrame(tk.Frame):
         config.show_whitespace_characters = self.showinvis
         self.convert_whitespace_characters()
 
+    def test_colorize(self, curtoken):
+        curtoken = str(curtoken)
+        if self.window_side == "right":
+            return
+        token_to_follow = "all"#"Renpy.Screen.Displayables"
+        token_to_follow = "Token." + token_to_follow
+        if curtoken == token_to_follow:
+            print(curtoken, " : ", self.text.get("range_start", 'range_end'))
+        elif token_to_follow == "Token.all":
+            print(curtoken, " : ", self.text.get("range_start", 'range_end'))
+
     def init_theme(self, *args):
         for token in self.theme:
             token.set_font()
@@ -180,6 +191,7 @@ class EditorFrame(tk.Frame):
                                    "range_start + %dc" % len(content))
                 for tok in self.theme:
                     self.text.tag_configure(f"Token.{tok.name}", **tok.attributes)
+                self.test_colorize(token)
                 self.text.tag_add(str(token), "range_start", "range_end")
                 self.text.mark_set("range_start", "range_end")
 

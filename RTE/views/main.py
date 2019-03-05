@@ -4,7 +4,10 @@ from .editor_window import EditorFrame
 from .project_manager import ProjectManagerView
 from RTE.controller import Controller
 from .console import ConsoleView
+from .variable_viewer import VariableViewerView
+from .snippets import SnippetsView
 from RTE.config import config
+import tkinter.font as tkfont
 
 
 class CloseableNotebook(ttk.Notebook):
@@ -19,7 +22,6 @@ class CloseableNotebook(ttk.Notebook):
 
         kwargs["style"] = "CloseableNotebook"
         ttk.Notebook.__init__(self, *args, **kwargs)
-
         self._active = None
 
         self.bind("<ButtonPress-1>", self.on_close_press, True)
@@ -75,7 +77,7 @@ class CloseableNotebook(ttk.Notebook):
         try:
             style.element_create("close", "image", "img_close",
                                  ("active", "pressed", "!disabled", "img_closepressed"),
-                                 ("active", "!disabled", "img_closeactive"), border=8, sticky='')
+                                 ("active", "!disabled", "img_closeactive"), border=8, sticky='e')
         except tk.TclError:
             pass
 
@@ -84,6 +86,7 @@ class CloseableNotebook(ttk.Notebook):
         style.layout("CloseableNotebook.Tab", [
             ("CloseableNotebook.tab", {
                 "sticky": "nswe",
+                "expand":1,
                 "children": [
                     ("CloseableNotebook.padding", {
                         "side": "top",
@@ -93,8 +96,8 @@ class CloseableNotebook(ttk.Notebook):
                                 "side": "top",
                                 "sticky": "nswe",
                                 "children": [
-                                    ("CloseableNotebook.label", {"side": "left", "sticky": ''}),
-                                    ("CloseableNotebook.close", {"side": "left", "sticky": ''}),
+                                    ("CloseableNotebook.label", {"side": "left", "sticky": 'w'}),
+                                    ("CloseableNotebook.close", {"side": "left", "sticky": 'e'}),
                                 ]})
                         ]})
                 ]})])
@@ -117,6 +120,8 @@ class MainWindowView(tk.PanedWindow):
 
         self.console_ui = ConsoleView(self)
         self.bottom_nb.add(self.console_ui, text="Console")
+        self.variable_viewer_ui = VariableViewerView(self)
+        self.bottom_nb.add(self.variable_viewer_ui, text="Variable Viewer")
 
         self.left_tabs = []
         self.right_tabs = []
@@ -143,6 +148,9 @@ class RenpyTextEditorGUI(tk.Frame):
         self.__setup_variables()
         self.__setup_menu()
         self.__setup_ui()
+
+        self.bind('<Configure>', self.on_configure)
+        self.loop()
         return
 
     def __setup_variables(self):
@@ -150,16 +158,16 @@ class RenpyTextEditorGUI(tk.Frame):
         self.current_theme.set(config.theme_name)
 
     def __setup_ui(self):
-        self.frame = tk.Frame(self)
-
         self.main = MainWindowView(self)
-
+        self.side_notebook = ttk.Notebook(self)
         self.project_manager = ProjectManagerView(self)
-        self.project_manager.grid(row=0, column=0, sticky="ns")
+        self.snippets = SnippetsView(self)
+
+        self.side_notebook.grid(row=0, column=0, sticky="ns")
+        self.side_notebook.add(self.project_manager, text="Project Manager")
+        self.side_notebook.add(self.snippets, text="Snippets")
 
         self.main.grid(row=0, column=1, sticky="ns")
-
-        #elf.frame.grid(row=0, column=0)
 
     def __setup_menu(self):
         self.menubar = tk.Menu(self)
@@ -200,6 +208,12 @@ class RenpyTextEditorGUI(tk.Frame):
         menutools.add_command(label="Variable Viewer", command=self.controller.menus.tools_open_variable_viewer)
         menutools.add_command(label="Screen Builder", command=self.controller.menus.tools_open_screen_builder)
         menutools.add_command(label="Options", command=self.controller.menus.tools_open_options)
+
+    def on_configure(self, event):
+        global config
+        config.wm_width = int(event.width)
+        config.wm_height = int(event.height)
+        config.save()
 
     def get_current_text(self, side):
         if side == "left":

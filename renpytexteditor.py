@@ -7,9 +7,15 @@ import os
 
 def main():
     root = tk.Tk()
+    config.validate_width_height(root)
     root.geometry(config.geometry)
+    # root.state('zoomed')
     root.title("Renpy Text Editor")
-    # root.iconbitmap(assets.folder())
+    try:
+        root.iconbitmap(default="assets/favicon.ico")
+    except tk.TclError:
+        # root.iconphoto(default=tk.PhotoImage("favicon.png"))
+        root.iconbitmap('@assets/favicon.xbm')
     view = RenpyTextEditorGUI(root)
     view.grid(sticky="nswe")
     view.main.add_tab("left")

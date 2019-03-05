@@ -2,5 +2,5 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 
-class VariableViewerView(tk.Frame):
+class SnippetsView(tk.Frame):
     pass

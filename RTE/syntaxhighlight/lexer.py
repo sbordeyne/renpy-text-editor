@@ -13,6 +13,7 @@ from pygments.lexer import Lexer, RegexLexer, include, bygroups, using, \
     default, words, combined, do_insertions
 from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
     Number, Punctuation, Generic, Other
+from .tokens import Renpy
 
 __all__ = ['RenpyLexer', 'RenpyConsoleLexer', 'RenpyTracebackLexer']
 
@@ -44,6 +45,7 @@ class RenpyLexer(RegexLexer):
     tokens = {
         'root': [
             (r'\n', Text),
+            include('screen_lang'),
             (r'\$', String.Symbol),
             (r'^(\s*)([rRuUbB]{,2})("""(?:.|\n)*?""")',
              bygroups(Text, String.Affix, String.Doc)),
@@ -99,17 +101,26 @@ class RenpyLexer(RegexLexer):
                 'audio', 'scene', 'expression', 'play', 'queue', 'stop',
                 'python', 'init', 'pause', 'jump', 'call', 'zorder',
                 'show', 'hide', 'at', 'music', 'sound', 'voice',
-                ), suffix=r'\b'),
-             Keyword.Reserved),
+            ), suffix=r'\b'), Renpy.Reserved),
             (words((
                 'default', 'define', 'layeredimage', 'screen', 'transform',
                 'label', 'menu', 'style', 'image'), suffix=r'\b'),
-             Keyword.Declaration),
+             Renpy.Declaration),
         ],
         'special_labels': [
             (words(('start', 'quit', 'after_load', 'splashscreen',
                     'before_main_menu', 'main_menu', 'after_warp',
-                    ), suffix=r'\b'), Name.Label),
+                    ), prefix=r"label ", suffix=r'\b'), Renpy.Label.Reserved),
+        ],
+        'screen_lang': [
+            (words(('add', 'bar', 'button', 'fixed', 'frame', 'grid',
+                    'hbox', 'imagebutton', 'input', 'key',
+                    'mousearea', 'null', 'side', 'text', 'textbutton',
+                    'timer', 'vbar', 'vbox', 'viewport',
+                    'vpgrid', 'window', 'imagemap', 'hotspot',
+                    'hotbar', 'drag', 'draggroup', 'has', 'on', 'use',
+                    'transclude', 'transform', 'label',
+                    ), prefix=r'\s+', suffix=r'\b'), Renpy.Screen.Displayables),
         ],
         'builtins': [
             (words((

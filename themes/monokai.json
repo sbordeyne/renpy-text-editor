@@ -47,18 +47,25 @@
         "Keyword":{
             "foreground":"#f92672"
         },
-        "Keyword.Reserved":{
+        "Renpy.Reserved":{
             "foreground":"#f92672"
         },
-        "Keyword.Declaration":{
+        "Renpy.Declaration":{
             "foreground":"#f92672",
             "font":{
                 "weight": "bold",
                 "slant": "roman"
             }
         },
-        "Name.Label":{
+        "Renpy.Label.Reserved":{
             "foreground": "#FFE792"
+        },
+        "Renpy.Screen.Displayables":{
+            "foreground": "#BED6FF",
+            "font":{
+                "weight": "bold",
+                "slant": "roman"
+            }
         },
         "Keyword.Namespace":{
             "foreground":"#f92672"

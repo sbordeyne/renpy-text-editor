@@ -100,8 +100,8 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] To UPPERCASE : Ctrl+Shift+U
 - [ ] To Capitalized case : Ctrl+Alt+U
 - [ ] Invert casing : Ctrl+Shift+Alt+U
-- [x] Undo
-- [x] Redo
+- [x] Undo : Ctrl+Z
+- [x] Redo : Ctrl+Y
 
 # To do list :
 
@@ -112,6 +112,14 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [x] opening a file from the project manager
 - [x] Sort the project manager by item type (folder/file)
 - [ ] Improve the lexer for the RenPy language
+    - [x] Lexing screen language
+    - [ ] Lexing screen language attributes
+    - [ ] Lexing the $ sign for inline python
+    - [x] Adding new Renpy token type
+    - [ ] lexing transform/atl language
+    - [x] lexing renpy keywords
+    - [ ] lexing style attributes
+    - [ ] lexing renpy built-in functions
 - [ ] Save files
 - [ ] Handle keyboard input / changing the Keybindings
 - [x] Adding in the Options window.
@@ -120,3 +128,10 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Resizing window support + saving in the config file for later restoration.
 - [x] Undo/Redo
 - [x] Duplicate line & formatting text (upper, lower, capitalize etc)
+- [ ] Comparing between two files
+- [ ] Toolbar
+- [x] favicon asset
+- [x] open/collapse assets
+- [ ] Tooltips
+    - [x] Create Tooltip class
+    - [ ] add tooltips to buttons
