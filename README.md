@@ -1,6 +1,8 @@
 # renpy-text-editor
 Renpy Text Editor - A dedicated text editor and IDE for the Ren'Py Engine.
 
+[Discord Server](https://discord.gg/aHk5kur)
+
 # Installation instructions
 
 In order to use this software, you must have the following installed on your computer :

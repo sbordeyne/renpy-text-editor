@@ -154,9 +154,9 @@ class EditorFrame(tk.Frame):
 
     def test_colorize(self, curtoken):
         curtoken = str(curtoken)
-        if self.window_side == "right":
+        if self.window_side == "right" or not config.debug:
             return
-        token_to_follow = "all"#"Renpy.Screen.Displayables"
+        token_to_follow = ""
         token_to_follow = "Token." + token_to_follow
         if curtoken == token_to_follow:
             print(curtoken, " : ", self.text.get("range_start", 'range_end'))
