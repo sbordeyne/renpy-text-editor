@@ -8,6 +8,7 @@ from .variable_viewer import VariableViewerView
 from .snippets import SnippetsView
 from RTE.config import config
 import tkinter.font as tkfont
+from RTE.models.snippet import snippet_store
 
 
 class CloseableNotebook(ttk.Notebook):
@@ -144,6 +145,7 @@ class RenpyTextEditorGUI(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
+        self.master.protocol("WM_DELETE_WINDOW", self.quit)
         self.controller = Controller(self)
         self.__setup_variables()
         self.__setup_menu()
@@ -229,4 +231,5 @@ class RenpyTextEditorGUI(tk.Frame):
         self.after(5, self.loop)
 
     def quit(self):
+        snippet_store.save()
         self.master.destroy()

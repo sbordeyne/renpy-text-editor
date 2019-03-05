@@ -1,0 +1,8 @@
+{
+    "bold":{
+        "name": "Bold Snippet",
+        "replace_selection": false,
+        "before_cursor": "{b}",
+        "after_cursor": "{/b}"
+    }
+}
