@@ -217,7 +217,7 @@ class Controller():
         elif ftype == "music" and sys.platform == "win32":
             root = tk.Toplevel()
             root.title("Sound playing : " + path.split('/')[-1])
-            root.geometry("300x50")
+            root.geometry("300x70")
             root.resizable(False, False)
             sfx_view = SoundViewer(root, path)
             sfx_view.grid()

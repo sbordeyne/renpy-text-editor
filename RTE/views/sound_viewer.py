@@ -9,6 +9,8 @@ class SoundViewer(tk.Frame):
         self.fpath = fpath
         self.time_elapsed = tk.IntVar()
         self.time_elapsed.set(0)  # seconds
+        self.volume = tk.IntVar()
+        self.volume.set(80)
         self.clip = mp3play.load(fpath)
         self.paused = True
         self.started = False
@@ -26,8 +28,14 @@ class SoundViewer(tk.Frame):
         self.stop_btn = tk.Button(self,
                                   bitmap=tk.BitmapImage("@assets/button-stop.xbm"),
                                   command=self.stop)
+        self.volume_scl = tk.Scale(self, from_=0, to=100, orient=tk.HORIZONTAL,
+                                   variable=self.volume,
+                                   )
+        self.volume_lbl = tk.Label(self, bitmap=tk.BitmapImage("@assets/volume-icon.xbm"))
         self.play_pause_btn.grid(row=1, column=8)
         self.stop_btn.grid(row=1, column=9)
+        self.volume_lbl.grid(row=1, column=0)
+        self.volume_scl.grid(row=1, column=1)
         self.master.protocol("WM_DELETE_WINDOW", self.quit)
         self.loop()
 
@@ -55,6 +63,15 @@ class SoundViewer(tk.Frame):
         self.paused = True
         self.play_pause_btn.config(bitmap=tk.BitmapImage("@assets/button-play.xbm"))
 
+    def set_volume(self, *args):
+        return
+        vol = 0
+        if args:
+            vol = args[0]
+        else:
+            vol = self.volume.get()
+        self.clip.volume(vol / 10)
+
     def quit(self):
         self.stop()
         self.master.destroy()
@@ -62,4 +79,5 @@ class SoundViewer(tk.Frame):
     def loop(self):
         if not self.paused:
             self.time_elapsed.set(self.time_elapsed.get() + 1)
+        self.set_volume()
         self.after(1, self.loop)
