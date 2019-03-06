@@ -3,4 +3,4 @@ pyinstaller --onefile --noconsole ^
 cp ./config ./dist/config
 cp ./themes ./dist/themes
 cp ./snippets ./dist/snippets
-pause
+cp ./assets ./dist/assets
