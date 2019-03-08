@@ -13,11 +13,33 @@ from pygments.lexer import Lexer, RegexLexer, include, bygroups, using, \
     default, words, combined, do_insertions
 from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
     Number, Punctuation, Generic, Other
-from .tokens import Renpy
+from .tokens import Renpy, Block
 
 __all__ = ['RenpyLexer', 'RenpyConsoleLexer', 'RenpyTracebackLexer']
 
 line_re = re.compile('.*?\n')
+
+
+class RenpyBlockLexer(RegexLexer):
+    name = "RenpyBlock"
+    aliases = ["renpyblock"]
+
+    tokens = {
+        'root': [
+            (r'[a-zA-Z_]\w*', Name),
+            (words((
+                'elif', 'else', 'except', 'finally', 'for', 'if',
+                'try', 'while', 'with', 'label', 'screen', 'transform',
+                'init', 'layeredimage', 'menu', 'style'), suffix=r'\b'),
+             Block.Start),
+            (r'# *region\b', Block.Start),
+            (r'# *endregion\b', Block.End),
+            (words((
+                '\n\n', 'break', 'continue', 'return', 'yield', 'yield from',
+                'pass', '# *endregion'), suffix=r'\b'),
+             Block.End),
+        ],
+    }
 
 
 class RenpyLexer(RegexLexer):

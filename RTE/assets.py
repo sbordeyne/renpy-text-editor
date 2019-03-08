@@ -1,6 +1,8 @@
 import tkinter as tk
 
 class AssetStore:
+    loaded_assets = []
+
     @classmethod
     def get_icon_by_extension(cls, extension):
         if isinstance(extension, str):
@@ -18,20 +20,30 @@ class AssetStore:
 
     @classmethod
     def folder(cls):
-        return tk.BitmapImage("@assets/folder.xbm")
+        asset = tk.BitmapImage("@assets/folder.xbm")
+        cls.loaded_assets.append(asset)
+        return AssetStore.loaded_assets[-1]
 
     @classmethod
     def image(cls):
-        return tk.BitmapImage("@assets/imagefile.xbm")
+        asset = tk.BitmapImage("@assets/imagefile.xbm")
+        cls.loaded_assets.append(asset)
+        return AssetStore.loaded_assets[-1]
 
     @classmethod
     def movie(cls):
-        return tk.BitmapImage("@assets/moviefile.xbm")
+        asset = tk.BitmapImage("@assets/moviefile.xbm")
+        cls.loaded_assets.append(asset)
+        return AssetStore.loaded_assets[-1]
 
     @classmethod
     def music(cls):
-        return tk.BitmapImage("@assets/musicfile.xbm")
+        asset = tk.BitmapImage("@assets/musicfile.xbm")
+        cls.loaded_assets.append(asset)
+        return AssetStore.loaded_assets[-1]
 
     @classmethod
     def text(cls):
-        return tk.BitmapImage("@assets/textfile.xbm")
+        asset = tk.BitmapImage("@assets/textfile.xbm")
+        cls.loaded_assets.append(asset)
+        return AssetStore.loaded_assets[-1]

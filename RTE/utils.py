@@ -82,7 +82,8 @@ def get_type_by_extension(extension):
         return "movie"
     elif extension in ("mp3", "wav", "opus", "music"):
         return "music"
-    else:
+    elif extension in ("rpy", 'py', 'txt', 'json', 'xml', 'md', 'rst',
+                       'yaml', 'yml', 'html', 'css', 'js', ''):
         return "text"
 
 def text_get_selected(text):

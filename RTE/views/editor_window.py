@@ -4,12 +4,17 @@ import tkinter.ttk as ttk
 from pygments import lex
 from RTE.syntaxhighlight.lexer import RenpyLexer
 from RTE.config import config
+from RTE.models.code_block import Block
+import re
 
 
 class TextLineNumbers(tk.Canvas):
     def __init__(self, *args, **kwargs):
         tk.Canvas.__init__(self, *args, **kwargs)
         self.textwidget = None
+        self.root_block = None
+        self.collapse_img = tk.BitmapImage("@assets/button-collapse.xbm")
+        self.open_img = tk.BitmapImage("@assets/button-open.xbm")
 
     def attach(self, text_widget):
         self.textwidget = text_widget
@@ -18,6 +23,8 @@ class TextLineNumbers(tk.Canvas):
         '''redraw line numbers'''
         self.delete("all")
 
+        block_starts = self.root_block.get_all_starts()
+
         i = self.textwidget.index("@0,0")
         while True:
             dline = self.textwidget.dlineinfo(i)
@@ -25,6 +32,9 @@ class TextLineNumbers(tk.Canvas):
                 break
             y = dline[1]
             linenum = str(i).split(".")[0]
+            if int(linenum) in block_starts:
+                #self.create_text(4, y, anchor="nw", text=linenum)
+                self.create_image(2, y, anchor="ne", image=self.collapse_img)
             self.create_text(2, y, anchor="nw", text=linenum)
             i = self.textwidget.index("%s+1line" % i)
 
@@ -59,10 +69,14 @@ class CustomText(tk.Text):
 
 
 class EditorFrame(tk.Frame):
+
+    wordre = re.compile(r'\b\S+\b')
+
     def __init__(self, master=None, windowside="left"):
         super(EditorFrame, self).__init__(master)
         self.master = master
         self.window_side = windowside
+
         self.text = CustomText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical",
                                 command=self.text.yview)
@@ -73,8 +87,11 @@ class EditorFrame(tk.Frame):
                             wrap=tk.NONE,
                             height=config.wm_height // 20,
                             undo=True)
+
         self.linenumbers = TextLineNumbers(self, width=30)
         self.linenumbers.attach(self.text)
+
+        self.parse_blocks()
 
         self.vsb.pack(side="right", fill="y")
         self.hsb.pack(side="bottom", fill="x")
@@ -89,10 +106,15 @@ class EditorFrame(tk.Frame):
         self.text.bind("<Return>", lambda event: self.on_key_whitespace(self.text, '\n'))
         self.text.bind("<FocusIn>", lambda event: self.master.master.controller.set_last_entered_side(self.window_side))
 
+        #self.text.bind('<Double-Button-1>', self.select_word)
+        #self.text.bind('<Triple-Button-1>', self.select_line)
+
         # self.text.bind("<Control-w>", self.init_theme)
 
-        self.text.mark_set("range_start", "1.0")
-        self.text.mark_set("range_end", "1.0")
+        self.text.mark_set("highlight_start", "1.0")
+        self.text.mark_set("highlight_end", "1.0")
+
+        self.text.tag_configure("hidden", elide=True)
 
         self.theme = config.get_theme()
         self.showinvis = config.show_whitespace_characters
@@ -101,8 +123,33 @@ class EditorFrame(tk.Frame):
         self.loop()
 
     def _on_change(self, event):
+        self.parse_blocks()
         self.linenumbers.redraw()
         self.colorize()
+
+    def select_line(self, *args):
+        beginning = "insert linestart"
+        end = "insert lineend"
+        self.text.tag_add("sel", beginning, end)
+        pass
+
+    def select_word(self, *args):
+        text = self.text.get("insert linestart", "insert lineend")
+        line = self.text.index(tk.INSERT).split(".")[0]
+        col = self.text.index(tk.INSERT).split(".")[1]
+        words = self.wordre.split(text)
+        count = 0
+        colbegin = 0
+        colend = 0
+        for i, w in enumerate(words):
+            count += len(w)
+            if count >= int(col):
+                colbegin = count = len(words[i - 1])
+                colend = count - 1
+        beginning = f"{line}.{colbegin}"
+        end = f"{line}.{colend}"
+        self.text.tag_add("sel", beginning, end)
+        pass
 
     def _tab_key_pressed(self, event):
         if config.insert_spaces_instead_of_tabs:
@@ -159,9 +206,9 @@ class EditorFrame(tk.Frame):
         token_to_follow = ""
         token_to_follow = "Token." + token_to_follow
         if curtoken == token_to_follow:
-            print(curtoken, " : ", self.text.get("range_start", 'range_end'))
+            print(curtoken, " : ", self.text.get("highlight_start", 'highlight_end'))
         elif token_to_follow == "Token.all":
-            print(curtoken, " : ", self.text.get("range_start", 'range_end'))
+            print(curtoken, " : ", self.text.get("highlight_start", 'highlight_end'))
 
     def init_theme(self, *args):
         for token in self.theme:
@@ -182,20 +229,29 @@ class EditorFrame(tk.Frame):
             row = int(self.text.index("insert linestart").split(".")[0])
 
         if (self.previous_content != content):
-            self.text.mark_set("range_start", f"{row}.0")
+            self.text.mark_set("highlight_start", f"{row}.0")
             data = self.text.get(f"{row}.0",
                                  f"{row}." + str(len(lines[int(row) - 1])))
 
             for token, content in lex(data, RenpyLexer()):
-                self.text.mark_set("range_end",
-                                   "range_start + %dc" % len(content))
+                self.text.mark_set("highlight_end",
+                                   "highlight_start + %dc" % len(content))
                 for tok in self.theme:
                     self.text.tag_configure(f"Token.{tok.name}", **tok.attributes)
                 self.test_colorize(token)
-                self.text.tag_add(str(token), "range_start", "range_end")
-                self.text.mark_set("range_start", "range_end")
+                self.text.tag_add(str(token), "highlight_start", "highlight_end")
+                self.text.mark_set("highlight_start", "highlight_end")
 
         self.previous_content = self.text.get("1.0", f"{row}.0")
+
+    def parse_blocks(self):
+        content = self.text.get("1.0", tk.END)
+        end_idx = self.text.index(tk.END).split(".")[0]
+        self.root_block = Block(end=int(end_idx))
+        self.root_block.detect_all(content)
+        print(self.root_block.get_all_starts())
+        self.linenumbers.root_block = self.root_block
+        pass
 
     def set_text(self, fpath):
         with open(fpath, "r") as f:

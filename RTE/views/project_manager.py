@@ -46,7 +46,8 @@ class ProjectManagerView(tk.Frame):
         self.vsb.grid(row=0, column=1, sticky="ns")
         self.hsb.grid(row=1, column=0, sticky="ns")
         self.tree.bind('<<TreeviewOpen>>', self.update_tree)
-        self.tree.bind('<Double-Button-1>', self.change_dir)
+        self.tree.bind('<Double-Button-1>', self.on_double_click)
+        self.images = {}
 
     def build_tree(self, rootdir=None):  # old code
         if rootdir is None:
@@ -54,15 +55,19 @@ class ProjectManagerView(tk.Frame):
         for root, dirs, files in os.walk(rootdir):
             if dirs:
                 for directory in dirs:
+                    fullpath = os.path.join(root, directory)
+                    self.images[fullpath] = assets.get_icon_by_extension("folder")
                     item_options = {"text": directory,
-                                    "image": assets.get_icon_by_extension("folder"),
+                                    "image": self.images[fullpath],
                                     "values": (directory, os.path.join(root, directory)),
                                     "open": True}
                     self.tree.insert("", "end", **item_options)
                     self.build_tree(os.path.join(root, directory))
             for filename in files:
+                fullpath = os.path.join(root, filename)
+                self.images[fullpath] = assets.get_icon_by_extension(filename.split(".")[-1])
                 item_options = {"text": filename,
-                                "image": assets.get_icon_by_extension(filename.split(".")[-1]),
+                                "image": self.images[fullpath],
                                 "values": (filename, os.path.join(root, filename)),
                                 "open": True}
                 self.tree.insert("", "end", **item_options)
@@ -107,7 +112,7 @@ class ProjectManagerView(tk.Frame):
 
     def populate_roots(self):
         dir_ = os.path.abspath(self.project_path).replace('\\', '/')
-        node = self.tree.insert('', 'end', text=self.project_name.capitalize(), values=[dir_, "directory"])
+        node = self.tree.insert('', 'end', text=self.project_name.capitalize(), values=[dir_, "directory"], open=True)
         self.populate_tree(node)
         self.sort_tree(node)
 
@@ -117,17 +122,15 @@ class ProjectManagerView(tk.Frame):
         self.populate_tree(tree.focus())
         self.sort_tree(tree.focus())
 
-    def change_dir(self, event):
+    def on_double_click(self, event):
         tree = event.widget
         node = tree.focus()
-        print(tree.item(node))
         if tree.item(node)["values"][1] == "directory":
-            if tree.parent(node):
-                path = os.path.abspath(tree.set(node, "fullpath"))
-                if os.path.isdir(path):
-                    os.chdir(path)
-                    tree.delete(tree.get_children(''))
-                    self.populate_roots()
+            to_open = not bool(tree.item(node, option="open"))
+            try:
+                tree.item(node, option={"open": to_open})
+            except TypeError:
+                pass
         elif tree.item(node)["values"][1] == "file":
             path = tree.item(node)["values"][0]
             ftype = get_type_by_extension(path.split("/")[-1].split(".")[-1])
