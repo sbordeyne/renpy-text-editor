@@ -9,16 +9,12 @@ from RTE.config import config
 class File:
     def __init__(self, fpath, window_side="left", text="", is_new=False):
         self.window_side = window_side
+        self.is_new = is_new
+        self._path = None
         if not is_new:
             self.path = fpath
-            self.fullname = os.path.split(fpath)[-1]
-            self.extension = self.fullname.split(".")[-1].lower()
-            self.name = self.fullname.split(".")[0]
         else:
             self.path = None
-            self.fullname = "New File"
-            self.extension = ""
-            self.name = "New File"
         self.text = text
 
     @property
@@ -48,3 +44,20 @@ class File:
 
     def update_text(self, text):
         self.text = text
+
+    def __set_path(self, fpath):
+        if fpath is not None:
+            self._path = fpath
+            self.fullname = os.path.split(fpath)[-1]
+            self.extension = self.fullname.split(".")[-1].lower()
+            self.name = self.fullname.split(".")[0]
+        else:
+            self._path = None
+            self.fullname = "New File"
+            self.extension = ""
+            self.name = "New File"
+
+    def __get_path(self):
+        return self._path
+
+    path = property(__get_path, __set_path)

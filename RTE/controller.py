@@ -25,10 +25,8 @@ class MenusController():
         return
 
     def file_new(self):
-        path = filedialog.askdirectory()
-        self.master.project = Project(path)
-        self.master.view.project_manager.project_path = path
-        self.master.view.project_manager.populate_roots()
+        file_ = File("", self.master.last_entered_side, is_new=True)
+        self.master.view.main.add_tab(file_)
         return
 
     def file_open(self):
@@ -38,13 +36,39 @@ class MenusController():
         self.master.view.project_manager.populate_roots()
         return
 
-    def file_save(self):
+    def file_save(self, file_=None):
+        if file_ is None:
+            file_ = self.master.current_file
+        if file_.is_new:
+            self.file_save_as(file_)
+        else:
+            file_.save()
         return
 
-    def file_save_as(self):
+    def file_save_as(self, file_=None):
+        if file_ is None:
+            file_ = self.master.current_file
+        initialdir = None
+        if self.master.project is None:
+            initialdir = os.getcwd()
+        else:
+            initialdir = self.master.project.path
+        filename = filedialog.asksaveasfilename(initialdir=initialdir,
+                                                title="Select file",
+                                                filetypes=(("RenPy Scripts", "*.rpy"),
+                                                           ("JSON files", "*.json"),
+                                                           ("YAML files", "*.yml"),
+                                                           ("XML files", "*.xml"),
+                                                           ("Diff files", "*.diff"),
+                                                           ("Text files", "*.txt"),
+                                                           ("All files", "*.*")))
+        file_.path = os.path.join(self.master.project.path, filename)
+        file_.save()
         return
 
     def file_save_all(self):
+        for f in self.master.all_open_files:
+            self.file_save(file_=f)
         return
 
     def tools_open_layeredimage_builder(self):
@@ -76,15 +100,15 @@ class MenusController():
         return
 
     def edit_undo(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         text.text.edit_undo()
 
     def edit_redo(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         text.text.edit_redo()
 
     def edit_duplicate(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
             text.insert(tk.SEL_LAST, f"\n{selection}")
@@ -95,7 +119,7 @@ class MenusController():
         pass  # TODO
 
     def edit_formatting_upper(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
             text.insert(tk.SEL_LAST, selection.upper())
@@ -108,7 +132,7 @@ class MenusController():
         pass
 
     def edit_formatting_lower(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
             text.insert(tk.SEL_LAST, selection.lower())
@@ -121,7 +145,7 @@ class MenusController():
         pass
 
     def edit_formatting_capitalized(self):
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
             text.insert(tk.SEL_LAST, selection.capitalize())
@@ -144,7 +168,7 @@ class MenusController():
                 else:
                     rv += char
             return rv
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
             text.insert(tk.SEL_LAST, invert(selection))
@@ -232,12 +256,12 @@ class Controller():
             root.mainloop()
 
     def mark_as_first_diff(self, *args):
-        self.marked_as_diff = self.view.get_current_text(self.last_entered_side).text.file
+        self.marked_as_diff = self.current_file
         return
 
     def diff(self, *args):
         if self.marked_as_diff is not None:
-            file2 = self.view.get_current_text(self.last_entered_side).text.file
+            file2 = self.current_file
             self._diff(self.marked_as_diff, file2)
             self.marked_as_diff = None
         return
@@ -250,3 +274,18 @@ class Controller():
 
     def set_last_entered_side(self, side):
         self.last_entered_side = side
+
+    @property
+    def current_text(self):
+        return self.view.get_current_text(self.last_entered_side).text
+
+    @property
+    def current_file(self):
+        return self.current_text.file
+
+    @property
+    def all_open_files(self):
+        rv = []
+        rv.extend([x.file for x in self.view.main.left_tabs])
+        rv.extend([x.file for x in self.view.main.right_tabs])
+        return rv
