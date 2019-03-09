@@ -20,7 +20,6 @@ class File:
             self.extension = ""
             self.name = "New File"
         self.text = text
-        self.marked_as_diff = False
 
     @property
     def lexer(self):

@@ -202,6 +202,7 @@ class Controller():
         self.view = view
         self.last_entered_side = "left"
         self.differ = Differ()
+        self.marked_as_diff = None
         return
 
     @property
@@ -231,9 +232,14 @@ class Controller():
             root.mainloop()
 
     def mark_as_first_diff(self, *args):
+        self.marked_as_diff = self.view.get_current_text(self.last_entered_side).text.file
         return
 
     def diff(self, *args):
+        if self.marked_as_diff is not None:
+            file2 = self.view.get_current_text(self.last_entered_side).text.file
+            self._diff(self.marked_as_diff, file2)
+            self.marked_as_diff = None
         return
 
     def _diff(self, file1, file2):
