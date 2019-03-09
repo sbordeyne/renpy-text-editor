@@ -16,6 +16,7 @@ class SnippetsView(tk.Frame):
                                  height=config.wm_height // 20,
                                  selectmode="browse",
                                  yscrollcommand=lambda f, l: autoscroll(self.vsb, f, l),
+                                 style="Custom.Treeview",
                                  )
         self.tree.heading("#0", text="Snippets", anchor='w')
 

@@ -16,6 +16,7 @@ import random
 import sys
 from difflib import Differ
 
+
 class MenusController():
     def __init__(self, master):
         self.master = master
@@ -186,7 +187,7 @@ class MenusController():
             for char in s:
                 rv += [char.upper(), char.lower()][random.randint(0, 1)]
             return rv
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
             text.insert(tk.SEL_LAST, rand(selection))
@@ -200,10 +201,15 @@ class MenusController():
     def edit_formatting_spongebob(self):
         def sponge(s):
             rv = ""
-            for i, char in enumerate(s):
+            i = 0
+            for char in s:
+                if char == " ":
+                    rv += " "
+                    continue
                 rv += [char.upper(), char.lower()][i % 2]
+                i += 1
             return rv
-        text = self.master.view.get_current_text(self.master.last_entered_side).text
+        text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
             text.insert(tk.SEL_LAST, sponge(selection))

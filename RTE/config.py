@@ -2,6 +2,7 @@ import RTE.constants as const
 import json
 from collections import defaultdict
 from RTE.models.theme import Theme
+from RTE.models.locale import Translator
 
 
 class Config:
@@ -29,6 +30,12 @@ class Config:
 
     def set_theme(self, theme_name):
         self.theme_name = theme_name
+
+    def get_locale(self):
+        return Translator(self.locale)
+
+    def set_locale(self, locale):
+        self.locale = Translator.validate_locale(locale)
 
     def save(self):
         to_save = dict(self._attrs)

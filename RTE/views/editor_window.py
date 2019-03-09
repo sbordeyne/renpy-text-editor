@@ -2,7 +2,6 @@ import tkinter as tk
 import tkinter.font as tkfont
 import tkinter.ttk as ttk
 from pygments import lex
-from RTE.syntaxhighlight.lexer import RenpyLexer
 from RTE.config import config
 from RTE.models.code_block import Block
 import re

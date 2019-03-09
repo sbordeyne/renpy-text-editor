@@ -26,6 +26,24 @@ class ProjectManagerView(tk.Frame):
         global config
         self.vsb = ttk.Scrollbar(orient="vertical")
         self.hsb = ttk.Scrollbar(orient="horizontal")
+        style = ttk.Style()
+        style.configure("Custom.Treeview", **config.get_theme().ui["treeview"]["base"])
+        style.configure("Custom.Treeview.Heading",
+                        **config.get_theme().ui["treeview"]["heading"],
+                        relief='flat')
+        style.element_create("Custom.Treeheading.border", "from", "default")
+        style.layout("Custom.Treeview.Heading", [
+            ("Custom.Treeheading.cell", {'sticky': 'nswe'}),
+            ("Custom.Treeheading.border", {'sticky': 'nswe', 'children': [
+                ("Custom.Treeheading.padding", {'sticky': 'nswe', 'children': [
+                    ("Custom.Treeheading.image", {'side': 'right', 'sticky': ''}),
+                    ("Custom.Treeheading.text", {'sticky': 'we'})
+                ]})
+            ]}),
+        ])
+        style.layout("Custom.Treeview", [('Custom.Treeview.treearea', {'sticky': 'nswe'})])
+        style.map("Custom.Treeview.Heading",
+                  relief=[('active', 'groove'), ('pressed', 'sunken')])
         self.tree = ttk.Treeview(self,
                                  columns=("fullpath", "type", "size"),
                                  displaycolumns=(),
@@ -33,6 +51,7 @@ class ProjectManagerView(tk.Frame):
                                  selectmode="browse",
                                  yscrollcommand=lambda f, l: autoscroll(self.vsb, f, l),
                                  xscrollcommand=lambda f, l: autoscroll(self.hsb, f, l),
+                                 style='Custom.Treeview',
                                  )
 
         self.tree.heading("#0", text="Directory Structure", anchor='w')
@@ -48,29 +67,7 @@ class ProjectManagerView(tk.Frame):
         self.tree.bind('<<TreeviewOpen>>', self.update_tree)
         self.tree.bind('<Double-Button-1>', self.on_double_click)
         self.images = {}
-
-    def build_tree(self, rootdir=None):  # old code
-        if rootdir is None:
-            rootdir = self.project_path
-        for root, dirs, files in os.walk(rootdir):
-            if dirs:
-                for directory in dirs:
-                    fullpath = os.path.join(root, directory)
-                    self.images[fullpath] = assets.get_icon_by_extension("folder")
-                    item_options = {"text": directory,
-                                    "image": self.images[fullpath],
-                                    "values": (directory, os.path.join(root, directory)),
-                                    "open": True}
-                    self.tree.insert("", "end", **item_options)
-                    self.build_tree(os.path.join(root, directory))
-            for filename in files:
-                fullpath = os.path.join(root, filename)
-                self.images[fullpath] = assets.get_icon_by_extension(filename.split(".")[-1])
-                item_options = {"text": filename,
-                                "image": self.images[fullpath],
-                                "values": (filename, os.path.join(root, filename)),
-                                "open": True}
-                self.tree.insert("", "end", **item_options)
+        self.tree.tag_configure("base", **config.get_theme().ui["treeview"]["base"])
 
     def populate_tree(self, node=""):
         if self.tree.set(node, "type") != 'directory':
@@ -98,11 +95,11 @@ class ProjectManagerView(tk.Frame):
                 if fname not in ('.', '..'):
                     self.tree.insert(id_, 0, text="dummy")
                     self.tree.item(id_, text=fname,
-                                   image=assets.get_icon_by_extension("folder"))
+                                   image=assets.get_icon_by_extension("folder"),
+                                   tags=("base",))
             elif ptype == 'file':
-                size = os.stat(p).st_size
-                self.tree.item(id_, image=assets.get_icon_by_extension(fname.split(".")[-1]))
-                #self.tree.set(id_, "size", "%d bytes" % size)
+                self.tree.item(id_, image=assets.get_icon_by_extension(fname.split(".")[-1]),
+                               tags=("base",))
 
     def sort_tree(self, node, col="type", reverse=False):
         items = [(self.tree.set(k, col), k) for k in self.tree.get_children(node)]
@@ -112,7 +109,10 @@ class ProjectManagerView(tk.Frame):
 
     def populate_roots(self):
         dir_ = os.path.abspath(self.project_path).replace('\\', '/')
-        node = self.tree.insert('', 'end', text=self.project_name.capitalize(), values=[dir_, "directory"], open=True)
+        node = self.tree.insert('', 'end',
+                                text=self.project_name.capitalize(),
+                                values=[dir_, "directory"], open=True,
+                                tags=("base",))
         self.populate_tree(node)
         self.sort_tree(node)
 

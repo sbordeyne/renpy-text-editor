@@ -9,6 +9,16 @@
             "background": "#272822",
             "foreground": "#f8f8f2",
             "insertbackground": "#f8f8f2"
+        },
+        "treeview":{
+            "base":{
+                "background": "#272822",
+                "foreground": "#f8f8f2"
+            },
+            "heading":{
+                "background": "#272822",
+                "foreground": "#f8f8f2"
+            }
         }
     },
     "tokens":

@@ -239,5 +239,9 @@ class RenpyTextEditorGUI(tk.Frame):
         self.after(5, self.loop)
 
     def quit(self):
+        global config
+        config.wm_width = int(self.master.winfo_width())
+        config.wm_height = int(self.master.winfo_height())
+        config.save()
         snippet_store.save()
         self.master.destroy()
