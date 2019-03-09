@@ -10,7 +10,7 @@ from .toolbar import Toolbar
 from RTE.config import config
 import tkinter.font as tkfont
 from RTE.models.snippet import snippet_store
-
+from RTE.utils import tr
 
 class CloseableNotebook(ttk.Notebook):
     """A ttk Notebook with close buttons on each tab"""
@@ -121,9 +121,9 @@ class MainWindowView(tk.PanedWindow):
         self.add(self.bottom_nb)
 
         self.console_ui = ConsoleView(self)
-        self.bottom_nb.add(self.console_ui, text="Console")
+        self.bottom_nb.add(self.console_ui, text=tr("Console"))
         self.variable_viewer_ui = VariableViewerView(self)
-        self.bottom_nb.add(self.variable_viewer_ui, text="Variable Viewer")
+        self.bottom_nb.add(self.variable_viewer_ui, text=tr("Variable Viewer"))
 
         self.left_tabs = []
         self.right_tabs = []
@@ -174,8 +174,8 @@ class RenpyTextEditorGUI(tk.Frame):
         self.toolbar.grid(row=0, column=0, columnspan=2, sticky="ew")
 
         self.side_notebook.grid(row=1, column=0, sticky="ns")
-        self.side_notebook.add(self.project_manager, text="Project Manager")
-        self.side_notebook.add(self.snippets, text="Snippets")
+        self.side_notebook.add(self.project_manager, text=tr("Project Manager"))
+        self.side_notebook.add(self.snippets, text=tr("Snippets"))
 
         self.main.grid(row=1, column=1, sticky="ns")
 
@@ -188,36 +188,36 @@ class RenpyTextEditorGUI(tk.Frame):
         menuedit = tk.Menu(self.menubar)
         menuedit_formatting = tk.Menu(menuedit)
 
-        self.menubar.add_cascade(label="File", menu=menufile)
-        self.menubar.add_cascade(label="Edit", menu=menuedit)
-        self.menubar.add_cascade(label="Themes", menu=self.menuthemes)
-        self.menubar.add_cascade(label="Tools", menu=menutools)
+        self.menubar.add_cascade(label=tr("File"), menu=menufile)
+        self.menubar.add_cascade(label=tr("Edit"), menu=menuedit)
+        self.menubar.add_cascade(label=tr("Themes"), menu=self.menuthemes)
+        self.menubar.add_cascade(label=tr("Tools"), menu=menutools)
 
-        menufile.add_command(label="Open", command=self.controller.menus.file_open)
-        menufile.add_command(label="Save", command=self.controller.menus.file_save)
-        menufile.add_command(label="Save As", command=self.controller.menus.file_save_as)
-        menufile.add_command(label="Quit", command=self.quit)
+        menufile.add_command(label=tr("Open"), command=self.controller.menus.file_open)
+        menufile.add_command(label=tr("Save"), command=self.controller.menus.file_save)
+        menufile.add_command(label=tr("Save As"), command=self.controller.menus.file_save_as)
+        menufile.add_command(label=tr("Quit"), command=self.quit)
 
-        menuedit.add_command(label="Undo", command=self.controller.menus.edit_undo)
-        menuedit.add_command(label="Redo", command=self.controller.menus.edit_redo)
-        menuedit.add_command(label="Duplicate line/selection", command=self.controller.menus.edit_duplicate)
-        menuedit.add_cascade(label="Formatting", menu=menuedit_formatting)
+        menuedit.add_command(label=tr("Undo"), command=self.controller.menus.edit_undo)
+        menuedit.add_command(label=tr("Redo"), command=self.controller.menus.edit_redo)
+        menuedit.add_command(label=tr("Duplicate line/selection"), command=self.controller.menus.edit_duplicate)
+        menuedit.add_cascade(label=tr("Formatting"), menu=menuedit_formatting)
 
-        menuedit_formatting.add_command(label="To UPPERCASE", command=self.controller.menus.edit_formatting_upper)
-        menuedit_formatting.add_command(label="To lowercase", command=self.controller.menus.edit_formatting_lower)
-        menuedit_formatting.add_command(label="To Capitalized", command=self.controller.menus.edit_formatting_capitalized)
-        menuedit_formatting.add_command(label="To iNVERT cASING", command=self.controller.menus.edit_formatting_invert)
-        menuedit_formatting.add_command(label="To RAnDom CASinG", command=self.controller.menus.edit_formatting_random)
-        menuedit_formatting.add_command(label="To SpOnGeBoB cAsInG", command=self.controller.menus.edit_formatting_spongebob)
+        menuedit_formatting.add_command(label=tr("To UPPERCASE"), command=self.controller.menus.edit_formatting_upper)
+        menuedit_formatting.add_command(label=tr("To lowercase"), command=self.controller.menus.edit_formatting_lower)
+        menuedit_formatting.add_command(label=tr("To Capitalized"), command=self.controller.menus.edit_formatting_capitalized)
+        menuedit_formatting.add_command(label=tr("To iNVERT cASING"), command=self.controller.menus.edit_formatting_invert)
+        menuedit_formatting.add_command(label=tr("To RAnDom CASinG"), command=self.controller.menus.edit_formatting_random)
+        menuedit_formatting.add_command(label=tr("To SpOnGeBoB cAsInG"), command=self.controller.menus.edit_formatting_spongebob)
 
         for theme in self.controller.get_all_themes:
             self.menuthemes.add_radiobutton(label=theme,
                                             variable=self.current_theme)
 
-        menutools.add_command(label="Layeredimage Builder", command=self.controller.menus.tools_open_layeredimage_builder)
-        menutools.add_command(label="Variable Viewer", command=self.controller.menus.tools_open_variable_viewer)
-        menutools.add_command(label="Screen Builder", command=self.controller.menus.tools_open_screen_builder)
-        menutools.add_command(label="Options", command=self.controller.menus.tools_open_options)
+        menutools.add_command(label=tr("Layeredimage Builder"), command=self.controller.menus.tools_open_layeredimage_builder)
+        menutools.add_command(label=tr("Variable Viewer"), command=self.controller.menus.tools_open_variable_viewer)
+        menutools.add_command(label=tr("Screen Builder"), command=self.controller.menus.tools_open_screen_builder)
+        menutools.add_command(label=tr("Options"), command=self.controller.menus.tools_open_options)
 
     def on_configure(self, event):
         global config

@@ -1,4 +1,5 @@
 import tkinter as tk
+from RTE.config import config
 
 
 class CreateToolTip(object):
@@ -50,7 +51,7 @@ class CreateToolTip(object):
 
     def hidetip(self):
         tw = self.tw
-        self.tw= None
+        self.tw = None
         if tw:
             tw.destroy()
 
@@ -91,3 +92,6 @@ def text_get_selected(text):
         return text.get(tk.SEL_FIRST, tk.SEL_LAST)
     else:
         return ""
+
+def tr(text):
+    return config.get_locale().translate(text)

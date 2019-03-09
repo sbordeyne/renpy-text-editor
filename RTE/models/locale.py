@@ -18,8 +18,8 @@ class Translator:
         with open(os.path.join(const.locale_folder_path, f"{locale}.json")) as f:
             self._attrs = json.load(f)
 
-    def tr(self, text):
+    def translate(self, text):
         try:
-            return self._attrs[text]
+            return self._attrs[text].encode("utf8")
         except KeyError:
             return text

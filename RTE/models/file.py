@@ -5,6 +5,7 @@ from pygments.lexers.data import JsonLexer, YamlLexer
 from pygments.lexers.markup import MarkdownLexer
 from pygments.lexers.html import XmlLexer
 from RTE.config import config
+from RTE.utils import tr
 
 class File:
     def __init__(self, fpath, window_side="left", text="", is_new=False):
@@ -53,9 +54,9 @@ class File:
             self.name = self.fullname.split(".")[0]
         else:
             self._path = None
-            self.fullname = "New File"
+            self.fullname =tr("New File")
             self.extension = ""
-            self.name = "New File"
+            self.name = tr("New File")
 
     def __get_path(self):
         return self._path

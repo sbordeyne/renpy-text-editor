@@ -1,11 +1,11 @@
 {
-    "wm_width": 1612,
-    "wm_height": 852,
+    "wm_width": 1609,
+    "wm_height": 907,
     "theme_name": "monokai",
     "insert_spaces_instead_of_tabs": true,
     "tabs_length": 4,
     "show_whitespace_characters": false,
     "debug": true,
     "start_maximized": false,
-    "locale": "en-US"
+    "locale": "fr-FR"
 }
