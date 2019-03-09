@@ -401,4 +401,13 @@ class RenpyTracebackLexer(RegexLexer):
     }
 
 
-renpylexer = RenpyLexer()
+class NullLexer(RegexLexer):
+    name = 'Null'
+    aliases = ['null']
+    filenames = ['*.null']
+
+    tokens = {
+        'root': [
+            (r' .*\n', Text),
+        ]
+    }

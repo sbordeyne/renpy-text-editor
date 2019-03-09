@@ -72,10 +72,11 @@ class EditorFrame(tk.Frame):
 
     wordre = re.compile(r'\b\S+\b')
 
-    def __init__(self, master=None, windowside="left"):
+    def __init__(self, master=None, file_=None):
         super(EditorFrame, self).__init__(master)
         self.master = master
-        self.window_side = windowside
+        self.window_side = file_.window_side
+        self.file = file_
 
         self.text = CustomText(self)
         self.vsb = tk.Scrollbar(self, orient="vertical",
@@ -126,6 +127,7 @@ class EditorFrame(tk.Frame):
         self.parse_blocks()
         self.linenumbers.redraw()
         self.colorize()
+        self.file.update_text(self.text.get("1.0", tk.END))
 
     def select_line(self, *args):
         beginning = "insert linestart"
@@ -233,7 +235,7 @@ class EditorFrame(tk.Frame):
             data = self.text.get(f"{row}.0",
                                  f"{row}." + str(len(lines[int(row) - 1])))
 
-            for token, content in lex(data, RenpyLexer()):
+            for token, content in lex(data, self.file.lexer):
                 self.text.mark_set("highlight_end",
                                    "highlight_start + %dc" % len(content))
                 for tok in self.theme:

@@ -6,6 +6,7 @@ from RTE.controller import Controller
 from .console import ConsoleView
 from .variable_viewer import VariableViewerView
 from .snippets import SnippetsView
+from .toolbar import Toolbar
 from RTE.config import config
 import tkinter.font as tkfont
 from RTE.models.snippet import snippet_store
@@ -127,8 +128,11 @@ class MainWindowView(tk.PanedWindow):
         self.left_tabs = []
         self.right_tabs = []
 
-    def add_tab(self, side="left", fpath=None, fname="New Tab"):
-        tab = EditorFrame(self, side)
+    def add_tab(self, file_):
+        side = file_.window_side
+        fpath = file_.path
+        fname = file_.fullname
+        tab = EditorFrame(self, file_)
         if fpath is not None:
             tab.set_text(fpath)
         if side == "left":
@@ -160,16 +164,20 @@ class RenpyTextEditorGUI(tk.Frame):
         self.current_theme.set(config.theme_name)
 
     def __setup_ui(self):
+        self.toolbar = Toolbar(self)
+
         self.main = MainWindowView(self)
         self.side_notebook = ttk.Notebook(self)
         self.project_manager = ProjectManagerView(self)
         self.snippets = SnippetsView(self)
 
-        self.side_notebook.grid(row=0, column=0, sticky="ns")
+        self.toolbar.grid(row=0, column=0, columnspan=2, sticky="ew")
+
+        self.side_notebook.grid(row=1, column=0, sticky="ns")
         self.side_notebook.add(self.project_manager, text="Project Manager")
         self.side_notebook.add(self.snippets, text="Snippets")
 
-        self.main.grid(row=0, column=1, sticky="ns")
+        self.main.grid(row=1, column=1, sticky="ns")
 
     def __setup_menu(self):
         self.menubar = tk.Menu(self)

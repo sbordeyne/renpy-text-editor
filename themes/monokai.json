@@ -136,6 +136,41 @@
         },
         "String.Double":{
             "foreground": "#A6E22E"
+        },
+        "Generic.Inserted":{
+            "foreground": "#A6E22E"
+        },
+        "Generic.Deleted":{
+            "foreground": "#f92672"
+        },
+        "Generic.Strong":{
+        },
+        "Generic.Subheading":{
+        },
+        "Generic.Heading":{
+        },
+        "Name.Tag":{
+        },
+        "Keyword.Type":{
+        },
+        "Punctuation.Indicator":{
+        },
+        "Name.Label":{
+        },
+        "Name.Variable":{
+        },
+        "String":{
+            "foreground": "#A6E22E"
+        },
+        "Name.Constant":{
+        },
+        "Keyword.Constant":{
+        },
+        "Generic.Emph":{
+        },
+        "Name.Attribute":{
+        },
+        "Name.Entity":{
         }
     }
 }

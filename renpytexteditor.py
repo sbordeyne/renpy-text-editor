@@ -2,6 +2,7 @@ from RTE.views.main import RenpyTextEditorGUI
 import tkinter as tk
 from RTE.constants import assets
 from RTE.config import config
+from RTE.models.file import File
 import os
 
 
@@ -20,8 +21,8 @@ def main():
         root.iconbitmap('@assets/favicon.xbm')
     view = RenpyTextEditorGUI(root)
     view.grid(sticky="nswe")
-    view.main.add_tab("left")
-    view.main.add_tab("right")
+    view.main.add_tab(File("", "left", is_new=True))
+    view.main.add_tab(File("", "right", is_new=True))
     root.mainloop()
 
 

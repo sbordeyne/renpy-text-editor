@@ -1,6 +1,7 @@
 import os
 from RTE.models.theme import Theme
 from RTE.models.project import Project
+from RTE.models.file import File
 import tkinter.filedialog as filedialog
 import RTE.constants as const
 
@@ -13,6 +14,7 @@ import tkinter as tk
 import string
 import random
 import sys
+from difflib import Differ
 
 class MenusController():
     def __init__(self, master):
@@ -40,6 +42,9 @@ class MenusController():
         return
 
     def file_save_as(self):
+        return
+
+    def file_save_all(self):
         return
 
     def tools_open_layeredimage_builder(self):
@@ -155,7 +160,7 @@ class MenusController():
         def rand(s):
             rv = ""
             for char in s:
-                rv += [char.upper(), char.lower()][random.randint(0,1)]
+                rv += [char.upper(), char.lower()][random.randint(0, 1)]
             return rv
         text = self.master.view.get_current_text(self.master.last_entered_side).text
         selection = text_get_selected(text)
@@ -196,6 +201,7 @@ class Controller():
         self.project = None
         self.view = view
         self.last_entered_side = "left"
+        self.differ = Differ()
         return
 
     @property
@@ -207,7 +213,8 @@ class Controller():
 
     def open_file(self, path, ftype):
         if ftype == "text":
-            self.view.main.add_tab(self.last_entered_side, path, path.split('/')[-1])
+            file_ = File(path, self.last_entered_side)
+            self.view.main.add_tab(file_)
         elif ftype == "image":
             root = tk.Toplevel()
             root.title("View image : " + path.split('/')[-1])
@@ -222,6 +229,18 @@ class Controller():
             sfx_view = SoundViewer(root, path)
             sfx_view.grid()
             root.mainloop()
+
+    def mark_as_first_diff(self, *args):
+        return
+
+    def diff(self, *args):
+        return
+
+    def _diff(self, file1, file2):
+        diff = self.differ.compare(file1.text.splitlines(True), file2.text.splitlines(True))
+        fpath = os.path.join(self.project.path, f"{file1.name}-{file2.name}.diff")
+        file_ = File(fpath, self.last_entered_side, diff)
+        self.view.main.add_tab(file_)
 
     def set_last_entered_side(self, side):
         self.last_entered_side = side
