@@ -42,12 +42,12 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Autocompletion of variables in text
 - [x] Multiple Views with resizable frames
 - [x] Fully Portable
-- [ ] Project Viewer, with Picture, and audio player.
+- [x] Project Viewer, with Picture, and audio player.
 - [ ] Plugin support
 - [ ] Automatic Indent
 - [ ] Built-in linting line by line with PEP8 support, and Renpy's linting system
 - [ ] Git integration
-- [ ] Support for MD, JSON, YAML, XML markdown
+- [x] Support for MD, JSON, YAML, XML markdown
 - [ ] Save file viewer
 - [x] Layeredimage builder and preview
 - [ ] Screen builder and preview
@@ -122,16 +122,16 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [x] lexing renpy keywords
     - [ ] lexing style attributes
     - [ ] lexing renpy built-in functions
-- [ ] Save files
+- [x] Save files
 - [ ] Handle keyboard input / changing the Keybindings
 - [x] Adding in the Options window.
-- [ ] Integrate picture viewer into project manager / Implement music (sound) player.
+- [x] Integrate picture viewer into project manager / Implement music (sound) player.
 - [x] Make tabs closeable
 - [ ] Resizing window support + saving in the config file for later restoration.
 - [x] Undo/Redo
 - [x] Duplicate line & formatting text (upper, lower, capitalize etc)
-- [ ] Comparing between two files
-- [ ] Toolbar
+- [x] Comparing between two files
+- [x] Toolbar
 - [x] favicon asset
 - [x] open/collapse assets
 - [ ] Tooltips
