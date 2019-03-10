@@ -67,6 +67,23 @@
                 "slant": "roman"
             }
         },
+        "Renpy.Python.Inline":{
+            "foreground":"#f92672",
+            "font":{
+                "weight": "bold",
+                "slant": "italic"
+            }
+        },
+        "Renpy.Function.Builtin":{
+            "foreground":"#D197D9",
+            "font":{
+                "weight": "bold",
+                "slant": "roman"
+            }
+        },
+        "Renpy.Function.Arguments":{
+            "foreground":"#79ABFF"
+        },
         "Renpy.Label.Reserved":{
             "foreground": "#FFE792"
         },
@@ -76,6 +93,15 @@
                 "weight": "bold",
                 "slant": "roman"
             }
+        },
+        "Renpy.Properties":{
+            "foreground": "#FFE792",
+            "font":{
+                "underline":"1"
+            }
+        },
+        "Renpy.Screen.Actions":{
+
         },
         "Keyword.Namespace":{
             "foreground":"#f92672"

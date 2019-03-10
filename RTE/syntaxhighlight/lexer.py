@@ -68,6 +68,9 @@ class RenpyLexer(RegexLexer):
         'root': [
             (r'\n', Text),
             include('screen_lang'),
+            (r'^ *\$', Renpy.Python.Inline),
+            (r'(renpy\.[a-zA-Z_]+)\(([a-zA-Z_ ,=]+)\)',
+             bygroups(Renpy.Function.Builtin, Renpy.Function.Arguments)),
             (r'\$', String.Symbol),
             (r'^(\s*)([rRuUbB]{,2})("""(?:.|\n)*?""")',
              bygroups(Text, String.Affix, String.Doc)),
@@ -143,6 +146,65 @@ class RenpyLexer(RegexLexer):
                     'hotbar', 'drag', 'draggroup', 'has', 'on', 'use',
                     'transclude', 'transform', 'label',
                     ), prefix=r'\s+', suffix=r'\b'), Renpy.Screen.Displayables),
+        ],
+        'properties': [  # renpy/tutorial/game/keywords.py
+            # [u'(?:insensitive|keysym|layer|length|min_overlap|modal|mouse_drop|mousewheel|
+            # pagekeys|pixel_width|predict|prefix|properties|range|repeat|rows|scope|scrollbars|
+            # selected|selected_hover|selected_idle|selected_insensitive|sensitive|slow|slow_done|
+            # pacing|style|style_group|style_prefix|style_suffix|substitute|suffix|text_style|
+            # transpose|unhovered|value|variant|width|xadjustment|xinitial|yadjustment|yinitial|
+            # zorder)', '(?:|activate_|hover_|idle_|insensitive_|selected_|selected_activate_|
+            # selected_hover_|selected_idle_|selected_insensitive_)(?:additive|adjust_spacing
+            # |align|alignaround|alpha|alt|anchor|angle|antialias|area|around|background|
+            # bar_invert|bar_resizing|bar_vertical|base_bar|black_color|bold|bottom_bar|
+            # bottom_gutter|bottom_margin|bottom_padding|box_layout|box_reverse|box_wrap|
+            # box_wrap_spacing|caret|child|clipping|color|corner1|corner2|crop|crop_relative|
+            # debug|delay|drop_shadow|drop_shadow_color|events|first_indent|first_spacing|
+            # fit_first|focus_mask|font|foreground|hinting|hyperlink_functions|italic|
+            # justify|kerning|key_events|keyboard_focus|language|layout|left_bar|left_gutter|
+            # left_margin|left_padding|line_leading|line_spacing|margin|maximum|maxsize|min_width|
+            # minimum|minwidth|mouse|nearest|newline_indent|offset|order_reverse|outline_scaling|
+            # outlines|padding|pos|radius|rest_indent|right_bar|right_gutter|right_margin|
+            # right_padding|rotate|rotate_pad|ruby_style|size|size_group|slow_abortable|
+            # slow_cps|slow_cps_multiplier|sound|spacing|strikethrough|subpixel|text_align|
+            # text_y_fudge|thumb|thumb_offset|thumb_shadow|tooltip|top_bar|top_gutter|top_margin|
+            # top_padding|transform_anchor|underline|unscrollable|vertical|xalign|xanchor|
+            # xanchoraround|xaround|xcenter|xfill|xfit|xmargin|xmaximum|xminimum|xoffset|xpadding|
+            # xpan|xpos|xsize|xspacing|xtile|xysize|xzoom|yalign|yanchor|yanchoraround|yaround|
+            # ycenter|yfill|yfit|ymargin|ymaximum|yminimum|yoffset|ypadding|ypan|ypos|ysize|
+            # yspacing|ytile|yzoom|zoom)', '(?:vscrollbar_|scrollbar_)(?:|activate_|hover_|
+            # idle_|insensitive_|selected_|selected_activate_|selected_hover_|selected_idle_|
+            # selected_insensitive_)(?:align|alt|anchor|area|bar_invert|bar_resizing|bar_vertical|
+            # base_bar|bottom_bar|bottom_gutter|clipping|debug|keyboard_focus|left_bar|left_gutter|
+            # maximum|mouse|offset|pos|right_bar|right_gutter|thumb|thumb_offset|thumb_shadow|
+            # tooltip|top_bar|top_gutter|unscrollable|xalign|xanchor|xcenter|xfill|xmaximum|
+            # xoffset|xpos|xsize|xysize|yalign|yanchor|ycenter|yfill|ymaximum|yoffset|ypos|
+            # ysize)', 'side_(?:|activate_|hover_|idle_|insensitive_|selected_|selected_activate_|
+            # selected_hover_|selected_idle_|selected_insensitive_)(?:align|alt|anchor|area|clipping|
+            # debug|maximum|offset|pos|spacing|tooltip|xalign|xanchor|xcenter|xfill|xmaximum|
+            # xoffset|xpos|xsize|xysize|yalign|yanchor|ycenter|yfill|ymaximum|yoffset|ypos|
+            # ysize)', 'text_(?:|activate_|hover_|idle_|insensitive_|selected_|selected_activate_|
+            # selected_hover_|selected_idle_|selected_insensitive_)(?:adjust_spacing|align|alt|
+            # anchor|antialias|area|black_color|bold|clipping|color|debug|drop_shadow|
+            # drop_shadow_color|first_indent|font|hinting|hyperlink_functions|italic|justify|
+            # kerning|language|layout|line_leading|line_spacing|maximum|min_width|minimum|minwidth|
+            # newline_indent|offset|outline_scaling|outlines|pos|rest_indent|ruby_style|size|
+            # slow_abortable|slow_cps|slow_cps_multiplier|strikethrough|text_align|text_y_fudge|
+            # tooltip|underline|vertical|xalign|xanchor|xcenter|xfill|xmaximum|xminimum|xoffset|
+            # xpos|xsize|xysize|yalign|yanchor|ycenter|yfill|ymaximum|yminimum|yoffset|ypos|
+            # ysize)', 'viewport_(?:|activate_|hover_|idle_|insensitive_|selected_|
+            # selected_activate_|selected_hover_|selected_idle_|selected_insensitive_)(?:align
+            # |alt|anchor|area|clipping|debug|maximum|offset|pos|tooltip|xalign|xanchor|xcenter
+            # |xfill|xmaximum|xoffset|xpos|xsize|xysize|yalign|yanchor|ycenter|yfill|ymaximum|
+            # yoffset|ypos|ysize)']
+            (words(("action", "activate_sound", "activated", "adjustment", "allow",
+                    "alpha", "alternate", "alternate_keysym", "arguments", "arrowkeys",
+                    "at", "auto", "cache", "caption", "changed", "child_size",
+                    "clicked", "cols", "copypaste", "default", "drag_handle", "drag_joined",
+                    "drag_name", "drag_offscreen", "drag_raise", "draggable", "dragged",
+                    "drop_allowable", "droppable", "dropped", "edgescroll",
+                    "exclude", "focus", "focus_mask", "ground", "height", "hover",
+                    "hovered", "id", "idle", "image_style"), prefix=r"( {4}){2,}", suffix=r"\b"), Renpy.Properties)
         ],
         'builtins': [
             (words((

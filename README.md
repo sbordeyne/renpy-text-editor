@@ -124,12 +124,12 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Improve the lexer for the RenPy language
     - [x] Lexing screen language
     - [ ] Lexing screen language attributes
-    - [ ] Lexing the $ sign for inline python
+    - [x] Lexing the $ sign for inline python
     - [x] Adding new Renpy token type
     - [ ] lexing transform/atl language
     - [x] lexing renpy keywords
     - [ ] lexing style attributes
-    - [ ] lexing renpy built-in functions
+    - [x] lexing renpy built-in functions
 - [ ] Handle keyboard input / changing the Keybindings
 - [ ] Resizing window support + saving in the config file for later restoration.
 - [ ] Tooltips
