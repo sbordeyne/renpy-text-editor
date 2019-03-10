@@ -136,4 +136,9 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [x] Create Tooltip class
     - [ ] add tooltips to buttons
 - [ ] GUI for adding in snippets
-- [ ] Collapsing blocks of code
+- [x] Collapsing blocks of code
+    - [ ] improve the gui
+    - [ ] add more collapse buttons
+    - [ ] remove debug prints
+- [ ] fix saving
+- [ ] fix renpy builtin lexing
