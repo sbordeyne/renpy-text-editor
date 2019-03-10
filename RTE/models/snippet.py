@@ -38,6 +38,7 @@ class SnippetStore:
         data = {}
         final_dict = {}
         self.snippets = {}
+        self.has_new_snippet = False
         for dirpath, dirnames, filenames in os.walk(const.snippets_folder_path):
             for fname in filenames:
                 path = os.path.join(dirpath, fname)
@@ -54,6 +55,7 @@ class SnippetStore:
 
     def add(self, sname, **kwargs):
         self.snippets[sname] = Snippet(**kwargs)
+        self.has_new_snippet = True
 
     def save(self):
         path = os.path.join(const.snippets_folder_path, "snippets.json")

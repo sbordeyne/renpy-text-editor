@@ -180,19 +180,21 @@ class RenpyTextEditorGUI(tk.Frame):
         self.main.grid(row=1, column=1, sticky="ns")
 
     def __setup_menu(self):
-        self.menubar = tk.Menu(self)
+        theme = config.get_theme()
+        self.menubar = tk.Menu(self, **theme.ui["menu"])
         self.master.config(menu=self.menubar)
-        menufile = tk.Menu(self.menubar)
-        self.menuthemes = tk.Menu(self.menubar)
-        menutools = tk.Menu(self.menubar)
-        menuedit = tk.Menu(self.menubar)
-        menuedit_formatting = tk.Menu(menuedit)
+        menufile = tk.Menu(self.menubar, **theme.ui["menu"])
+        self.menuthemes = tk.Menu(self.menubar, **theme.ui["menu"])
+        menutools = tk.Menu(self.menubar, **theme.ui["menu"])
+        menuedit = tk.Menu(self.menubar, **theme.ui["menu"])
+        menuedit_formatting = tk.Menu(menuedit, **theme.ui["menu"])
 
         self.menubar.add_cascade(label=tr("File"), menu=menufile)
         self.menubar.add_cascade(label=tr("Edit"), menu=menuedit)
         self.menubar.add_cascade(label=tr("Themes"), menu=self.menuthemes)
         self.menubar.add_cascade(label=tr("Tools"), menu=menutools)
 
+        menufile.add_command(label=tr("New"), command=self.controller.menus.file_new)
         menufile.add_command(label=tr("Open"), command=self.controller.menus.file_open)
         menufile.add_command(label=tr("Save"), command=self.controller.menus.file_save)
         menufile.add_command(label=tr("Save As"), command=self.controller.menus.file_save_as)
@@ -217,6 +219,7 @@ class RenpyTextEditorGUI(tk.Frame):
         menutools.add_command(label=tr("Layeredimage Builder"), command=self.controller.menus.tools_open_layeredimage_builder)
         menutools.add_command(label=tr("Variable Viewer"), command=self.controller.menus.tools_open_variable_viewer)
         menutools.add_command(label=tr("Screen Builder"), command=self.controller.menus.tools_open_screen_builder)
+        menutools.add_command(label=tr("Add Snippet"), command=self.controller.menus.tools_open_add_snippet)
         menutools.add_command(label=tr("Options"), command=self.controller.menus.tools_open_options)
 
     def on_configure(self, event):

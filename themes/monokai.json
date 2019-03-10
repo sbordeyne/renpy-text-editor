@@ -19,6 +19,12 @@
                 "background": "#272822",
                 "foreground": "#f8f8f2"
             }
+        },
+        "menu":{
+            "background": "#272822",
+            "foreground": "#f8f8f2",
+            "activebackground": "#34352D",
+            "activeforeground": "#C4C4C0"
         }
     },
     "tokens":
@@ -101,7 +107,11 @@
             }
         },
         "Renpy.Screen.Actions":{
-
+            "foreground":"#D197D9",
+            "font":{
+                "weight": "bold",
+                "slant": "roman"
+            }
         },
         "Keyword.Namespace":{
             "foreground":"#f92672"

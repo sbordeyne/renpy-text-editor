@@ -16,5 +16,11 @@
         "replace_selection": false,
         "before_cursor": "im.Flip(",
         "after_cursor": ", horizontal=False)"
+    },
+    "italic_snippet": {
+        "name": "Italic Snippet",
+        "replace_selection": false,
+        "before_cursor": "{i}\n",
+        "after_cursor": "{/i}\n"
     }
 }

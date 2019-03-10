@@ -50,6 +50,7 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [x] Toolbar
 - [x] Snippets support
 - [x] Translation support
+- [x] GUI for adding in snippets
 
 # Planned Features
 
@@ -123,7 +124,8 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 
 - [ ] Improve the lexer for the RenPy language
     - [x] Lexing screen language
-    - [ ] Lexing screen language attributes
+    - [x] Lexing screen language attributes
+    - [x] Lexing Screen Actions
     - [x] Lexing the $ sign for inline python
     - [x] Adding new Renpy token type
     - [ ] lexing transform/atl language
@@ -135,7 +137,6 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Tooltips
     - [x] Create Tooltip class
     - [ ] add tooltips to buttons
-- [ ] GUI for adding in snippets
 - [x] Collapsing blocks of code
     - [ ] improve the gui
     - [ ] add more collapse buttons

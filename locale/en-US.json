@@ -24,5 +24,15 @@
     "Layeredimage Builder": "Layeredimage Builder",
     "Screen Builder": "Screen Builder",
     "Options": "Options",
-    "New File": "New File"
+    "New File": "New File",
+    "New": "New",
+    "Ok": "Ok",
+    "Cancel": "Cancel",
+    "Snippet Name": "Snippet Name",
+    "Snippet Name :": "Snippet Name :",
+    "Snippet Id :": "Snippet Id :",
+    "Replace Selection ?": "Replace Selection ?",
+    "Before Cursor :": "Before Cursor :",
+    "After Cursor :": "After Cursor :",
+    "Add Snippet": "Add Snippet"
 }

@@ -9,6 +9,7 @@ from RTE.views.layeredimage_builder import LayeredImageBuilderGUI
 from RTE.views.options import OptionsView
 from RTE.views.image_viewer import ImageViewer
 from RTE.views.sound_viewer import SoundViewer
+from RTE.views.snippets import SnippetsAddingView
 from RTE.utils import text_get_selected
 import tkinter as tk
 import string
@@ -23,6 +24,7 @@ class MenusController():
 
         self.layeredimage_builder_wm = None
         self.options_wm = None
+        self.add_snippet_wm = None
         return
 
     def file_new(self):
@@ -89,6 +91,13 @@ class MenusController():
 
     def tools_open_screen_builder(self):
         return
+
+    def tools_open_add_snippet(self):
+        if self.add_snippet_wm is None:
+            self.add_snippet_wm = tk.Toplevel()
+            gui = SnippetsAddingView(master=self.add_snippet_wm, controller=self)
+            gui.grid()
+            self.add_snippet_wm.mainloop()
 
     def tools_open_options(self):
         if self.options_wm is None:
