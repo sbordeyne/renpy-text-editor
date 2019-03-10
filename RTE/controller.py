@@ -287,7 +287,7 @@ class Controller():
 
     @property
     def current_file(self):
-        return self.current_text.file
+        return self.view.get_current_text(self.last_entered_side).file
 
     @property
     def all_open_files(self):
