@@ -12,8 +12,6 @@ class TextLineNumbers(tk.Canvas):
         tk.Canvas.__init__(self, *args, **kwargs)
         self.textwidget = None
         self.root_block = None
-        self.collapse_img = tk.BitmapImage("@assets/button-collapse.xbm")
-        self.open_img = tk.BitmapImage("@assets/button-open.xbm")
 
     def attach(self, text_widget):
         self.textwidget = text_widget
@@ -23,7 +21,7 @@ class TextLineNumbers(tk.Canvas):
         self.delete("all")
 
         block_starts = self.root_block.get_all_starts()
-
+        block_starts = [1, ]
         i = self.textwidget.index("@0,0")
         while True:
             dline = self.textwidget.dlineinfo(i)
@@ -32,10 +30,20 @@ class TextLineNumbers(tk.Canvas):
             y = dline[1]
             linenum = str(i).split(".")[0]
             if int(linenum) in block_starts:
-                #self.create_text(4, y, anchor="nw", text=linenum)
-                self.create_image(2, y, anchor="ne", image=self.collapse_img)
+                block = self.root_block.get_block(int(linenum))
+                img = self.create_image(15, y, anchor="nw", image=block.image)
+                self.tag_bind(img, '<Button-1>',
+                              lambda event: self.on_click_button1(block, event))
             self.create_text(2, y, anchor="nw", text=linenum)
             i = self.textwidget.index("%s+1line" % i)
+
+    def on_click_button1(self, block, event):
+        # img = event.widget.find_closest(event.x, event.y)
+        block.collapsed = not block.collapsed
+        if block.collapsed:
+            self.textwidget.tag_add("hidden", block.start_idx, block.end_idx)
+        else:
+            self.textwidget.tag_remove("hidden", block.start_idx, block.end_idx)
 
 
 class CustomText(tk.Text):
@@ -90,6 +98,7 @@ class EditorFrame(tk.Frame):
 
         self.linenumbers = TextLineNumbers(self, width=30)
         self.linenumbers.attach(self.text)
+        self.root_block = Block(text="")
 
         self.parse_blocks()
 
@@ -247,10 +256,9 @@ class EditorFrame(tk.Frame):
 
     def parse_blocks(self):
         content = self.text.get("1.0", tk.END)
-        end_idx = self.text.index(tk.END).split(".")[0]
-        self.root_block = Block(end=int(end_idx))
-        self.root_block.detect_all(content)
-        print(self.root_block.get_all_starts())
+        print("parsing")
+        self.root_block.set_text(content)
+        self.root_block.detect_all()
         self.linenumbers.root_block = self.root_block
         pass
 

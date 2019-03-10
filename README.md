@@ -28,30 +28,43 @@ All code in this repository adheres to the PEP8 styling guide as much as possibl
 
 All code in this repository should be MVC oriented (Model-View-Controller). The entry point is in the RTE.views.main subpackage.
 
-# Planned Features
+# Currently implemented features
 
 - [x] Editor View with Line numbering
-- [x] RenPy Syntax Highlighting
 - [x] Theme Support
 - [x] Snippets Support
 - [x] Duplicate line/ Selected Code Block
+- [x] Fully Portable
+- [x] Project Viewer, with Picture, and audio player.
+- [x] Support for MD, JSON, YAML, XML markdown
+- [x] Closeable tabs for multiple files open at the same time.
+- [x] Layeredimage builder and preview
+- [x] Syntax highlighting
+- [x] Main window view, with 2 resizable frames for text editing.
+- [x] opening a file from the project manager
+- [x] Sort the project manager by item type (folder/file)
+- [x] Save files
+- [x] Undo/Redo
+- [x] Formatting text (upper, lower, capitalize etc)
+- [x] Comparing between two files
+- [x] Toolbar
+- [x] Snippets support
+- [x] Translation support
+
+# Planned Features
+
+
 - [ ] Tab Autocompletion
 - [ ] Variable viewer
 - [ ] Renpy Console (run renpy code headless, jump to labels to test, call screens etc)
 - [ ] Automatic Renpy markdown matching, with automatic detection of custom text tags ({b}, {u} etc tags)
 - [ ] Autocompletion of variables in text
-- [x] Multiple Views with resizable frames
-- [x] Fully Portable
-- [x] Project Viewer, with Picture, and audio player.
 - [ ] Plugin support
 - [ ] Automatic Indent
 - [ ] Built-in linting line by line with PEP8 support, and Renpy's linting system
 - [ ] Git integration
-- [x] Support for MD, JSON, YAML, XML markdown
 - [ ] Save file viewer
-- [x] Layeredimage builder and preview
 - [ ] Screen builder and preview
-- [x] Tabs for multiple files open at the same time.
 - [ ] Collapsing blocks of code
     - [ ] collapsing with "#region region-name" and "#endregion" comments
     - [ ] collapsing labels, screens, python, init, statements and functions
@@ -107,12 +120,7 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 
 # To do list :
 
-- [x] Syntax highlighting
-- [x] Main window view, with 2 resizable frames for text editing.
-- [x] Project manager view
-- [x] Theme support
-- [x] opening a file from the project manager
-- [x] Sort the project manager by item type (folder/file)
+
 - [ ] Improve the lexer for the RenPy language
     - [x] Lexing screen language
     - [ ] Lexing screen language attributes
@@ -122,20 +130,10 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [x] lexing renpy keywords
     - [ ] lexing style attributes
     - [ ] lexing renpy built-in functions
-- [x] Save files
 - [ ] Handle keyboard input / changing the Keybindings
-- [x] Adding in the Options window.
-- [x] Integrate picture viewer into project manager / Implement music (sound) player.
-- [x] Make tabs closeable
 - [ ] Resizing window support + saving in the config file for later restoration.
-- [x] Undo/Redo
-- [x] Duplicate line & formatting text (upper, lower, capitalize etc)
-- [x] Comparing between two files
-- [x] Toolbar
-- [x] favicon asset
-- [x] open/collapse assets
 - [ ] Tooltips
     - [x] Create Tooltip class
     - [ ] add tooltips to buttons
-- [x] Snippets support
 - [ ] GUI for adding in snippets
+- [ ] Collapsing blocks of code

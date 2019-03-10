@@ -1,43 +1,79 @@
 import re
-
+import tkinter as tk
 
 class Block:
-    tabs_re = re.compile(r'( {4})')
-    start_re = re.compile(r'(elif|else|except|finally|for|if|try|while|with|label|screen|transform|init|layeredimage|menu|style|# *region|class) ?\w*\b')
-    end_re = re.compile(r'(\n|break|continue|return|yield|yield from|pass|# *endregion) ?\w*\b')
+    tabs = re.compile(r'( {4})')
+    start_re = re.compile(r'(.*:$|^ *#region.*)')
+    end_re = re.compile(r'^ *#endregion.*')
 
-    def __init__(self, parent=None, start=0, end=0, indent=0):
+    def __init__(self, parent=None, start=0, end=0, indent=0, text=""):
         self.children = []
         self.parent = parent
-        self.start = start
-        self.end = end
-        self.indent = indent
+        if parent is not None:
+            parent.children.append(self)
+            self.start = start
+            self.end = end
+            self.indent = indent
+        else:
+            self.start = 0
+            self.end = len(text)
+            self.indent = 0
         self.collapsed = False
+        self.text = text
 
-    def get(self, text):
-        return '\n'.join(text.split("\n")[self.start:self.end])
+        self._img_opened = tk.BitmapImage(file="assets/button-collapse.xbm")
+        self._img_collapsed = tk.BitmapImage(file="assets/button-open.xbm")
 
-    def detect(self, text):
-        start_indices = []
-        end_indices = []
-        for line_nb, line in enumerate(self.get(text).split("\n")):
-            indent = len(self.tabs_re.findall(line))
-            if indent > self.indent + 1:
-                continue
-            if self.start_re.match(line):
-                start_indices.append((line_nb, indent))
-            elif self.end_re.match(line):
-                end_indices.append((line_nb, indent))
-        for i, (idx, idx_indent) in enumerate(start_indices):
-            for jdx, jdx_indent in end_indices:
-                if jdx_indent == idx_indent and jdx > idx and idx_indent == self.indent + 1:
-                    self.children.append(Block(self, idx, jdx, idx_indent))
-                    break
+    @property
+    def image(self):
+        if self.collapsed:
+            return self._img_collapsed
+        else:
+            return self._img_opened
 
-    def detect_all(self, text):
-        self.detect(text)
+    @property
+    def start_idx(self):
+        return f"{self.start+1}.0 linestart"
+
+    @property
+    def end_idx(self):
+        return f"{self.end}.0 lineend"
+
+    def get_block(self, start):
+        for child in self.get_all_children():
+            if child.start == start:
+                return child
+        return self
+
+    def get(self):
+        return self.text
+
+    def set_text(self, text):
+        self.start = 0
+        self.end = len(text)
+        self.indent = 0
+        self.text = text
+
+    def detect(self):
+        text = self.text.split("\n")
+        i = 0
+        while i < len(text):
+            current_line = text[i]
+            if self.start_re.match(current_line):
+                indent = len(self.tabs.findall(current_line))
+                for j, sub_line in enumerate(text[i:]):
+                    new_indent = len(self.tabs.findall(sub_line))
+                    # the end of the current block is when we reach the same ident
+                    if (new_indent == indent and j != 0) or self.end_re.match(sub_line):
+                        Block(parent=self, start=i, end=i + j, indent=indent, text="\n".join(text[i:j + i]))
+                        i += j
+                        break
+            i += 1
+
+    def detect_all(self):
+        self.detect()
         for child in self.children:
-            child.detect_all(text)
+            child.detect_all()
 
     @property
     def is_root(self):
