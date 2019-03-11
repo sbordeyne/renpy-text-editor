@@ -69,7 +69,7 @@ Please see the monokai.json file for an example.
 
 #### For the UI
 
-TODO (check the tkinter config options on eeffbot.org for the widget to change)
+TODO (check the tkinter config options on effbot.org for the widget to change)
 
 ## Theme Installation
 

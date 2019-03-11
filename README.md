@@ -51,6 +51,9 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [x] Snippets support
 - [x] Translation support
 - [x] GUI for adding in snippets
+- [x] Collapsing blocks of code
+    - [x] collapsing with "#region region-name" and "#endregion" comments
+    - [x] collapsing labels, screens, python, init, statements and functions
 
 # Planned Features
 
@@ -63,15 +66,17 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Plugin support
 - [ ] Automatic Indent
 - [ ] Built-in linting line by line with PEP8 support, and Renpy's linting system
+    - [ ] pycodestyle linting
+    - [ ] renpy linting
 - [ ] Git integration
 - [ ] Save file viewer
 - [ ] Screen builder and preview
-- [ ] Collapsing blocks of code
-    - [ ] collapsing with "#region region-name" and "#endregion" comments
-    - [ ] collapsing labels, screens, python, init, statements and functions
 - [ ] Visual scripting for Renpy Visual Novels (VSVN)
 - [ ] Reassign Keybindings how you see fit, including support for F13-F24 keys.
 - [ ] Search, Replace, and Search in all files with regular expression support.
+- [ ] Built-in inline boolean expression simplifier
+- [ ] Boolean expression builder with variable names, and a truth table for those really complex conditions.
+- [ ] Debugger with breakpoints, pause, line-by-line execution.
 
 ## LayeredImage Builder Feature
 
@@ -143,3 +148,4 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [ ] remove debug prints
 - [ ] fix saving
 - [ ] fix renpy builtin lexing
+- [ ] tab functionnality : indent/deindent code with tab /shift-tab

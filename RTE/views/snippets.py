@@ -2,7 +2,8 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from RTE.models.snippet import snippet_store
 from RTE.config import config
-from RTE.utils import autoscroll, EntryWithPlaceholder, tr
+from RTE.utils import autoscroll, tr
+from RTE.widgets.entries import EntryWithPlaceholder
 
 
 class SnippetsView(tk.Frame):

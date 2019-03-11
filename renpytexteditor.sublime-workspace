@@ -1,0 +1,445 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Snippet",
+				"SnippetsAddingView\tclass"
+			],
+			[
+				"Entry",
+				"EntryWithPlaceholder\tclass"
+			],
+			[
+				"Renpy",
+				"RenpyLexer\tclass"
+			],
+			[
+				"lines",
+				"linenumbers\tstatement"
+			],
+			[
+				"snipp",
+				"snippet_store\tstatement"
+			],
+			[
+				"snippet",
+				"snippet_store\tinstance"
+			],
+			[
+				"snip",
+				"snippet_store\tstatement"
+			],
+			[
+				"variable",
+				"variable_viewer_ui\tstatement"
+			],
+			[
+				"include",
+				"include_files"
+			],
+			[
+				"text",
+				"text_get_selected\tfunction"
+			],
+			[
+				"inst",
+				"insert_spaces_over_tabs\tstatement"
+			],
+			[
+				"auto",
+				"autoscroll_pack\tfunction"
+			],
+			[
+				"Consol",
+				"ConsoleView\tclass"
+			],
+			[
+				"de",
+				"defaultdict\tclass"
+			],
+			[
+				"get_p",
+				"get_posts_json"
+			],
+			[
+				"la",
+				"label_name"
+			],
+			[
+				"N",
+				"NewMod"
+			],
+			[
+				"New",
+				"NewMod"
+			],
+			[
+				"se",
+				"setup_menubar"
+			],
+			[
+				"cheat",
+				"cheatitem_postItemUse"
+			],
+			[
+				"Chea",
+				"CheatMode"
+			],
+			[
+				"Gian",
+				"GiantBossMinion"
+			],
+			[
+				"Giant",
+				"GiantBossMinionArcher"
+			],
+			[
+				"GiantBoss",
+				"GiantBossMinion"
+			],
+			[
+				"PRI",
+				"PRISMARINE_BRICKS"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Advanced Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control:",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: __magic__"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 157.0,
+		"history":
+		[
+			"import socket; socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((\"localhost\", 51017))",
+			"text",
+			"text = view.substr(region)",
+			"region",
+			"region = selection[0]",
+			"len(selection)",
+			"selection",
+			"selection = view.sel()",
+			"view = sublime.active_window().active_view()",
+			"sublime.active_window()",
+			"sublime.window()",
+			"s",
+			"s = sublime.Region(1,10)",
+			"sublime.Region(1,10)",
+			"sublime",
+			"help(sublime)",
+			"class FSM:",
+			"print(a)",
+			"print a",
+			"a = 3",
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/project_manager.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/syntaxhighlight/lexer.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/models/code_block.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/layeredimage_builder.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_options_window.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_layeredimage_builder.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/constants.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/models/locale.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/models/snippet.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/snippets.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/toolbar.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/models/file.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/README.md",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_snippets_add.py",
+		"/C/Users/user/Downloads/18_Misc_Intro_Additions.txt",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_block_detect.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/utils.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/locale/fr-FR.json",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/setup_tests.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_tree_widget.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_project_manager.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/renpy/parser.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/image_viewer.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/sound_viewer.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/models/project.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/assets.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/console.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/models/theme.py",
+		"/D/Developpement/UnityProjects/Metroidvania project/Assets/ideas.txt",
+		"/C/Users/user/Downloads/traceback.txt",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/tkvlc.py",
+		"/D/Developpement/summertimesaga-dev/summertime-saga-game/traceback.txt",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/syntaxhighlight/tokens.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/requirements.txt",
+		"/D/Developpement/PythonProjects/renpy-text-editor/snippets/default_snippets.json",
+		"/D/Developpement/github/nsfw_game_updater/GUI/gui.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/variable_viewer.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/renpy/execution.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/renpy/game.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/renpy/script.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/setup.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/loader.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/loadsave.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/__init__.py",
+		"/D/Developpement/github/nsfw_game_updater/GUI/sql.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/renpy/__init__.py",
+		"/C/Users/user/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/C/Users/user/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_canvas_thing.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/project/text_syntax_highlight.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/project/text_syntax_highlight",
+		"/C/Users/user/Downloads/18_Misc_Diary (1).txt",
+		"/D/Developpement/summertimesaga-dev/wrap_jenny_diary.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/test_editor_window.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/keypress.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/syntaxhighlight/formatter.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/themes/themes.md",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/model.py",
+		"/C/Users/user/Downloads/Spectrasonics.Omnisphere.2.DVDR.D1-D8.-R2R-DYNAMiCS/Crack/R2R.txt",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/renpy/ast.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/moviefile-mask.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/moviefile.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/musicfile-mask.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/musicfile.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/textfile-mask.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/textfile.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/imagefile-mask.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/imagefile.xbm",
+		"/D/Developpement/github/nsfw_game_updater/GUI/options.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/folder-mask.xbm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/folder.xbm",
+		"/D/Developpement/github/nsfw_game_updater/GUI/constants.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/assets/folder.xpm",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/renpy/lint.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/display/core.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/lint.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/python.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/ast.py",
+		"/D/Developpement/summertimesaga-dev/renpy-7.0.0-sdk/renpy/display/transform.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/views/__init__.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE/__init__.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/RTE.py",
+		"/D/Developpement/PythonProjects/renpy-text-editor/tests/panedwindow.py",
+		"/D/Developpement/PythonProjects/Renpy Text Editor (RTE)/RTE/view.py",
+		"/D/Developpement/PythonProjects/Renpy Text Editor (RTE)/RTE.py",
+		"/D/Developpement/PythonProjects/Renpy Text Editor (RTE)/requirements.txt",
+		"/D/Developpement/PythonProjects/Renpy Text Editor (RTE)/README.md",
+		"/D/Developpement/PythonProjects/Renpy Text Editor (RTE)/tests/test_editor_window.py",
+		"/C/Users/user/Downloads/18_Misc_Diary.txt",
+		"/D/Developpement/summertimesaga-dev/merge_scripts.py",
+		"/C/Users/user/Downloads/regex.txt",
+		"/D/Developpement/summertimesaga-dev/summertime-saga-game/game/images/locations/populate.py",
+		"/D/Developpement/PythonProjects/ssdata.py",
+		"/C/Users/user/Documents/My Games/FarmingSimulator2019/savegame1/farms.xml",
+		"/D/Developpement/PythonProjects/sexeintime/sexeintime.py",
+		"/D/Scripts/pathed/minuteur.py",
+		"/D/Developpement/summertimesaga-dev/summertime-saga-game/game/changelog.txt",
+		"/D/Developpement/_ASSETS/pixelcharacterscollectionvol1_windows/pixelcharacterscollectionvol1/ReadMe.txt",
+		"/C/Users/user/Downloads/18_J13_Cedric.txt",
+		"/C/Users/user/Downloads/18_J14_Cant_Stop_Wont_Stop.txt",
+		"/D/Developpement/PythonProjects/population.py/__init__.py",
+		"/C/Users/user/Downloads/codex-farming.simulator.19/README.txt",
+		"/C/Users/user/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/C/Users/user/Downloads/J11J13-J16.txt",
+		"/C/Users/user/AppData/Roaming/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/C/Users/user/Downloads/Urgent.txt",
+		"/D/Developpement/PythonProjects/facedetect/facedetect.py",
+		"/D/Developpement/PythonProjects/0_OLD/TIPE/fonctions.py",
+		"/D/Developpement/PythonProjects/facedetect.py",
+		"/D/Developpement/SideralG/plugin-dev/BuildTools/PortableGit-2.15.0-64-bit/PortableGit/mingw64/share/doc/connect/manual.html",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/cheat_mod/main.lua",
+		"/D/Developpement/summertimesaga-dev/unused_assets.py",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/external item descriptions_836319872/config.lua",
+		"/C/Users/user/Downloads/18_Misc_Photo_Minigame.txt",
+		"/C/Users/user/Downloads/18_Misc_Somrak_Flow.txt",
+		"/C/Users/user/Downloads/18_J07_Diary_and_Decisions.txt",
+		"/C/Users/user/Downloads/18_J08_Paying_for_Favors.txt",
+		"/C/Users/user/Downloads/18_J07_Diary_and_Decisions (1).txt",
+		"/D/Developpement/summertimesaga-dev/summertime-saga-game/game/fonts/caveat-license.txt",
+		"/C/Users/user/AppData/Local/Temp/7zO0BB4ECF8/OFL.txt",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/cheat_mod/metadata.xml",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/stillbirth_911007490/luafiles/helper_func.lua",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/stillbirth_911007490/luafiles/mechanics/curses.lua",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/stillbirth_911007490/luafiles/items/collectibles.lua",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/cheat_mod/content/items.xml",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/stillbirth_911007490/content/items.xml",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/stillbirth_911007490/luafiles/init.lua",
+		"/C/Users/user/Documents/My Games/Binding of Isaac Afterbirth+ Mods/stillbirth_911007490/main.lua"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 98.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "renpytexteditor.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 232.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

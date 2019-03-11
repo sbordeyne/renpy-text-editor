@@ -1,13 +1,11 @@
 from RTE.views.main import RenpyTextEditorGUI
 import tkinter as tk
-from RTE.constants import assets
 from RTE.config import config
 from RTE.models.file import File
-import os
-
+from RTE.widgets.debounce import DebounceTk
 
 def main():
-    root = tk.Tk()
+    root = DebounceTk()
     config.validate_width_height(root)
     if config.start_maximized:
         root.state('zoomed')
@@ -17,7 +15,6 @@ def main():
     try:
         root.iconbitmap(default="assets/favicon.ico")
     except tk.TclError:
-        # root.iconphoto(default=tk.PhotoImage("favicon.png"))
         root.iconbitmap('@assets/favicon.xbm')
     view = RenpyTextEditorGUI(root)
     view.grid(sticky="nswe")

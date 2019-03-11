@@ -256,7 +256,6 @@ class EditorFrame(tk.Frame):
 
     def parse_blocks(self):
         content = self.text.get("1.0", tk.END)
-        print("parsing")
         self.root_block.set_text(content)
         self.root_block.detect_all()
         self.linenumbers.root_block = self.root_block
