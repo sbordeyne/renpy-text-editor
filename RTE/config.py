@@ -58,7 +58,10 @@ class Keybindings:
             self._attrs[k] = v
 
     def __getattr__(self, attr):
-        return self._attrs[attr]
+        if attr == "_attrs":
+            return self._attrs
+        else:
+            return self._attrs[attr]
 
     def __setattr__(self, attr, value):
         if attr == '_attrs':
@@ -68,6 +71,11 @@ class Keybindings:
     def format(self, value):
         v = value.strip('<>')
         return f"<{v}>"
+
+    def save(self):
+        to_save = dict(self._attrs)
+        with open(const.keybindings_file_path, "w") as conf:
+            json.dump(to_save, conf, indent=4)
 
 
 config = Config()

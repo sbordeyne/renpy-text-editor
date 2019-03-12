@@ -27,19 +27,19 @@ class MenusController():
         self.add_snippet_wm = None
         return
 
-    def file_new(self):
+    def file_new(self, *args):
         file_ = File("", self.master.last_entered_side, is_new=True)
         self.master.view.main.add_tab(file_)
         return
 
-    def file_open(self):
+    def file_open(self, *args):
         path = filedialog.askdirectory()
         self.master.project = Project(path)
         self.master.view.project_manager.project_path = path
         self.master.view.project_manager.populate_roots()
         return
 
-    def file_save(self, file_=None):
+    def file_save(self, *args, file_=None):
         if file_ is None:
             file_ = self.master.current_file
         if file_.is_new:
@@ -48,7 +48,7 @@ class MenusController():
             file_.save()
         return
 
-    def file_save_as(self, file_=None):
+    def file_save_as(self, *args, file_=None):
         if file_ is None:
             file_ = self.master.current_file
         initialdir = None
@@ -69,7 +69,7 @@ class MenusController():
         file_.save()
         return
 
-    def file_save_all(self):
+    def file_save_all(self, *args):
         for f in self.master.all_open_files:
             self.file_save(file_=f)
         return
@@ -109,15 +109,15 @@ class MenusController():
 
         return
 
-    def edit_undo(self):
+    def edit_undo(self, *args):
         text = self.master.current_text
         text.text.edit_undo()
 
-    def edit_redo(self):
+    def edit_redo(self, *args):
         text = self.master.current_text
         text.text.edit_redo()
 
-    def edit_duplicate(self):
+    def edit_duplicate(self, *args):
         text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
@@ -128,7 +128,7 @@ class MenusController():
             text.insert(tk.CURRENT + " lineend", f"\n{selection}")
         pass  # TODO
 
-    def edit_formatting_upper(self):
+    def edit_formatting_upper(self, *args):
         text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
@@ -141,7 +141,7 @@ class MenusController():
             text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
 
-    def edit_formatting_lower(self):
+    def edit_formatting_lower(self, *args):
         text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
@@ -154,7 +154,7 @@ class MenusController():
             text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
 
-    def edit_formatting_capitalized(self):
+    def edit_formatting_capitalized(self, *args):
         text = self.master.current_text
         selection = text_get_selected(text)
         if selection:
@@ -167,7 +167,7 @@ class MenusController():
             text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
 
-    def edit_formatting_invert(self):
+    def edit_formatting_invert(self, *args):
         def invert(s):
             rv = ""
             for char in s:
@@ -190,7 +190,7 @@ class MenusController():
             text.delete(tk.SEL_FIRST, tk.SEL_LAST)
         pass
 
-    def edit_formatting_random(self):
+    def edit_formatting_random(self, *args):
         def rand(s):
             rv = ""
             for char in s:
@@ -207,7 +207,7 @@ class MenusController():
             text.insert(tk.CURRENT + " lineend", rand(selection))
             text.delete(tk.SEL_FIRST, tk.SEL_LAST)
 
-    def edit_formatting_spongebob(self):
+    def edit_formatting_spongebob(self, *args):
         def sponge(s):
             rv = ""
             i = 0

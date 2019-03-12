@@ -12,10 +12,15 @@
     "copy": "<Control-c>",
     "paste": "<Control-v>",
     "cut": "<Control-x>",
-    "save": "<Control-s>",
-    "save_as": "<Control-Shift-f>",
+    "save_file": "<Control-s>",
+    "save_as": "<Control-Shift-s>",
+    "save_all": "<Control-Alt-Shift-s>",
     "to_lower": "<Control-u>",
     "to_upper": "<Control-Shift-u>",
     "to_capitalize": "<Control-Alt-u>",
-    "to_invert_casing": "<Control-Alt-Shift-u>"
+    "to_invert_casing": "<Control-Alt-Shift-u>",
+    "to_spongebob_casing": "<Control-Alt-Shift-i>",
+    "to_random_casing": "<Control-Shift-i>",
+    "new_file": "<Control-n>",
+    "open_project": "<Control-o>"
 }

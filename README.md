@@ -54,6 +54,7 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [x] Collapsing blocks of code
     - [x] collapsing with "#region region-name" and "#endregion" comments
     - [x] collapsing labels, screens, python, init, statements and functions
+- [x] Reassign Keybindings how you see fit, including support for F13-F24 keys.
 
 # Planned Features
 
@@ -72,7 +73,6 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Save file viewer
 - [ ] Screen builder and preview
 - [ ] Visual scripting for Renpy Visual Novels (VSVN)
-- [ ] Reassign Keybindings how you see fit, including support for F13-F24 keys.
 - [ ] Search, Replace, and Search in all files with regular expression support.
 - [ ] Built-in inline boolean expression simplifier
 - [ ] Boolean expression builder with variable names, and a truth table for those really complex conditions.
@@ -104,9 +104,9 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 
 ## Available Keybindings
 
-- [ ] Duplicate line/selected block : Ctrl+D
+- [x] Duplicate line/selected block : Ctrl+D
 - [ ] Run selected file in the console : F5
-- [ ] Quit : Alt+F4
+- [x] Quit : Alt+F4
 - [ ] Close current file : Ctrl+W
 - [ ] Comment/Uncomment selected block/line : Ctrl+Q
 - [ ] Search : Ctrl+F
@@ -115,12 +115,12 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] Copy : Ctrl+C
 - [ ] Paste : Ctrl+V
 - [ ] Cut : Ctrl+X
-- [ ] Save : Ctrl+S
-- [ ] Save As : Ctrl+Shift+S
-- [ ] To lowercase : Ctrl+U
-- [ ] To UPPERCASE : Ctrl+Shift+U
-- [ ] To Capitalized case : Ctrl+Alt+U
-- [ ] Invert casing : Ctrl+Shift+Alt+U
+- [x] Save : Ctrl+S
+- [x] Save As : Ctrl+Shift+S
+- [x] To lowercase : Ctrl+U
+- [x] To UPPERCASE : Ctrl+Shift+U
+- [x] To Capitalized case : Ctrl+Alt+U
+- [x] Invert casing : Ctrl+Shift+Alt+U
 - [x] Undo : Ctrl+Z
 - [x] Redo : Ctrl+Y
 
@@ -149,3 +149,4 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
 - [ ] fix saving
 - [ ] fix renpy builtin lexing
 - [ ] tab functionnality : indent/deindent code with tab /shift-tab
+- [ ] comment/uncomment blocks of code

@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from copy import copy
 
 class EntryWithPlaceholder(tk.Entry):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):
@@ -29,20 +29,13 @@ class EntryWithPlaceholder(tk.Entry):
 
 
 class KeybindingEntry(tk.Entry):
-    def __init__(self, master=None, keybinder_inst=None, target_keybind=""):
+    def __init__(self, master=None, current=[]):
         super().__init__(master)
 
-        self.keybinder = keybinder_inst
-        self.target = target_keybind
-
-        current = getattr(self.keybinder, self.target)[1:-1]
-        if current:
-            self.keys_pressed = current.split("-")
-        else:
-            self.keys_pressed = []
+        self.keys_pressed = copy(current)
         self.bind("<FocusIn>", self.on_focus_in)
         self.bind("<KeyPress>", self.on_key_pressed)
-        self.bind('<KeyRelease>', self.on_key_released)
+        self.update()
 
     def on_focus_in(self, event):
         self.keys_pressed = []
@@ -54,12 +47,7 @@ class KeybindingEntry(tk.Entry):
         if keysym not in self.keys_pressed:
             self.keys_pressed.append(keysym)
             self.update()
-        pass
-
-    def on_key_released(self, event):
-        v = "<" + "-".join(self.keys_pressed) + ">"
-        setattr(self.keybinder, self.target, v)
-        pass
+        return 'break'
 
     def format_keysym(self, keysym):
         keysym = keysym.capitalize()

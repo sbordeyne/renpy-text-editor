@@ -8,7 +8,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("600x480")
     ctrl.options_wm = root
-    root.title("Layered Image Builder")
+    root.title("Options")
     gui = OptionsView(root, controller=ctrl)
     gui.grid(sticky="nswe")
     root.mainloop()

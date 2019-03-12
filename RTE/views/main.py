@@ -12,7 +12,7 @@ import tkinter.font as tkfont
 from RTE.models.snippet import snippet_store
 from RTE.utils import tr
 from RTE.widgets.notebooks import CloseableNotebook
-
+from RTE.config import keybindings
 
 class MainWindowView(tk.PanedWindow):
     def __init__(self, *args, **kwargs):
@@ -63,8 +63,7 @@ class RenpyTextEditorGUI(tk.Frame):
         self.__setup_variables()
         self.__setup_menu()
         self.__setup_ui()
-
-        self.bind('<Configure>', self.on_configure)
+        self.__setup_binds()
         self.loop()
         return
 
@@ -131,6 +130,23 @@ class RenpyTextEditorGUI(tk.Frame):
         menutools.add_command(label=tr("Add Snippet"), command=self.controller.menus.tools_open_add_snippet)
         menutools.add_command(label=tr("Options"), command=self.controller.menus.tools_open_options)
 
+    def __setup_binds(self):
+        self.bind('<Configure>', self.on_configure)
+        self.bind(keybindings.quit, self.quit)
+        self.bind(keybindings.to_upper, self.controller.menus.edit_formatting_upper)
+        self.bind(keybindings.to_lower, self.controller.menus.edit_formatting_lower)
+        self.bind(keybindings.to_capitalize, self.controller.menus.edit_formatting_capitalized)
+        self.bind(keybindings.to_invert_casing, self.controller.menus.edit_formatting_invert)
+        self.bind(keybindings.to_random_casing, self.controller.menus.edit_formatting_random)
+        self.bind(keybindings.to_spongebob_casing, self.controller.menus.edit_formatting_spongebob)
+        self.bind(keybindings.save_file, self.controller.menus.file_save)
+        self.bind(keybindings.save_as, self.controller.menus.file_save_as)
+        self.bind(keybindings.save_all, self.controller.menus.file_save_all)
+        self.bind(keybindings.new_file, self.controller.menus.file_new)
+        self.bind(keybindings.open_project, self.controller.menus.file_open)
+        self.bind(keybindings.duplicate, self.controller.menus.edit_duplicate)
+
+
     def on_configure(self, event):
         global config
         config.wm_width = int(event.width)
@@ -155,5 +171,6 @@ class RenpyTextEditorGUI(tk.Frame):
         config.wm_width = int(self.master.winfo_width())
         config.wm_height = int(self.master.winfo_height())
         config.save()
+        keybindings.save()
         snippet_store.save()
         self.master.destroy()

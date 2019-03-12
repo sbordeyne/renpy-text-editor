@@ -23,3 +23,7 @@ class Translator:
             return self._attrs[text].encode("utf8")
         except KeyError:
             return text
+
+    @classmethod
+    def get_all_locales(cls):
+        return [fname.split(".")[0] for fname in os.listdir(const.locale_folder_path) if fname.endswith(".json")]
