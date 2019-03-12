@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from .editor_window import EditorFrame
 from .project_manager import ProjectManagerView
-from RTE.controller import Controller
+from RTE.controllers.controller import Controller
 from .console import ConsoleView
 from .variable_viewer import VariableViewerView
 from .snippets import SnippetsView
