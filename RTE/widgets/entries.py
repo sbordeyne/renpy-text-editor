@@ -1,5 +1,8 @@
 import tkinter as tk
 from copy import copy
+import tkinter.filedialog as filedialog
+from RTE.utils import tr
+
 
 class EntryWithPlaceholder(tk.Entry):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):
@@ -57,3 +60,25 @@ class KeybindingEntry(tk.Entry):
     def update(self):
         self.delete(0, tk.END)
         self.insert(tk.END, "+".join(self.keys_pressed))
+
+
+class EntrySelectFolder(tk.Frame):
+    def __init__(self, master=None, title="Select a directory", path=None):
+        super().__init__(master)
+        self.ety = tk.Entry(self)
+        self.button_img = tk.BitmapImage("@assets/folder.xbm")
+        button = tk.Button(self, bitmap=self.button_img, command=self.on_btn_click)
+
+        self.ety.bind("<Double-Button-1>", self.on_btn_click)
+        self.path = path
+        if path is not None:
+            self.ety.delete(0, tk.END)
+            self.ety.insert(tk.END, self.path)
+
+        self.ety.grid(row=0, column=0)
+        button.grid(row=0, column=1)
+
+    def on_btn_click(self, *args):
+        self.path = filedialog.askdirectory(title=tr(self.title))
+        self.ety.delete(0, tk.END)
+        self.ety.insert(tk.END, self.path)

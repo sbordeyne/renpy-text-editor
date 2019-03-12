@@ -3,10 +3,14 @@ import tkinter as tk
 from RTE.config import config
 from RTE.models.file import File
 from RTE.widgets.debounce import DebounceTk
+import os
+
 
 def main():
     root = DebounceTk()
     config.validate_width_height(root)
+    if config.path_to_git:
+        os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = config.path_to_git
     if config.start_maximized:
         root.state('zoomed')
     else:

@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import string
 
 from RTE.config import config, keybindings
-from RTE.widgets.entries import KeybindingEntry
+from RTE.widgets.entries import KeybindingEntry, EntrySelectFolder
 from RTE.utils import tr
 from RTE.models.locale import Translator
 
@@ -71,12 +71,21 @@ class GeneralView(tk.Frame):
                                          height=10)
         self.locale_combo.grid(row=1, column=1)
         tk.Label(self, text=tr("Language :")).grid(row=1, column=0)
+        tk.Label(self, text=tr("Path to  git :")).grid(row=2, column=0)
+        if config.path_to_git:
+            path = config.path_to_git
+        else:
+            path = None
+        self.git_path_ety = EntrySelectFolder(master=self, title="Select path to git install", path=path)
+        self.git_path_ety.grid(row=2, column=1)
 
 
     def save_config(self):
         self.formatting_frame.save_config()
         global config
         config.locale = self.locale_code.get()
+        if self.git_path_ety.path is not None:
+            config.path_to_git = self.git_path_ety.path
         config.save()
 
 

@@ -3,6 +3,7 @@ import json
 from collections import defaultdict
 from RTE.models.theme import Theme
 from RTE.models.locale import Translator
+import os
 
 
 class Config:
@@ -38,6 +39,8 @@ class Config:
         self.locale = Translator.validate_locale(locale)
 
     def save(self):
+        if self.path_to_git:
+            os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = self.path_to_git
         to_save = dict(self._attrs)
         with open(const.config_file_path, "w") as conf:
             json.dump(to_save, conf, indent=4)

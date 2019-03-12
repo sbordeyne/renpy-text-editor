@@ -7,5 +7,6 @@
     "show_whitespace_characters": false,
     "debug": true,
     "start_maximized": false,
-    "locale": "en-US"
+    "locale": "en-US",
+    "path_to_git": ""
 }
