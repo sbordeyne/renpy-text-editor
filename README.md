@@ -55,6 +55,7 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [x] collapsing with "#region region-name" and "#endregion" comments
     - [x] collapsing labels, screens, python, init, statements and functions
 - [x] Reassign Keybindings how you see fit, including support for F13-F24 keys.
+- [x] GUI for setting up your preferences
 
 # Planned Features
 
@@ -137,7 +138,6 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [x] lexing renpy keywords
     - [ ] lexing style attributes
     - [x] lexing renpy built-in functions
-- [ ] Handle keyboard input / changing the Keybindings
 - [ ] Resizing window support + saving in the config file for later restoration.
 - [ ] Tooltips
     - [x] Create Tooltip class
@@ -147,6 +147,6 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [ ] add more collapse buttons
     - [ ] remove debug prints
 - [ ] fix saving
-- [ ] fix renpy builtin lexing
+- [ ] fix "renpy builtin" lexing
 - [ ] tab functionnality : indent/deindent code with tab /shift-tab
 - [ ] comment/uncomment blocks of code
