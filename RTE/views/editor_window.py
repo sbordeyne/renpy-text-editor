@@ -110,15 +110,10 @@ class EditorFrame(tk.Frame):
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
         self.text.bind("<Tab>", self._tab_key_pressed)
+        self.text.bind("<Shift-Tab>", self._shift_tab_key_pressed)
         self.text.bind("<Key-space>", lambda event: self.on_key_whitespace(self.text, ' '))
-        self.text.bind("<Key-Tab>", lambda event: self.on_key_whitespace(self.text, '\t'))
         self.text.bind("<Return>", lambda event: self.on_key_whitespace(self.text, '\n'))
         self.text.bind("<FocusIn>", lambda event: self.master.master.controller.set_last_entered_side(self.window_side))
-
-        #self.text.bind('<Double-Button-1>', self.select_word)
-        #self.text.bind('<Triple-Button-1>', self.select_line)
-
-        # self.text.bind("<Control-w>", self.init_theme)
 
         self.text.mark_set("highlight_start", "1.0")
         self.text.mark_set("highlight_end", "1.0")
@@ -162,10 +157,35 @@ class EditorFrame(tk.Frame):
         pass
 
     def _tab_key_pressed(self, event):
-        if config.insert_spaces_instead_of_tabs:
-            self.text.insert(tk.END, " " * config.tabs_length)
+        self.on_key_whitespace('\t', event)
+        to_insert = " " * config.tabs_length if config.insert_spaces_instead_of_tabs else "\t"
+        if self.text.tag_ranges("sel"):
+            id_start = int(self.text.index(tk.SEL_FIRST + " linestart").split(".")[0])
+            id_end = int(self.text.index(tk.SEL_LAST + " linestart").split(".")[0])
+            while id_start < id_end + 1:
+                ids = f"{id_start}.0"
+                self.text.insert(ids, to_insert)
+                id_start += 1
         else:
-            self.text.insert(tk.END, "\t")
+            self.text.insert(tk.INSERT, to_insert)
+        return 'break'
+
+    def _shift_tab_key_pressed(self, event):
+        to_remove = " " * config.tabs_length if config.insert_spaces_instead_of_tabs else "\t"
+        ids = tk.INSERT + " linestart"
+        ide = tk.INSERT + f" linestart +{len(to_remove)}c"
+
+        if self.text.tag_ranges("sel"):
+            id_start = int(self.text.index(tk.SEL_FIRST + " linestart").split(".")[0])
+            id_end = int(self.text.index(tk.SEL_LAST + " linestart").split(".")[0])
+            while id_start < id_end + 1:
+                ids = f"{id_start}.0"
+                ide = f"{id_start}.{len(to_remove)}"
+                if self.text.get(ids, ide) == to_remove:
+                    self.text.delete(ids, ide)
+                id_start += 1
+        elif self.text.get(ids, ide) == to_remove:
+            self.text.delete(ids, ide)
         return 'break'
 
     def on_key_whitespace(self, char, event=None):

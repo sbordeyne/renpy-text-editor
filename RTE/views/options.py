@@ -89,8 +89,8 @@ class FormattingView(tk.LabelFrame):
     def __setup_ui(self):
         tk.Label(self, text=tr("Insert spaces instead of tabs? ")).grid(row=0, column=0)
         tk.Label(self, text=tr("Show Whitespace Characters? ")).grid(row=1, column=0)
-        tk.Label(self, text=tr("Start maximized? ")).grid(row=2, column=0)
-        tk.Label(self, text=tr("Tabs Length :")).grid(row=3, column=0)
+        tk.Label(self, text=tr("Tabs Length :")).grid(row=2, column=0)
+        tk.Label(self, text=tr("Start maximized? ")).grid(row=3, column=0)
 
         spaces_cb = tk.Checkbutton(self,
                                    variable=self.insert_spaces_over_tabs)

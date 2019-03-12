@@ -56,6 +56,7 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [x] collapsing labels, screens, python, init, statements and functions
 - [x] Reassign Keybindings how you see fit, including support for F13-F24 keys.
 - [x] GUI for setting up your preferences
+- [x] Indent/Deindent code with tab/shift+tab
 
 # Planned Features
 
@@ -148,5 +149,4 @@ All code in this repository should be MVC oriented (Model-View-Controller). The 
     - [ ] remove debug prints
 - [ ] fix saving
 - [ ] fix "renpy builtin" lexing
-- [ ] tab functionnality : indent/deindent code with tab /shift-tab
 - [ ] comment/uncomment blocks of code

@@ -102,6 +102,8 @@ class MenusController():
     def tools_open_options(self):
         if self.options_wm is None:
             self.options_wm = tk.Toplevel()
+            self.options_wm.geometry("640x480")
+            self.options_wm.title("Options")
             gui = OptionsView(master=self.options_wm, controller=self)
             gui.grid()
             self.options_wm.protocol("WM_DELETE_WINDOW", gui.quit)
