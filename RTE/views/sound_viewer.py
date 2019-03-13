@@ -1,6 +1,10 @@
 import tkinter as tk
 import tkinter.ttk as ttk
-import mp3play
+try:
+    import mp3play
+except ImportError:
+    mp3play = None
+
 
 class SoundViewer(tk.Frame):
     def __init__(self, master=None, fpath=None):
