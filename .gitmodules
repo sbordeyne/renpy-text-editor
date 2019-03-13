@@ -1,0 +1,3 @@
+[submodule "librpydb"]
+	path = librpydb
+	url = https://github.com/Enerccio/librpydb.git
