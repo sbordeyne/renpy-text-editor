@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 try:
     import mp3play
-except ImportError:
+except Exception:
     mp3play = None
 
 
