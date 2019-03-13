@@ -48,6 +48,11 @@ class DebuggerView(tk.Frame):
         return self.execution_paused_state is not None and \
             self.execution_paused_state.is_valid()
 
+    @property
+    def thread_executing(self):
+        return self.executed_thread is not None and \
+            self.executed_thread.is_valid()
+
     def print(self, message, end="\n"):
         self.text.insert(tk.END, message + end)
 
@@ -82,7 +87,7 @@ class DebuggerView(tk.Frame):
     def on_client_error(*args, **kwargs):
         pass
 
-    def help_cmd(self):
+    def help_cmd(self, *args):
         hlp_msg = """
 Available commands:
 connect - connects to debugged renpy game on port 14711
@@ -107,17 +112,17 @@ dinfo - prints debugger state information
 """
         self.print(hlp_msg)
 
-    def set_breakpoint(self, file, line):
+    def set_breakpoint(self, file, line, *args):
         try:
             self.debugger.add_breakpoint(Breakpoint(line, file))
         except BaseException:
             self.print("Failed to insert breakpoint, check syntax")
 
-    def list_breakpoints(self):
+    def list_breakpoints(self, *args):
         for bp in self.debugger.breakpoints:
             self.print(f"Breakpoint at {bp.source}, line {bp.line}")
 
-    def remove_breakpoint(self, file=None, line=None):
+    def remove_breakpoint(self, file=None, line=None, *args):
         if file is None or line is None:
             self.debugger.clear_breakpoints()
             self.print("All breakpoints removed")
@@ -127,7 +132,7 @@ dinfo - prints debugger state information
             self.debugger.remove_breakpoint(Breakpoint(line, file))
         self.print("Don't forget to 'sb' to synchronize breakpoints!")
 
-    def connect(self):
+    def connect(self, *args):
         if self.debugger.get_state() == DebuggerState.NOT_CONNECTED:
             self.print("Establishing connection")
             try:
@@ -135,21 +140,50 @@ dinfo - prints debugger state information
             except Exception:
                 self.print("Failed. Is a renpy debugged game running?")
 
-    def synchronize_breakpoints(self):
+    def synchronize_breakpoints(self, *args):
         if self.debugger.get_state() in (DebuggerState.CONNECTED, DebuggerState.CONNECTING):
             self.print("Not connected")
         else:
             self.debugger.sync_breakpoints()
             self.print("Breakpoints synchronized")
 
-    def list_threads(self):
+    def list_threads(self, *args):
         if self.debugger.get_state() == DebuggerState.NOT_CONNECTED:
+            self.print("Not connected")
             return
         if self.is_paused:
             execution_threads = self.execution_paused_state.get_threads()
             self.print("Threads:")
             for it, renpy_thread in enumerate(execution_threads):
                 self.print(f"Threads #{it} : {renpy_thread.get_thread_name()}")
+
+    def show_backtrace(self, thread_id="0", *args):
+        if self.debugger.get_state() == DebuggerState.NOT_CONNECTED:
+            self.print("Not connected")
+            return
+        if self.is_paused:
+            if int(thread_id) >= len(self.execution_threads):
+                self.print(f"No thread {thread_id} available")
+            else:
+                self.print(f"Backtrace for thread [{thread_id}]")
+                self.executed_thread = self.execution_threads[int(thread_id)]
+                self.executed_stack_frames = self.executed_thread.get_stack_frames()
+                id = 0
+                for st in self.executed_stack_frames:
+                    self.print(f"#{id}: <{st.get_source()}:{st.get_line()}> {st.get_line_of_code()} ")
+                    id += 1
+
+    def switch_stack_frame(self, stid=0, *args):
+        if self.debugger.get_state() == DebuggerState.NOT_CONNECTED:
+            self.print("Not connected")
+            return
+        if self.thread_executing:
+            if stid >= len(self.executed_stack_frames):
+                self.print(f"No such stack frame {stid}")
+            else:
+                self.executed_stack_frame = self.executed_stack_frames[stid]
+                self.executed_stack_frame.set_active()
+                self.print(f"#{stid}: <{self.executed_stack_frame.get_source()}:{self.executed_stack_frame.get_line()}> {self.executed_stack_frame.get_line_of_code()} ")
 
     def dinfo(self):
         msg = f"""
@@ -163,5 +197,4 @@ Showing variables :     {self.showing_variables}
         self.print(msg)
 
     def loop(self):
-
         self.after(1, self.loop)
