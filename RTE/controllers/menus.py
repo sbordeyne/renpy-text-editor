@@ -61,8 +61,9 @@ class MenusController():
                                                            ("Diff files", "*.diff"),
                                                            ("Text files", "*.txt"),
                                                            ("All files", "*.*")))
-        file_.path = os.path.join(self.master.project.path, filename)
-        file_.save()
+        if filename:
+            file_.path = os.path.join(self.master.project.path, filename)
+            file_.save()
         return
 
     def file_save_all(self, *args):

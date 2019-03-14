@@ -40,6 +40,9 @@ class File:
 
     def save(self):
         text = self.text.replace("\t", " " * config.tabs_length)
+        text = "\n".join([line.rstrip() for line in text.split("\n")])
+        if self.path.endswith("\\\\"):
+            return
         with open(self.path, "w") as f:
             f.write(text)
 

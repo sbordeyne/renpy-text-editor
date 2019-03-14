@@ -7,6 +7,7 @@ from .console import ConsoleView
 from .variable_viewer import VariableViewerView
 from .snippets import SnippetsView
 from .toolbar import Toolbar
+from .debugger import DebuggerView
 from RTE.config import config
 import tkinter.font as tkfont
 from RTE.models.snippet import snippet_store
@@ -29,10 +30,12 @@ class MainWindowView(tk.PanedWindow):
         self.add(self.texts)
         self.add(self.bottom_nb)
 
-        self.console_ui = ConsoleView(self)
+        self.console_ui = ConsoleView(self.bottom_nb)
         self.bottom_nb.add(self.console_ui, text=tr("Console"))
-        self.variable_viewer_ui = VariableViewerView(self)
+        self.variable_viewer_ui = VariableViewerView(self.bottom_nb)
         self.bottom_nb.add(self.variable_viewer_ui, text=tr("Variable Viewer"))
+        self.debugger_ui = DebuggerView(master=self.bottom_nb)
+        self.bottom_nb.add(self.debugger_ui, text=tr("Debugger"))
 
         self.left_tabs = []
         self.right_tabs = []
@@ -75,7 +78,7 @@ class RenpyTextEditorGUI(tk.Frame):
         self.toolbar = Toolbar(self)
 
         self.main = MainWindowView(self)
-        self.side_notebook = ttk.Notebook(self)
+        self.side_notebook = ttk.Notebook(self, width=config.side_notebook_width)
         self.project_manager = ProjectManagerView(self)
         self.snippets = SnippetsView(self)
 
