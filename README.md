@@ -19,15 +19,6 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 
 `python3 -m renpytexteditor.py`
 
-
-# Contributing
-
-Contributions should be done via pull requests (PR). If you have a feature to add to the software, whether it's a planned feature or not, please fork this repository and open up a PR with your changes. This will be reviewed, and integrated if applicable.
-
-All code in this repository adheres to the PEP8 styling guide as much as possible, except for the line length guideline, although it is mostly kept under 80 characters long, sometimes, it is unavoidable. Code shall be linted with the pycodestyle linter and the following ignore flags : `E501, W142, W191, E303, E302, W293`.
-
-All code in this repository should be MVC oriented (Model-View-Controller). The entry point is in the RTE.views.main subpackage.
-
 # Currently implemented features
 
 - [x] Editor View with Line numbering

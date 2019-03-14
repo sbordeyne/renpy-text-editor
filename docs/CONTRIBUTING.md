@@ -1,4 +1,20 @@
-# Themes guide
+# Contributing
+
+Contributions should be done via pull requests (PR). If you have a feature to add to the software, whether it's a planned feature or not, please fork this repository and open up a PR with your changes. This will be reviewed, and integrated if applicable.
+
+All code in this repository adheres to the PEP8 styling guide as much as possible, except for the line length guideline, although it is mostly kept under 80 characters long, sometimes, it is unavoidable. Code shall be linted with the pycodestyle linter and the following ignore flags : `E501, W142, W191, E303, E302, W293`.
+
+All code in this repository should be MVC oriented (Model-View-Controller). The entry point is in the RTE.views.main subpackage.
+
+# Translating
+
+The RenPy Text Editor supports translations. In order to translate the software, you must provide a `<locale>.json` file which will set up a dictionnary. The keys to this dictionnary are the sentences in english to translate, the value for that key must be a single string, if possible of similar length, which will be displayed instead of the english string.
+
+If keys are missing from the translation file, then the default english strings will be used.
+
+# Creating themes
+
+Themes for the renpy text editor are just json files which will apply custom colors/font styles to particular UI elements. Themes are also responsible of the syntax highlighting.
 
 ## Theme Creation
 
@@ -74,3 +90,4 @@ TODO (check the tkinter config options on effbot.org for the widget to change)
 ## Theme Installation
 
 Themes are installed by dropping the appropriate JSON theme file in the themes/ folder. The file name will be used to determine the theme name. Authorized characters are "[A-z]-_"
+
