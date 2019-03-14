@@ -11,7 +11,7 @@ from .debugger import DebuggerView
 from RTE.config import config
 import tkinter.font as tkfont
 from RTE.models.snippet import snippet_store
-from RTE.utils import tr
+from RTE.utils import tr, method_toggle
 from RTE.widgets.notebooks import CloseableNotebook
 from RTE.config import keybindings
 
@@ -56,6 +56,13 @@ class MainWindowView(tk.PanedWindow):
         else:
             raise Exception(f"Incorrect side specified. Values are (right|left) : {side}")
 
+    def resize(self, width, height):
+        self.config(width=width,
+                    height=height)
+        #self.left_nb.config(width=width // 2, height=height - 300)
+        #self.right_nb.config(width=width // 2, height=height - 300)
+        #self.bottom_nb.config(width=width, height=300)
+
 
 class RenpyTextEditorGUI(tk.Frame):
     def __init__(self, master=None):
@@ -68,6 +75,7 @@ class RenpyTextEditorGUI(tk.Frame):
         self.__setup_ui()
         self.__setup_binds()
         self.loop()
+        self.slowloop()
         return
 
     def __setup_variables(self):
@@ -149,12 +157,12 @@ class RenpyTextEditorGUI(tk.Frame):
         self.bind(keybindings.open_project, self.controller.menus.file_open)
         self.bind(keybindings.duplicate, self.controller.menus.edit_duplicate)
 
-
     def on_configure(self, event):
         global config
         config.wm_width = int(event.width)
         config.wm_height = int(event.height)
-        config.save()
+        pass
+
 
     def get_current_text(self, side):
         if side == "left":
@@ -164,6 +172,15 @@ class RenpyTextEditorGUI(tk.Frame):
             tabid = self.main.right_nb.select()
             return self.main.right_tabs[self.main.right_nb.index(tabid)]
 
+
+    def slowloop(self):
+        return
+        w, h = config.wm_width, config.wm_height
+        self.side_notebook.config(width=config.side_notebook_width, height=h)
+        self.project_manager.resize(config.side_notebook_width, h)
+        self.snippets.resize(config.side_notebook_width, h)
+        self.main.resize(w - config.side_notebook_width, h)
+        self.after(100, self.slowloop)
 
     def loop(self):
         config.set_theme(self.current_theme.get())

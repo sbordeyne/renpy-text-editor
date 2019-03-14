@@ -93,7 +93,6 @@ class EditorFrame(tk.Frame):
         self.text.configure(yscrollcommand=self.vsb.set,
                             xscrollcommand=self.hsb.set,
                             wrap=tk.NONE,
-                            height=config.wm_height // 20,
                             undo=True)
 
         self.linenumbers = TextLineNumbers(self, width=30)
@@ -288,3 +287,8 @@ class EditorFrame(tk.Frame):
 
     def loop(self):
         self.after(5, self.loop)
+
+    def resize(self, width, height):
+        font = tkfont.Font(font=self.text["font"])
+        self.text.config(width=width // font.measure(" "),
+                         height=height // 20)

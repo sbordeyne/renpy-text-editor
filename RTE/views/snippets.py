@@ -10,7 +10,7 @@ class SnippetsView(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         global config
-        self.vsb = ttk.Scrollbar(orient="vertical")
+        self.vsb = ttk.Scrollbar(self, orient="vertical")
         self.tree = ttk.Treeview(self,
                                  columns=("name"),
                                  displaycolumns=(),
@@ -49,7 +49,9 @@ class SnippetsView(tk.Frame):
             self.update()
         self.after(5, self.loop)
 
-    pass
+    def resize(self, width, height):
+        # font = tkfont.Font(font=self.tree["font"])
+        self.tree.config(height=height // 20)
 
 
 class SnippetsAddingView(tk.Frame):

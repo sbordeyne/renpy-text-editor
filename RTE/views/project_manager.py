@@ -4,6 +4,7 @@ import os
 from RTE.constants import assets
 from RTE.config import config
 from RTE.utils import autoscroll, get_type_by_extension
+import tkinter.font as tkfont
 
 
 class ProjectManagerView(tk.Frame):
@@ -24,8 +25,8 @@ class ProjectManagerView(tk.Frame):
 
     def init_treeview(self):
         global config
-        self.vsb = ttk.Scrollbar(orient="vertical")
-        self.hsb = ttk.Scrollbar(orient="horizontal")
+        self.vsb = ttk.Scrollbar(master=self, orient="vertical")
+        self.hsb = ttk.Scrollbar(master=self, orient="horizontal")
         style = ttk.Style()
         style.configure("Custom.Treeview", **config.get_theme().ui["treeview"]["base"])
         style.configure("Custom.Treeview.Heading",
@@ -135,3 +136,7 @@ class ProjectManagerView(tk.Frame):
             path = tree.item(node)["values"][0]
             ftype = get_type_by_extension(path.split("/")[-1].split(".")[-1])
             self.master.controller.open_file(path, ftype)
+
+    def resize(self, width, height):
+        # font = tkfont.Font(font=self.tree["font"])
+        self.tree.config(height=height // 20)

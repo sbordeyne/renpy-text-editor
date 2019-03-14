@@ -41,3 +41,33 @@ def text_get_selected(text):
 
 def tr(text):
     return config.get_locale().translate(text)
+
+def method_once(method):
+    "A decorator that runs a method only once."
+    attrname = "_%s_once_result" % id(method)
+
+    def decorated(self, *args, **kwargs):
+        try:
+            return getattr(self, attrname)
+        except AttributeError:
+            setattr(self, attrname, method(self, *args, **kwargs))
+            return getattr(self, attrname)
+    return decorated
+
+def method_toggle(method):
+    "A decorator that runs a method once, then not, then once etc."
+    attrname = "_%s_once_result" % id(method)
+    i = -1
+    i += 1
+
+    def decorated(self, *args, **kwargs):
+        try:
+            return getattr(self, attrname)
+        except AttributeError:
+            setattr(self, attrname, method(self, *args, **kwargs))
+            return getattr(self, attrname)
+
+    if i % 2 == 0:
+        return decorated
+    else:
+        return method

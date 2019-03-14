@@ -285,3 +285,8 @@ Showing variables :     {self.showing_variables}
 
     def loop(self):
         self.after(1, self.loop)
+
+    def resize(self, width, height):
+        font = tkfont.Font(font=self.text["font"])
+        self.text.config(width=width // font.measure(" "),
+                         height=10)
