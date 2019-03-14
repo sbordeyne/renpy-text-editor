@@ -48,6 +48,7 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [x] Reassign Keybindings how you see fit, including support for F13-F24 keys.
 - [x] GUI for setting up your preferences
 - [x] Indent/Deindent code with tab/shift+tab
+- [x] Full-featured renpy debugger (courtesy of @Enerccio) including breakpoints, pause, line-by-line execution.
 
 # Planned Features
 
@@ -69,7 +70,6 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [ ] Search, Replace, and Search in all files with regular expression support.
 - [ ] Built-in inline boolean expression simplifier
 - [ ] Boolean expression builder with variable names, and a truth table for those really complex conditions.
-- [ ] Debugger with breakpoints, pause, line-by-line execution.
 
 ## LayeredImage Builder Feature
 
@@ -116,28 +116,3 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [x] Invert casing : Ctrl+Shift+Alt+U
 - [x] Undo : Ctrl+Z
 - [x] Redo : Ctrl+Y
-
-# To do list :
-
-
-- [ ] Improve the lexer for the RenPy language
-    - [x] Lexing screen language
-    - [x] Lexing screen language attributes
-    - [x] Lexing Screen Actions
-    - [x] Lexing the $ sign for inline python
-    - [x] Adding new Renpy token type
-    - [ ] lexing transform/atl language
-    - [x] lexing renpy keywords
-    - [ ] lexing style attributes
-    - [x] lexing renpy built-in functions
-- [ ] Resizing window support + saving in the config file for later restoration.
-- [ ] Tooltips
-    - [x] Create Tooltip class
-    - [ ] add tooltips to buttons
-- [x] Collapsing blocks of code
-    - [ ] improve the gui
-    - [ ] add more collapse buttons
-    - [ ] remove debug prints
-- [ ] fix saving
-- [ ] fix "renpy builtin" lexing
-- [ ] comment/uncomment blocks of code
