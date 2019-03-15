@@ -97,6 +97,9 @@ class EditorFrame(tk.Frame):
 
         self.linenumbers = TextLineNumbers(self, width=30)
         self.linenumbers.attach(self.text)
+
+        if self.file is not None:
+            self.file.widget = self.text
         self.root_block = Block(text="")
 
         self.parse_blocks()

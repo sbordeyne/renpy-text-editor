@@ -122,6 +122,7 @@ class RenpyTextEditorGUI(tk.Frame):
         menuedit.add_command(label=tr("Undo"), command=self.controller.menus.edit_undo)
         menuedit.add_command(label=tr("Redo"), command=self.controller.menus.edit_redo)
         menuedit.add_command(label=tr("Duplicate line/selection"), command=self.controller.menus.edit_duplicate)
+        menuedit.add_command(label=tr("Comment/Uncomment"), command=self.controller.menus.edit_comment)
         menuedit.add_cascade(label=tr("Formatting"), menu=menuedit_formatting)
 
         menuedit_formatting.add_command(label=tr("To UPPERCASE"), command=self.controller.menus.edit_formatting_upper)
@@ -156,6 +157,7 @@ class RenpyTextEditorGUI(tk.Frame):
         self.bind(keybindings.new_file, self.controller.menus.file_new)
         self.bind(keybindings.open_project, self.controller.menus.file_open)
         self.bind(keybindings.duplicate, self.controller.menus.edit_duplicate)
+        self.bind(keybindings.comment_selected, self.controller.menus.edit_comment)
 
     def on_configure(self, event):
         global config

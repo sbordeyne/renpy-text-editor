@@ -116,6 +116,15 @@ class MenusController():
         text = self.master.current_text
         text.text.edit_redo()
 
+    def edit_comment(self, *args):
+        text = self.master.current_text
+        file = self.master.current_file
+        selection = text_get_selected(text)
+        if selection:
+            file.insert_comment(text.index(tk.SEL_FIRST), text.index(tk.SEL_LAST))
+        else:
+            file.insert_comment(text.index("current linestart"), text.index("current lineend"))
+
     def edit_duplicate(self, *args):
         text = self.master.current_text
         selection = text_get_selected(text)

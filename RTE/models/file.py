@@ -17,6 +17,7 @@ class File:
         else:
             self.path = None
         self.text = text
+        self.widget = None
 
     @property
     def lexer(self):
@@ -65,3 +66,26 @@ class File:
         return self._path
 
     path = property(__get_path, __set_path)
+
+    def get_comment_token(self):
+        if self.extension in ("rpy", "yml", "yaml"):
+            return ("#", "")
+        elif self.extension == "xml":
+            return ("<--", "-->")
+        else:
+            return ("", "")
+
+    def insert_comment(self, start, end):
+        token_start, token_end = self.get_comment_token()
+        while int(start) <= int(end):
+            line = self.widget.get(start + " linestart", start + " lineend")
+            if line.lstrip().startswith(token_start):
+                # remove comment token
+                self.widget.delete(start + " linestart", start + f" linestart +{len(token_start)}c")
+                self.widget.delete(start + f" lineend -{len(token_start)}c", start + " lineend")
+            else:
+                # insert comment token
+                self.widget.insert(start + ' linestart', token_start)
+                self.widget.insert(start + ' lineend', token_end)
+            start = str(int(start.split(".")[0]) + 1)
+        pass
