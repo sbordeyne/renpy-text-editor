@@ -62,6 +62,42 @@ class DebuggerView(tk.Frame):
     def send_command(self, cmd, *args):
         if cmd == "h":
             self.help_cmd()
+        if cmd == "b":
+            self.set_breakpoint(*args)
+        if cmd == "connect":
+            self.connect()
+        if cmd == "disconnect":
+            self.disconnect()
+        if cmd == "rb":
+            self.remove_breakpoint(*args)
+        if cmd == "lb":
+            self.list_breakpoints()
+        if cmd == "sb":
+            self.synchronize_breakpoints()
+        if cmd == "threads":
+            self.list_threads()
+        if cmd == "bt":
+            self.show_backtrace(*args)
+        if cmd == "st":
+            self.switch_stack_frame(*args)
+        if cmd == "bytet":
+            self.print("Not Implemented")
+        if cmd == "scopes":
+            self.display_scopes()
+        if cmd == "v":
+            self.display_variable_structure(*args)
+        if cmd == "c":
+            self.continue_execution()
+        if cmd == "p":
+            self.pause_execution()
+        if cmd == "s":
+            self.step_execution()
+        if cmd == "si":
+            self.step_in()
+        if cmd == "so":
+            self.step_out()
+        if cmd == "dinfo":
+            self.dinfo()
         pass
 
     @property
