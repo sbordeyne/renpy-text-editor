@@ -49,6 +49,7 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [x] GUI for setting up your preferences
 - [x] Indent/Deindent code with tab/shift+tab
 - [x] Full-featured renpy debugger (courtesy of @Enerccio) including breakpoints, pause, line-by-line execution.
+- [x] Automatic Indent
 
 # Planned Features
 
@@ -59,7 +60,6 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [ ] Automatic Renpy markdown matching, with automatic detection of custom text tags ({b}, {u} etc tags)
 - [ ] Autocompletion of variables in text
 - [ ] Plugin support
-- [ ] Automatic Indent
 - [ ] Built-in linting line by line with PEP8 support, and Renpy's linting system
     - [ ] pycodestyle linting
     - [ ] renpy linting
@@ -87,8 +87,6 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [ ] Supported screen displayables :
     - [ ] imagebutton
     - [ ] textbutton
-    - [ ] frame
-    - [ ] viewport
     - [ ] add
     - [ ] use
 - [ ] support for conditions
@@ -101,7 +99,7 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [ ] Run selected file in the console : F5
 - [x] Quit : Alt+F4
 - [ ] Close current file : Ctrl+W
-- [ ] Comment/Uncomment selected block/line : Ctrl+Q
+- [x] Comment/Uncomment selected block/line : Ctrl+Q
 - [ ] Search : Ctrl+F
 - [ ] Search & Replace : Ctrl+H
 - [ ] Search & replace in all files : Ctrl+Shift+F
