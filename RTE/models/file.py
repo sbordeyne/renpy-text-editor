@@ -81,11 +81,15 @@ class File:
             line = self.widget.get(start + " linestart", start + " lineend")
             if line.lstrip().startswith(token_start):
                 # remove comment token
-                self.widget.delete(start + " linestart", start + f" linestart +{len(token_start)}c")
-                self.widget.delete(start + f" lineend -{len(token_start)}c", start + " lineend")
+                if token_start:
+                    self.widget.delete(start + " linestart", start + f" linestart +{len(token_start)}c")
+                if token_end:
+                    self.widget.delete(start + f" lineend -{len(token_start)}c", start + " lineend")
             else:
                 # insert comment token
-                self.widget.insert(start + ' linestart', token_start)
-                self.widget.insert(start + ' lineend', token_end)
-            start = f"{int(start.split(".")[0]) + 1}.0"
+                if token_start:
+                    self.widget.insert(start + ' linestart', token_start)
+                if token_end:
+                    self.widget.insert(start + ' lineend', token_end)
+            start = str(int(start.split(".")[0]) + 1) + ".0"
         pass
