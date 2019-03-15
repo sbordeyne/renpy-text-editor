@@ -77,7 +77,7 @@ class File:
 
     def insert_comment(self, start, end):
         token_start, token_end = self.get_comment_token()
-        while int(start) <= int(end):
+        while int(start.split(".")[0]) <= int(end.split(".")[0]):
             line = self.widget.get(start + " linestart", start + " lineend")
             if line.lstrip().startswith(token_start):
                 # remove comment token
@@ -87,5 +87,5 @@ class File:
                 # insert comment token
                 self.widget.insert(start + ' linestart', token_start)
                 self.widget.insert(start + ' lineend', token_end)
-            start = str(int(start.split(".")[0]) + 1)
+            start = f"{int(start.split(".")[0]) + 1}.0"
         pass

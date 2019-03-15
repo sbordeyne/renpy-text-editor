@@ -71,3 +71,9 @@ def method_toggle(method):
         return decorated
     else:
         return method
+
+def get_column(index):
+    return index.split(".")[1]
+
+def get_line(index):
+    return index.split(".")[0]
