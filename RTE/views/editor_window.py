@@ -114,7 +114,7 @@ class EditorFrame(tk.Frame):
         self.text.bind("<Tab>", self._tab_key_pressed)
         self.text.bind("<Shift-Tab>", self._shift_tab_key_pressed)
         self.text.bind("<Key-space>", lambda event: self.on_key_whitespace(self.text, ' '))
-        self.text.bind("<Return>", lambda event: self.on_key_whitespace(self.text, '\n'))
+        self.text.bind("<Return>", self._on_return_key_pressed)
         self.text.bind("<FocusIn>", lambda event: self.master.master.controller.set_last_entered_side(self.window_side))
 
         self.text.mark_set("highlight_start", "1.0")
@@ -158,6 +158,18 @@ class EditorFrame(tk.Frame):
         self.text.tag_add("sel", beginning, end)
         pass
 
+    def _on_return_key_pressed(self, event):
+        linestart = self.text.index(tk.INSERT + " linestart")
+        current_line = self.text.get(tk.INSERT + " linestart", tk.INSERT + " lineend")
+        indent = len(self.tabs.findall(current_line)) + 1
+        to_insert = " " * config.tabs_length if config.insert_spaces_instead_of_tabs else "\t"
+        self.on_key_whitespace('\n', event)
+        if not self.showinvis:
+            self.text.insert(tk.INSERT, "\n")
+        if Block.start_re.match(current_line):
+            self.text.insert(linestart + " +1 line", to_insert * indent)
+
+
     def _tab_key_pressed(self, event):
         self.on_key_whitespace('\t', event)
         to_insert = " " * config.tabs_length if config.insert_spaces_instead_of_tabs else "\t"
@@ -200,6 +212,7 @@ class EditorFrame(tk.Frame):
             elif char == '\n':
                 convstr = '¶\n'
             self.text.insert(tk.INSERT, convstr)
+
 
     def convert_whitespace_characters(self):
         if self.showinvis:
