@@ -31,6 +31,7 @@ class MenusController():
     def file_open(self, *args):
         path = filedialog.askdirectory()
         self.master.project = Project(path)
+        self.master.view.project_manager.clear_tree()
         self.master.view.project_manager.project_path = path
         self.master.view.project_manager.populate_roots()
         return

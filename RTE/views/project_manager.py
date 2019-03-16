@@ -108,6 +108,9 @@ class ProjectManagerView(tk.Frame):
         for index, (val, k) in enumerate(items):
             self.tree.move(k, node, index)
 
+    def clear_tree(self):
+        self.tree.delete(*self.tree.get_children(''))
+
     def populate_roots(self):
         dir_ = os.path.abspath(self.project_path).replace('\\', '/')
         node = self.tree.insert('', 'end',
