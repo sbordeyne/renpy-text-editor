@@ -25,6 +25,9 @@
             "foreground": "#f8f8f2",
             "activebackground": "#34352D",
             "activeforeground": "#C4C4C0"
+        },
+        "frame":{
+            "background": "#272822"
         }
     },
     "tokens":

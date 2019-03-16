@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
+from RTE.config import config
 
 
 class Toolbar(tk.Frame):
@@ -24,4 +25,6 @@ class Toolbar(tk.Frame):
         tk.Button(self, image=self.redo_img, command=self.controller.menus.edit_redo).grid(row=0, column=5)
         tk.Button(self, image=self.firstdiff_img, command=self.controller.mark_as_first_diff).grid(row=0, column=6)
         tk.Button(self, image=self.diff_img, command=self.controller.diff).grid(row=0, column=7)
+
+        self.config(**config.get_theme().ui["frame"])
 

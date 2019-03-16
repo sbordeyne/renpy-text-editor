@@ -4,6 +4,7 @@ import tkinter as tk
 import threading
 import tkinter.font as tkfont
 from RTE.config import config
+from RTE.models.history import ConsoleHistory
 
 
 class DebuggerView(tk.Frame):
@@ -31,6 +32,7 @@ class DebuggerView(tk.Frame):
         self.executed_stack_frames = None
         self.executed_stack_frame = None
         self.showing_variables = None
+        self.history = ConsoleHistory()
 
         self.debugger.set_connected_callback(self.on_connected)
         self.debugger.set_disconnected_callback(self.on_disconnected)
@@ -39,17 +41,30 @@ class DebuggerView(tk.Frame):
 
         self.text.grid(row=0, column=0, columnspan=49)
         self.vsb.grid(row=0, column=50, sticky="ns")
+        self.text.config(**config.get_theme().ui["text"])
+        self.print(">>>  ", end="")
         self.loop()
 
     def on_key_press(self, event):
+        print(event.keysym)
         if event.keysym == "Return":
             self.on_key_return(event)
+        elif event.keysym == "BackSpace":
+            self.text.delete(tk.END + " -1 line")
+        elif event.keysym == "Up":
+            self.history.rollback()
+            self.text.delete(tk.END + " -1 line linestart", "end -1 line lineend")
+            self.text.insert(tk.END, ">>>  " + self.history.pop_str())
+        elif event.keysym == "Down":
+            self.history.rollforward()
+            self.text.delete(tk.END + " -1 line linestart", "end -1 line lineend")
+            self.text.insert(tk.END, ">>>  " + self.history.pop_str())
         else:
             self.text.insert(tk.END, event.char)
         return "break"
 
     def on_key_return(self, event):
-        cmd = self.text.get("end -1 lines linestart", "end -1 lines lineend")
+        cmd = self.text.get("end -1 lines linestart +5 c", "end -1 lines lineend")
         try:
             command, *args = cmd.split()
             self.print()
@@ -57,9 +72,11 @@ class DebuggerView(tk.Frame):
         except ValueError:
             self.print()
             self.send_command(cmd.rstrip())
+        self.print(">>>  ", end="")
         pass
 
     def send_command(self, cmd, *args):
+        print(cmd)
         if cmd == "h":
             self.help_cmd()
         if cmd == "b":
@@ -98,6 +115,7 @@ class DebuggerView(tk.Frame):
             self.step_out()
         if cmd == "dinfo":
             self.dinfo()
+        self.history.push(cmd, args)
         pass
 
     @property

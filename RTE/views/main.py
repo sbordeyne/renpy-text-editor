@@ -19,6 +19,7 @@ class MainWindowView(tk.PanedWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindowView, self).__init__(*args, **kwargs)
         self.config(orient=tk.VERTICAL)
+        self.config(**config.get_theme().ui["frame"])
         self.texts = tk.PanedWindow(self)
 
         self.left_nb = CloseableNotebook(self, side="left")
@@ -74,6 +75,7 @@ class RenpyTextEditorGUI(tk.Frame):
         self.__setup_menu()
         self.__setup_ui()
         self.__setup_binds()
+        self.config(**config.get_theme().ui["frame"])
         self.loop()
         self.slowloop()
         return
