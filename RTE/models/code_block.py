@@ -21,11 +21,10 @@ class Block:
         self.collapsed = False
         self.text = text
 
-        self._img_opened = tk.BitmapImage(file="assets/button-collapse.xbm")
-        self._img_collapsed = tk.BitmapImage(file="assets/button-open.xbm")
-
     @property
     def image(self):
+        self._img_opened = tk.BitmapImage(file="assets/button-collapse.xbm")
+        self._img_collapsed = tk.BitmapImage(file="assets/button-open.xbm")
         if self.collapsed:
             return self._img_collapsed
         else:
@@ -112,3 +111,18 @@ class Block:
         for child in self.get_all_children():
             rv.append(child.start)
         return rv
+
+
+if __name__ == "__main__":
+    content = """
+if test:
+    for x in  list:
+        print(x)
+
+else:
+    for y in other:
+        print(test * y)
+    """
+    root = Block(text=content)
+    root.detect_all()
+    print(root.get_all_starts())

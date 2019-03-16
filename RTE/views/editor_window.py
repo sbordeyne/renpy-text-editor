@@ -33,17 +33,19 @@ class TextLineNumbers(tk.Canvas):
                 block = self.root_block.get_block(int(linenum))
                 img = self.create_image(15, y, anchor="nw", image=block.image)
                 self.tag_bind(img, '<Button-1>',
-                              lambda event: self.on_click_button1(block, event))
+                              lambda event: self.on_click_button1(block, event, img))
             self.create_text(2, y, anchor="nw", text=linenum)
             i = self.textwidget.index("%s+1line" % i)
 
-    def on_click_button1(self, block, event):
+    def on_click_button1(self, block, event, image):
         # img = event.widget.find_closest(event.x, event.y)
         block.collapsed = not block.collapsed
         if block.collapsed:
             self.textwidget.tag_add("hidden", block.start_idx, block.end_idx)
         else:
             self.textwidget.tag_remove("hidden", block.start_idx, block.end_idx)
+        self.itemconfig(image, image=block.image)
+
 
 
 class CustomText(tk.Text):
@@ -100,7 +102,6 @@ class EditorFrame(tk.Frame):
 
         if self.file is not None:
             self.file.widget = self.text
-        self.root_block = Block(text="")
 
         self.parse_blocks()
 
@@ -114,6 +115,7 @@ class EditorFrame(tk.Frame):
         self.text.bind("<Tab>", self._tab_key_pressed)
         self.text.bind("<Shift-Tab>", self._shift_tab_key_pressed)
         self.text.bind("<Key-space>", lambda event: self.on_key_whitespace(self.text, ' '))
+        self.text.bind("<BackSpace>", self._on_backspace_pressed)
         self.text.bind("<Return>", self._on_return_key_pressed)
         self.text.bind("<FocusIn>", lambda event: self.master.master.controller.set_last_entered_side(self.window_side))
 
@@ -158,17 +160,24 @@ class EditorFrame(tk.Frame):
         self.text.tag_add("sel", beginning, end)
         pass
 
+    def _on_backspace_pressed(self, event):
+        if self.text.get(f"insert -{config.tabs_length}c", "insert") == " " * config.tabs_length:
+            self.text.delete(f"insert -{config.tabs_length}c", "insert")
+            return 'break'
+
     def _on_return_key_pressed(self, event):
         linestart = self.text.index(tk.INSERT + " linestart")
         current_line = self.text.get(tk.INSERT + " linestart", tk.INSERT + " lineend")
-        indent = len(self.tabs.findall(current_line)) + 1
+        indent = len(Block.tabs.findall(current_line))
         to_insert = " " * config.tabs_length if config.insert_spaces_instead_of_tabs else "\t"
         self.on_key_whitespace('\n', event)
         if not self.showinvis:
             self.text.insert(tk.INSERT, "\n")
         if Block.start_re.match(current_line):
+            self.text.insert(linestart + " +1 line", to_insert * (indent + 1))
+        else:
             self.text.insert(linestart + " +1 line", to_insert * indent)
-
+        return 'break'
 
     def _tab_key_pressed(self, event):
         self.on_key_whitespace('\t', event)
@@ -291,9 +300,11 @@ class EditorFrame(tk.Frame):
 
     def parse_blocks(self):
         content = self.text.get("1.0", tk.END)
+        self.root_block = Block(text="")
         self.root_block.set_text(content)
         self.root_block.detect_all()
         self.linenumbers.root_block = self.root_block
+        print(self.root_block.get_all_starts())
         pass
 
     def set_text(self, fpath):
