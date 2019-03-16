@@ -51,11 +51,14 @@ class MainWindowView(tk.PanedWindow):
         if side == "left":
             self.left_nb.add(tab, text=fname)
             self.left_tabs.append(tab)
+            self.left_nb.select(tab)
         elif side == "right":
             self.right_nb.add(tab, text=fname)
             self.right_tabs.append(tab)
+            self.right_nb.select(tab)
         else:
             raise Exception(f"Incorrect side specified. Values are (right|left) : {side}")
+
 
     def resize(self, width, height):
         self.config(width=width,
