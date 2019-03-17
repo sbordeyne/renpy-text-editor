@@ -1,5 +1,6 @@
 import tkinter as tk
 from RTE.config import config
+import os
 
 
 def autoscroll(sbar, first, last):
@@ -77,3 +78,6 @@ def get_column(index):
 
 def get_line(index):
     return index.split(".")[0]
+
+def compare_path(path_a, path_b):
+    return os.path.normpath(path_a) == os.path.normpath(path_b)

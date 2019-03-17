@@ -5,10 +5,11 @@ from pygments.lexers.data import JsonLexer, YamlLexer
 from pygments.lexers.markup import MarkdownLexer
 from pygments.lexers.html import XmlLexer
 from RTE.config import config
-from RTE.utils import tr
+from RTE.utils import tr, compare_path
+
 
 class File:
-    def __init__(self, fpath, window_side="left", text="", is_new=False):
+    def __init__(self, fpath, window_side="left", text="", is_new=False, project=None):
         self.window_side = window_side
         self.is_new = is_new
         self._path = None
@@ -18,6 +19,7 @@ class File:
             self.path = None
         self.text = text
         self.widget = None
+        self.project = project
 
     @property
     def lexer(self):
@@ -93,3 +95,15 @@ class File:
                     self.widget.insert(start + ' lineend', token_end)
             start = str(int(start.split(".")[0]) + 1) + ".0"
         pass
+
+    def get_diff(self):
+        if self.project is None:
+            return
+        hcommit = self.project.repo.head.commit
+        diff = hcommit.diff()
+        added = [d for d in diff.iter_change_type('A') if compare_path(d.a_rawpath, self.path)]
+        deleted = [d for d in diff.iter_change_type('D') if compare_path(d.a_rawpath, self.path)]
+        modified = [d for d in diff.iter_change_type('M') if compare_path(d.a_rawpath, self.path)]
+        print("added ", added)
+        print("deleted ", deleted)
+        print("modified ", modified)

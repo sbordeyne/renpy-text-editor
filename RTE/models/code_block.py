@@ -58,12 +58,12 @@ class Block:
         i = 0
         while i < len(text):
             current_line = text[i]
-            if self.start_re.match(current_line):
+            if self.start_re.search(current_line):
                 indent = len(self.tabs.findall(current_line))
                 for j, sub_line in enumerate(text[i:]):
                     new_indent = len(self.tabs.findall(sub_line))
                     # the end of the current block is when we reach the same ident
-                    if (new_indent == indent and j != 0) or self.end_re.match(sub_line):
+                    if (new_indent == indent and j != 0) or self.end_re.search(sub_line):
                         Block(parent=self, start=i, end=i + j, indent=indent, text="\n".join(text[i:j + i]))
                         i += j
                         break
@@ -93,18 +93,19 @@ class Block:
     def __len__(self):
         return self.end - self.start
 
-    def get_all_children(self):
+    def get_all_children(self, to_return=None):
         """
             Method to return all the children of this block, recursively.
 
             Returns a list of all the children of this block.
         """
-        rv = []
+        if not to_return:
+            to_return = set()
+
         for child in self.children:
-            if child not in rv:
-                rv.append(child)
-                rv.extend(child.get_all_children())
-        return rv
+            to_return.add(child)
+            to_return = child.get_all_children(to_return)
+        return to_return
 
     def get_all_starts(self):
         rv = [self.start, ]
@@ -118,7 +119,6 @@ if __name__ == "__main__":
 if test:
     for x in  list:
         print(x)
-
 else:
     for y in other:
         print(test * y)

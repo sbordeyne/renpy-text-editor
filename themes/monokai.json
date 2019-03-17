@@ -3,6 +3,10 @@
         "family": "courier",
         "size": 10
     },
+    "bitmapimage": {
+            "background": "#f8f8f2",
+            "foreground": "#272822"
+    },
     "ui":
     {
         "text":{

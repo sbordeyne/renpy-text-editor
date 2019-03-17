@@ -36,7 +36,7 @@ class Controller():
 
     def open_file(self, path, ftype):
         if ftype == "text":
-            file_ = File(path, self.last_entered_side)
+            file_ = File(path, self.last_entered_side, project=self.project)
             self.view.main.add_tab(file_)
         elif ftype == "image":
             root = tk.Toplevel()

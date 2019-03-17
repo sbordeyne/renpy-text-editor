@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 from pygments import lex
 from RTE.config import config
 from RTE.models.code_block import Block
+from RTE.widgets.text import CustomText
 import re
 
 
@@ -21,7 +22,6 @@ class TextLineNumbers(tk.Canvas):
         self.delete("all")
 
         block_starts = self.root_block.get_all_starts()
-        block_starts = [1, ]
         i = self.textwidget.index("@0,0")
         while True:
             dline = self.textwidget.dlineinfo(i)
@@ -33,7 +33,7 @@ class TextLineNumbers(tk.Canvas):
                 block = self.root_block.get_block(int(linenum))
                 img = self.create_image(15, y, anchor="nw", image=block.image)
                 self.tag_bind(img, '<Button-1>',
-                              lambda event: self.on_click_button1(block, event, img))
+                              lambda event, block=block, img=img: self.on_click_button1(block, event, img))
             self.create_text(2, y, anchor="nw", text=linenum)
             i = self.textwidget.index("%s+1line" % i)
 
@@ -45,36 +45,6 @@ class TextLineNumbers(tk.Canvas):
         else:
             self.textwidget.tag_remove("hidden", block.start_idx, block.end_idx)
         self.itemconfig(image, image=block.image)
-
-
-
-class CustomText(tk.Text):
-    def __init__(self, *args, **kwargs):
-        tk.Text.__init__(self, *args, **kwargs)
-
-        # create a proxy for the underlying widget
-        self._orig = self._w + "_orig"
-        self.tk.call("rename", self._w, self._orig)
-        self.tk.createcommand(self._w, self._proxy)
-
-    def _proxy(self, *args):
-        # let the actual widget perform the requested action
-        cmd = (self._orig,) + args
-        result = self.tk.call(cmd)
-
-        # generate an event if something was added or deleted,
-        # or the cursor position changed
-        if (args[0] in ("insert", "replace", "delete") or
-            args[0:3] == ("mark", "set", "insert") or
-            args[0:2] == ("xview", "moveto") or
-            args[0:2] == ("xview", "scroll") or
-            args[0:2] == ("yview", "moveto") or
-            args[0:2] == ("yview", "scroll")
-        ):
-            self.event_generate("<<Change>>", when="tail")
-
-        # return what the actual widget returned
-        return result
 
 
 class EditorFrame(tk.Frame):
@@ -104,7 +74,7 @@ class EditorFrame(tk.Frame):
             self.file.widget = self.text
 
         self.parse_blocks()
-
+        self.linenumbers.redraw()
         self.vsb.pack(side="right", fill="y")
         self.hsb.pack(side="bottom", fill="x")
         self.linenumbers.pack(side="left", fill="y")
@@ -131,10 +101,11 @@ class EditorFrame(tk.Frame):
         self.loop()
 
     def _on_change(self, event):
-        self.parse_blocks()
-        self.linenumbers.redraw()
+        self.file.get_diff()
         self.colorize()
         self.file.update_text(self.text.get("1.0", tk.END))
+        self.parse_blocks()
+        self.linenumbers.redraw()
 
     def select_line(self, *args):
         beginning = "insert linestart"

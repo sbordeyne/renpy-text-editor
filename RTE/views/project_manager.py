@@ -1,7 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 import os
-from RTE.constants import assets
 from RTE.config import config
 from RTE.utils import autoscroll, get_type_by_extension
 import tkinter.font as tkfont
@@ -67,7 +66,7 @@ class ProjectManagerView(tk.Frame):
         self.hsb.grid(row=1, column=0, sticky="ns")
         self.tree.bind('<<TreeviewOpen>>', self.update_tree)
         self.tree.bind('<Double-Button-1>', self.on_double_click)
-        self.images = {}
+        self.images = []
         self.tree.tag_configure("base", **config.get_theme().ui["treeview"]["base"])
 
     def populate_tree(self, node=""):
@@ -94,12 +93,23 @@ class ProjectManagerView(tk.Frame):
 
             if ptype == 'directory':
                 if fname not in ('.', '..'):
+                    self.images.append(tk.BitmapImage("assets/folder.xbm", **config.get_theme().bitmapimage))
                     self.tree.insert(id_, 0, text="dummy")
                     self.tree.item(id_, text=fname,
-                                   image=assets.get_icon_by_extension("folder"),
+                                   image=self.images[-1],
                                    tags=("base",))
             elif ptype == 'file':
-                self.tree.item(id_, image=assets.get_icon_by_extension(fname.split(".")[-1]),
+                extension = fname.split(".")[-1]
+                if extension in ("png", "jpg", "image"):
+                    img = tk.BitmapImage("assets/imagefile.xbm", **config.get_theme().bitmapimage)
+                elif extension in ("webm", "mp4", "avi", "movie"):
+                    img = tk.BitmapImage("assets/moviefile.xbm", **config.get_theme().bitmapimage)
+                elif extension in ("mp3", "wav", "opus", "music"):
+                    img = tk.BitmapImage("assets/musicfile.xbm", **config.get_theme().bitmapimage)
+                else:
+                    img = tk.BitmapImage("assets/textfile.xbm", **config.get_theme().bitmapimage)
+                self.images.append(img)
+                self.tree.item(id_, image=self.images[-1],
                                tags=("base",))
 
     def sort_tree(self, node, col="type", reverse=False):

@@ -11,7 +11,7 @@ class DebuggerView(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
 
-        w = config.wm_width - config.side_notebook_width
+        w = config.wm_width - config.side_notebook_width - config.scrollbar_width
         self.text = tk.Text(self, height=10)
 
         self.vsb = tk.Scrollbar(self, orient="vertical",

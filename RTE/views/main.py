@@ -8,6 +8,7 @@ from .variable_viewer import VariableViewerView
 from .snippets import SnippetsView
 from .toolbar import Toolbar
 from .debugger import DebuggerView
+from .notes import NotesView
 from RTE.config import config
 import tkinter.font as tkfont
 from RTE.models.snippet import snippet_store
@@ -37,6 +38,8 @@ class MainWindowView(tk.PanedWindow):
         self.bottom_nb.add(self.variable_viewer_ui, text=tr("Variable Viewer"))
         self.debugger_ui = DebuggerView(master=self.bottom_nb)
         self.bottom_nb.add(self.debugger_ui, text=tr("Debugger"))
+        self.notes_view = NotesView(master=self, project=self.master.controller.project)
+        self.bottom_nb.add(self.notes_view, text=tr("Notes"))
 
         self.left_tabs = []
         self.right_tabs = []
@@ -97,11 +100,11 @@ class RenpyTextEditorGUI(tk.Frame):
 
         self.toolbar.grid(row=0, column=0, columnspan=2, sticky="ew")
 
-        self.side_notebook.grid(row=1, column=0, sticky="ns")
+        self.side_notebook.grid(row=2, column=0, sticky="ns")
         self.side_notebook.add(self.project_manager, text=tr("Project Manager"))
         self.side_notebook.add(self.snippets, text=tr("Snippets"))
 
-        self.main.grid(row=1, column=1, sticky="ns")
+        self.main.grid(row=2, column=1, sticky="ns")
 
     def __setup_menu(self):
         theme = config.get_theme()
@@ -112,11 +115,13 @@ class RenpyTextEditorGUI(tk.Frame):
         menutools = tk.Menu(self.menubar, **theme.ui["menu"])
         menuedit = tk.Menu(self.menubar, **theme.ui["menu"])
         menuedit_formatting = tk.Menu(menuedit, **theme.ui["menu"])
+        menuview = tk.Menu(self.menubar, **theme.ui["menu"])
 
         self.menubar.add_cascade(label=tr("File"), menu=menufile)
         self.menubar.add_cascade(label=tr("Edit"), menu=menuedit)
         self.menubar.add_cascade(label=tr("Themes"), menu=self.menuthemes)
         self.menubar.add_cascade(label=tr("Tools"), menu=menutools)
+        self.menubar.add_cascade(label=tr("View"), menu=menuview)
 
         menufile.add_command(label=tr("New"), command=self.controller.menus.file_new)
         menufile.add_command(label=tr("Open"), command=self.controller.menus.file_open)
@@ -136,6 +141,8 @@ class RenpyTextEditorGUI(tk.Frame):
         menuedit_formatting.add_command(label=tr("To iNVERT cASING"), command=self.controller.menus.edit_formatting_invert)
         menuedit_formatting.add_command(label=tr("To RAnDom CASinG"), command=self.controller.menus.edit_formatting_random)
         menuedit_formatting.add_command(label=tr("To SpOnGeBoB cAsInG"), command=self.controller.menus.edit_formatting_spongebob)
+
+        menuview.add_command(label=tr("Show Notes"), command=self.controller.menus.view_notes_window)
 
         for theme in self.controller.get_all_themes:
             self.menuthemes.add_radiobutton(label=theme,

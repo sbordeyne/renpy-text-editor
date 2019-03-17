@@ -34,6 +34,7 @@ class MenusController():
         self.master.view.project_manager.clear_tree()
         self.master.view.project_manager.project_path = path
         self.master.view.project_manager.populate_roots()
+        self.master.view.main.notes_view = self.master.project
         return
 
     def file_save(self, *args, file_=None):
@@ -237,3 +238,7 @@ class MenusController():
                                  tk.CURRENT + " lineend")
             text.insert(tk.CURRENT + " lineend", sponge(selection))
             text.delete(tk.SEL_FIRST, tk.SEL_LAST)
+
+    def view_notes_window(self, *args):
+        self.master.view.notes_view.project = self.master.project
+        self.master.view.notes_view.grid(row=1, column=0, columnspan=2)

@@ -35,6 +35,7 @@ class Theme:
         font = data["default-font"]
         self._tokens = [Token(k, v, font) for k, v in data["tokens"].items()]
         self.ui = data["ui"]
+        self.bitmapimage = data["bitmapimage"]
         self.i = 0
 
     def __iter__(self):
