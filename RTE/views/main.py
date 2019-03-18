@@ -121,7 +121,6 @@ class RenpyTextEditorGUI(tk.Frame):
         self.menubar.add_cascade(label=tr("Edit"), menu=menuedit)
         self.menubar.add_cascade(label=tr("Themes"), menu=self.menuthemes)
         self.menubar.add_cascade(label=tr("Tools"), menu=menutools)
-        self.menubar.add_cascade(label=tr("View"), menu=menuview)
 
         menufile.add_command(label=tr("New"), command=self.controller.menus.file_new)
         menufile.add_command(label=tr("Open"), command=self.controller.menus.file_open)
@@ -141,8 +140,6 @@ class RenpyTextEditorGUI(tk.Frame):
         menuedit_formatting.add_command(label=tr("To iNVERT cASING"), command=self.controller.menus.edit_formatting_invert)
         menuedit_formatting.add_command(label=tr("To RAnDom CASinG"), command=self.controller.menus.edit_formatting_random)
         menuedit_formatting.add_command(label=tr("To SpOnGeBoB cAsInG"), command=self.controller.menus.edit_formatting_spongebob)
-
-        menuview.add_command(label=tr("Show Notes"), command=self.controller.menus.view_notes_window)
 
         for theme in self.controller.get_all_themes:
             self.menuthemes.add_radiobutton(label=theme,

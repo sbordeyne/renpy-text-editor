@@ -238,7 +238,3 @@ class MenusController():
                                  tk.CURRENT + " lineend")
             text.insert(tk.CURRENT + " lineend", sponge(selection))
             text.delete(tk.SEL_FIRST, tk.SEL_LAST)
-
-    def view_notes_window(self, *args):
-        self.master.view.notes_view.project = self.master.project
-        self.master.view.notes_view.grid(row=1, column=0, columnspan=2)
