@@ -70,6 +70,7 @@ Then, run the renpytexteditor.py file in any python 3.6.5+ interpretor.
 - [ ] Search, Replace, and Search in all files with regular expression support.
 - [ ] Built-in inline boolean expression simplifier
 - [ ] Boolean expression builder with variable names, and a truth table for those really complex conditions.
+- [ ] Native support for .editorconfig files
 
 ## LayeredImage Builder Feature
 

@@ -2,12 +2,13 @@ import git
 import os
 import re
 import glob
+import json
 from .labels import Label
 
 class Project:
     def __init__(self, path):
         self.path = path
-        self.repo = git.Repo(path=path)
+        #self.repo = git.Repo(path=path)
         if os.path.exists(os.path.join(path, ".rte-notes")):
             with open(os.path.join(path, ".rte-notes")) as f:
                 self.notes = f.read()
@@ -38,3 +39,14 @@ class Project:
         for filename in glob.iglob(os.path.join(self.path, f'**/*.{ext}'), recursive=True):
             rv.append(filename)
         return rv
+
+    def save_project_metadata(self):
+        d = {}
+        d["labels"] = self.labels
+        with open(os.path.join(self.path, ".rte-project"), "w") as f:
+            json.dump(d, f)
+
+    def load_project_metadata(self):
+        f = open(os.path.join(self.path, ".rte-project"))
+        d = self.labels = json.load(f)
+        self.labels = d["labels"]

@@ -1,20 +1,23 @@
 {
-    "bold":{
+    "bold": {
         "name": "Bold Snippet",
         "replace_selection": false,
         "before_cursor": "{b}",
-        "after_cursor": "{/b}"
+        "after_cursor": "{/b}",
+        "hotkey": null
     },
-    "image-flipped-h":{
+    "image-flipped-h": {
         "name": "Image Flipped Horizontal",
         "replace_selection": false,
         "before_cursor": "im.Flip(",
-        "after_cursor": ", horizontal=True)"
+        "after_cursor": ", horizontal=True)",
+        "hotkey": null
     },
-    "image-flipped-v":{
+    "image-flipped-v": {
         "name": "Image Flipped Vertical",
         "replace_selection": false,
         "before_cursor": "im.Flip(",
-        "after_cursor": ", horizontal=False)"
+        "after_cursor": ", horizontal=False)",
+        "hotkey": null
     }
 }

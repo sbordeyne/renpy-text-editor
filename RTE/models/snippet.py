@@ -5,18 +5,20 @@ import json
 import os
 
 class Snippet:
-    def __init__(self, name="", replace_selection=False, before_cursor="", after_cursor=""):
+    def __init__(self, name="", replace_selection=False, before_cursor="", after_cursor="", hotkey=None):
         self.name = name
         self.replace_selection = replace_selection
         self.before_cursor = before_cursor
         self.after_cursor = after_cursor
+        self.hotkey = hotkey
 
     @property
     def json(self):
         return {"name": self.name,
                 "replace_selection": self.replace_selection,
                 "before_cursor": self.before_cursor,
-                "after_cursor": self.after_cursor}
+                "after_cursor": self.after_cursor,
+                "hotkey": self.hotkey}
 
     def insert(self, text):
         sel = text_get_selected(text)
