@@ -8,7 +8,7 @@ from .labels import Label
 class Project:
     def __init__(self, path):
         self.path = path
-        #self.repo = git.Repo(path=path)
+        self.repo = git.repo.Repo(path=path)
         if os.path.exists(os.path.join(path, ".rte-notes")):
             with open(os.path.join(path, ".rte-notes")) as f:
                 self.notes = f.read()
