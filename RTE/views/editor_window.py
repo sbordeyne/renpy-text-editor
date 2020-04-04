@@ -101,7 +101,7 @@ class EditorFrame(tk.Frame):
         self.loop()
 
     def _on_change(self, event):
-        self.file.get_diff()
+        # self.file.get_diff()
         self.colorize()
         self.file.update_text(self.text.get("1.0", tk.END))
         self.parse_blocks()

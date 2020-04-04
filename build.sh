@@ -1,7 +1,7 @@
 pyinstaller --onefile --noconsole renpytexteditor.py
-cp ./config ./dist/config
-cp ./themes ./dist/themes
-cp ./snippets ./dist/snippets
-cp ./assets ./dist/assets
-cp ./locale ./dist/locale
-cp ./docs ./dist/docs
+cp -rf ./config ./dist/config
+cp -rf ./themes ./dist/themes
+cp -rf ./snippets ./dist/snippets
+cp -rf ./assets ./dist/assets
+cp -rf ./locale ./dist/locale
+cp -rf ./docs ./dist/docs

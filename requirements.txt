@@ -5,3 +5,4 @@ pygame>=1.9.0
 pyperclip>=1.7.0
 pyinstaller>=3.4
 playsound>=1.2.2
+ttkwidgets>=0.11.0

@@ -3,24 +3,28 @@
         "name": "Bold Snippet",
         "replace_selection": false,
         "before_cursor": "{b}",
-        "after_cursor": "{/b}"
+        "after_cursor": "{/b}",
+        "hotkey": null
     },
     "image-flipped-h": {
         "name": "Image Flipped Horizontal",
         "replace_selection": false,
         "before_cursor": "im.Flip(",
-        "after_cursor": ", horizontal=True)"
+        "after_cursor": ", horizontal=True)",
+        "hotkey": null
     },
     "image-flipped-v": {
         "name": "Image Flipped Vertical",
         "replace_selection": false,
         "before_cursor": "im.Flip(",
-        "after_cursor": ", horizontal=False)"
+        "after_cursor": ", horizontal=False)",
+        "hotkey": null
     },
     "italic_snippet": {
         "name": "Italic Snippet",
         "replace_selection": false,
         "before_cursor": "{i}\n",
-        "after_cursor": "{/i}\n"
+        "after_cursor": "{/i}\n",
+        "hotkey": null
     }
 }
